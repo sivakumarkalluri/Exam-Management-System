@@ -1,138 +1,144 @@
-form-container{
-    background-color: #fff;
-    font-family: 'Titillium Web', sans-serif;
-    font-size: 0;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 0 25px -15px rgba(0, 0, 0, 0.3);
-}
-.form-container .title{
+body {
     color: #000;
-    font-size: 25px;
-    font-weight: 600;
-    text-transform: capitalize;
-    margin: 0 0 25px;
+    overflow-x: hidden;
+    height: 100%;
+    background-color: #B0BEC5;
+    background-repeat: no-repeat;
 }
-.form-container .title:after{
-    content: '';
-    background-color: #00A9EF;
-    height: 3px;
-    width: 60px;
-    margin: 10px 0 0;
-    display: block;
-    clear: both;
+
+.card0 {
+    box-shadow: 0px 4px 8px 0px #757575;
+    border-radius: 0px;
 }
-.form-container .sub-title{
-    color: #333;
-    font-size: 18px;
-    font-weight: 600;
-    text-align: center;
-    text-transform: uppercase;
-    margin: 0 0 20px;
+
+.card2 {
+    margin: 0px 40px;
 }
-.form-container .form-horizontal{ font-size: 0; }
-.form-container .form-horizontal .form-group{
-    color: #333;
-    width: 50%;
-    padding: 0 8px;
-    margin: 0 0 15px;
-    display: inline-block;
+
+.logo {
+    width: 200px;
+    height: 100px;
+    margin-top: 20px;
+    margin-left: 35px;
 }
-.form-container .form-horizontal .form-group:nth-child(4){ margin-bottom: 30px; }
-.form-container .form-horizontal .form-group label{
-    font-size: 17px;
-    font-weight: 600;
+
+.image {
+    width: 360px;
+    height: 280px;
 }
-.form-container .form-horizontal .form-control{
-    color: #888;
-    background: #fff;
-    font-weight: 400;
-    letter-spacing: 1px;
-    height: 40px;
-    padding: 6px 12px;
-    border-radius: 10px;
-    border: 2px solid #e7e7e7;
-    box-shadow: none;
+
+.border-line {
+    border-right: 1px solid #EEEEEE;
 }
-.form-container .form-horizontal .form-control:focus{ box-shadow: 0 0 5px #dcdcdc; }
-.form-container .form-horizontal .check-terms{
-    padding: 0 8px;
-    margin: 0 0 25px;
+
+
+.line {
+    height: 1px;
+    width: 45%;
+    background-color: #E0E0E0;
+    margin-top: 10px;
 }
-.form-container .form-horizontal .check-terms .check-label{
-    color: #333;
-    font-size: 14px;
-    font-weight: 500;
-    font-style: italic;
-    vertical-align: top;
-    display: inline-block;
+
+.or {
+    width: 10%;
+    font-weight: bold;
 }
-.form-container .form-horizontal .check-terms .checkbox{
-    height: 17px;
-    width: 17px;
-    min-height: auto;
-    margin: 2px 8px 0 0;
-    border: 2px solid #d9d9d9;
+
+.text-sm {
+    font-size: 14px !important;
+}
+
+::placeholder {
+    color: #BDBDBD;
+    opacity: 1;
+    font-weight: 300
+}
+
+:-ms-input-placeholder {
+    color: #BDBDBD;
+    font-weight: 300
+}
+
+::-ms-input-placeholder {
+    color: #BDBDBD;
+    font-weight: 300
+}
+
+input, textarea {
+    padding: 10px 12px 10px 12px;
+    border: 1px solid lightgrey;
     border-radius: 2px;
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    appearance: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    transition: all 0.3s ease 0s;
-}
-.form-container .form-horizontal .check-terms .checkbox:before{
-    content: '';
-    height: 5px;
-    width: 9px;
-    border-bottom: 2px solid #00A9EF;
-    border-left: 2px solid #00A9EF;
-    transform: rotate(-45deg);
-    position: absolute;
-    left: 2px;
-    top: 2.5px;
-    transition: all 0.3s ease;
-}
-.form-container .form-horizontal .check-terms .checkbox:checked:before{ opacity: 1; }
-.form-container .form-horizontal .check-terms .checkbox:not(:checked):before{ opacity: 0; }
-.form-container .form-horizontal .check-terms .checkbox:focus{ outline: none; }
-.form-container .signin-link{
-    color: #333;
+    margin-bottom: 5px;
+    margin-top: 2px;
+    width: 100%;
+    box-sizing: border-box;
+    color: #2C3E50;
     font-size: 14px;
-    width: calc(100% - 190px);
-    margin-right: 30px;
-    display: inline-block;
-    vertical-align: top;
-}
-.form-container .signin-link a{
-    color: #00A9EF;
-    font-weight: 600;
-    transition: all 0.3s ease 0s;
-}
-.form-container .signin-link a:hover{ text-decoration: underline; }
-.form-container .form-horizontal .signup{
-    color: #fff;
-    background: #00A9EF;
-    font-size: 15px;
-    font-weight: 700;
-    text-transform: uppercase;
     letter-spacing: 1px;
-    width: 160px;
-    padding: 8px 15px 9px;
-    border-radius: 10px;
-    transition: all 0.3s ease 0s;
 }
-.form-container .form-horizontal .btn:hover,
-.form-container .form-horizontal .btn:focus{
-    text-shadow: 0 0 5px rgba(0,0,0,0.5);
-    box-shadow: 3px 3px rgba(0,0,0,0.15),5px 5px rgba(0,0,0,0.1);
-    outline: none;
+
+input:focus, textarea:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: 1px solid #304FFE;
+    outline-width: 0;
 }
-@media only screen and (max-width:479px){
-    .form-container .form-horizontal .form-group{ width: 100%; }
-    .form-container .signin-link{
-        width: 100%;
-        margin: 0 10px 15px;
+
+button:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    outline-width: 0;
+}
+
+a {
+    color: inherit;
+    cursor: pointer;
+}
+
+.btn-blue {
+    background-color: #1A237E;
+    width: 150px;
+    color: #fff;
+    border-radius: 2px;
+}
+
+.btn-blue:hover {
+    background-color: #000;
+    cursor: pointer;
+}
+
+.bg-blue {
+    color: #fff;
+    background-color: #1A237E;
+}
+
+
+@media screen and (max-width: 991px) {
+    .logo {
+        margin-left: 0px;
     }
+
+    .image {
+        width: 300px;
+        height: 200px;
+    }
+
+    .border-line {
+        border-right: none;
+    }
+
+    .card2 {
+        border-top: 1px solid #EEEEEE !important;
+        margin: 0px 15px;
+    }
+}
+@media screen and (max-width: 1400px) {
+    .image {
+        width: 450px;
+        height: 400px;
+    }
+
+
 }

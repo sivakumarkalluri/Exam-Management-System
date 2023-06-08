@@ -16,26 +16,39 @@
                     <div class="row mb-4 px-3">
                         <h2 class="mb-4 mr-4 mt-2" style="text-align: center;">User Login</h2>
                     </div>
+                    <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
                     <div class="row px-3">
                         <label class="mb-1"><h6 class="mb-0 text-sm">Email Address</h6></label>
-                        <input class="mb-4" type="text" name="email" placeholder="Enter a valid email address">
+                        <input class="mb-4" type="text" name="email" formControlName="email" placeholder="Enter a valid email address">
+                        <div class="form text text-danger" *ngIf="Email.errors?.['required'] && (Email.touched || Email.dirty)">
+                            Email is Required
+                        </div>
+                        <div class="form text text-danger" *ngIf="Email.errors?.['email'] && (Email.touched || Email.dirty)">
+                            Email is Invalid
+                        </div>
                     </div>
                     <div class="row px-3">
                         <label class="mb-1"><h6 class="mb-0 text-sm">Password</h6></label>
-                        <input type="password" name="password" placeholder="Enter password">
+                        <input type="password" name="password" formControlName="pwd" placeholder="Enter password">
+                        <div class="form text text-danger" *ngIf="Pwd.errors?.['required'] && (Email.touched || Email.dirty)">
+                            Password is Required
+                        </div>
                     </div>
                     <div class="row px-3 mb-4">
                         
                         <!-- <a href="#" class="ml-auto mb-0 text-sm">Forgot Password?</a> -->
                     </div>
                     <div class="row mb-3 px-3">
-                        <button type="submit" class="btn btn-blue text-center">Login</button>
+                        <button type="submit" class="btn btn-blue text-center" [disabled]="loginForm.invalid">Login</button>
                     </div>
                     <div class="row mb-4 px-3">
                         <small class="font-weight-bold">Don't have an account? <a class="text-danger ">Register</a></small>
                     </div>
+                </form>
                 </div>
+            
             </div>
+        
         </div>
         
     </div>

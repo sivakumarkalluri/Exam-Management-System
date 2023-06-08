@@ -1,8 +1,7 @@
-<app-nav-bar></app-nav-bar>
-
-<app-admin-nav-bar (onToggleSideNav)="onToggleSideNav($event)" ></app-admin-nav-bar>
-
-<app-admin-body>
-    [collapsed]="isSideNavCollapsed"
-    [screenWidth]="screenWidth"
-</app-admin-body>
+<div id="adminHome">
+    <app-admin-nav-bar (onToggleSideNav)="onToggleSideNav($event)" ></app-admin-nav-bar>
+    <app-admin-body>
+        [collapsed]="isSideNavCollapsaed"
+        [screenWidth]="screenWidth"
+    </app-admin-body>
+</div>

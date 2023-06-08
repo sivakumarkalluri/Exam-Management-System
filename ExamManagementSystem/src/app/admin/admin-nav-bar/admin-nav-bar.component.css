@@ -5,7 +5,6 @@
   background: #263238;
   transition: all .5s ease;
   position: fixed;
-  margin-top: 90px;
     
   z-index:1;
   top:0;
@@ -104,4 +103,11 @@
       color: #000;
     }
   }
+}
+
+.active{
+    background-color: #fff;
+    .sidenav-link-icon,.sidenav-link-text{
+        color: #000;
+    }
 }

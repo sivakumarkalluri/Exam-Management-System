@@ -7,10 +7,11 @@ import { Injectable, OnInit } from '@angular/core';
 export class AdminService implements OnInit{
 
   constructor(private http:HttpClient) { }
+  toggleClicked=false;
   ngOnInit(): void {
    
   }
-
+  
   baseUrl="https://localhost:7058/api/Exam/"
 
   getExamData():any{

@@ -36,7 +36,7 @@ export class LoginPageComponent implements OnInit{
           this.router.navigate(['/userDashboard']);
         }
         else{
-          this.router.navigate(['/adminHome']);
+          this.router.navigate(['adminHome/adminDashboard']);
         }
       }
 

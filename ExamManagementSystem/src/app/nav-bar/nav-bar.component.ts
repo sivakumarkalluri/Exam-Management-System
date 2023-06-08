@@ -25,7 +25,7 @@ export class NavBarComponent implements OnInit {
     console.log(this.authService.roleCheck);
     if(this.authService.roleCheck=="Admin"){
      
-      this.router.navigate(['/adminHome']);
+      this.router.navigate(['adminHome/adminDashboard']);
     }
     else{
       this.router.navigate(['/userDashboard']);

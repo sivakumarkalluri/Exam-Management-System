@@ -1,5 +1,6 @@
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { navbarData } from './NavData';
+import { AdminService } from 'src/app/Services/admin/admin.service';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -13,6 +14,7 @@ interface SideNavToggle {
 })
 export class AdminNavBarComponent implements OnInit{
 
+  constructor(private adminService:AdminService){}
   @Output() onToggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter();
   collapsed = false;
   screenWidth = 0;
@@ -20,6 +22,7 @@ export class AdminNavBarComponent implements OnInit{
   
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
+    console.log("screen : "+this.screenWidth);
     
   }
 
@@ -34,11 +37,13 @@ export class AdminNavBarComponent implements OnInit{
 
 
   toggleCollapse(): void {
+    this.adminService.toggleClicked=true;
     this.collapsed = !this.collapsed;
      this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth:this.screenWidth});
   }
 
   closeSidenav(): void{
+    this.adminService.toggleClicked=false;
     this.collapsed = false;
     this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth:this.screenWidth});
   }

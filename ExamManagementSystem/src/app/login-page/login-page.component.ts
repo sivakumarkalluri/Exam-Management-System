@@ -32,9 +32,11 @@ export class LoginPageComponent implements OnInit{
       else{
         this.isUserValid=true;
         this.authService.setToken(res);
-        alert(res);
         if(this.authService.roleCheck=="User"){
-          this.router.navigate(["userDashboard"]);
+          this.router.navigate(['/userDashboard']);
+        }
+        else{
+          this.router.navigate(['/adminHome']);
         }
       }
 

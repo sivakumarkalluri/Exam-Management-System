@@ -5,9 +5,7 @@
   margin: 0%;
   overflow: hidden;
 }
-.nav_action{
-    margin-right: 15px;
-}
+
 :root{
     --bgOrange:#e84949;
 }
@@ -218,7 +216,7 @@
 }
 #successDesc{
     padding-top: 30px;
-    width: 900px;
+   width: 75%;
     margin: auto;
     text-align: center;
 }

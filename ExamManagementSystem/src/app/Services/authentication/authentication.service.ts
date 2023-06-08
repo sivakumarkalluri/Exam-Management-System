@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject } from 'rxjs';
 
@@ -8,7 +9,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AuthenticationService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,private router:Router) { }
   ngOnInit(): void {
       
   }
@@ -16,6 +17,8 @@ export class AuthenticationService {
   jwtHelperService=new JwtHelperService();
   
   roleCheck="";
+  loggedIn=false;
+  accessToken!:string;
   baseUrl="https://localhost:7058/api/UserData";
   registerUser(data:Array<String>){
     return this.http.post(this.baseUrl,{
@@ -42,12 +45,15 @@ export class AuthenticationService {
     )
   }
   setToken(token:string){
+    this.loggedIn=true;
     localStorage.setItem("access_token",token);
+    this.accessToken=token;
     this.loadCurrentUser();
   }
 
   loadCurrentUser(){
     const token=localStorage.getItem("access_token");
+    
     const userInfo=token !=null ? this.jwtHelperService.decodeToken(token):null;
     console.log(userInfo);
     this.roleCheck=userInfo.role;
@@ -60,5 +66,11 @@ export class AuthenticationService {
       role:userInfo.role
     }:null;
     this.currentUser.next(data);
+  }
+
+  removeToken(){
+    localStorage.removeItem("access_token");
+    this.loggedIn=false;
+    
   }
 }

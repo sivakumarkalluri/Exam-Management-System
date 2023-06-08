@@ -2,7 +2,7 @@ create database ExamPortal
 use ExamPortal
 
 --  UserLogin Data ------------------------------------------------------
-CREATE TABLE userLoginData (
+CREATE TABLE userRegisterData (
     userId INT PRIMARY KEY Identity(1,1),
     firstname VARCHAR(50),
     lastname VARCHAR(50),
@@ -14,15 +14,22 @@ CREATE TABLE userLoginData (
 	registeredAt DateTime
 );
 
-INSERT INTO userLoginData (firstname, lastname, email, mobile, gender, password, role, registeredAt)
+CREATE TABLE userLogin(
+	email varchar(50),
+	password varchar(50),
+	role varchar(10)
+)
+
+INSERT INTO userRegisterData (firstname, lastname, email, mobile, gender, password, role, registeredAt)
 VALUES
-    ('John', 'Doe', 'johndoe@example.com', '1234567890', 'Male', 'password123', 'User', GETDATE()),
-    ('Jane', 'Smith', 'janesmith@example.com', '9876543210', 'Female', 'p@ssw0rd', 'Admin', GETDATE());
+    
+    ('Jane', 'Smith', 'siva@gmail.com', '9876543210', 'Female', 'admin', 'Admin', GETDATE());
 
 
---drop table userLoginData
+--drop table userRegisterData
 
-
+select * from userRegisterData;
+select * from userLogin;
 ------------- Table for Creating an new Exam -----------------------------
 
 create table exam
@@ -62,7 +69,7 @@ correctAnswer int,
 
 select * from exam
 
-select * from userLoginData
+select * from userRegisterData
 
 INSERT INTO questions (exam_id, question_desc, option_1, option_2, option_3, option_4, correctAnswer)
 VALUES
@@ -81,7 +88,7 @@ CREATE TABLE usersExamData (
     question_id INT,
     answer INT,
 	attemptedAt DateTime
-    FOREIGN KEY (userId) REFERENCES userLoginData (userId),
+    FOREIGN KEY (userId) REFERENCES userRegisterData (userId),
     FOREIGN KEY (exam_id) REFERENCES exam (exam_id),
     FOREIGN KEY (question_id) REFERENCES Questions (question_id)
 );

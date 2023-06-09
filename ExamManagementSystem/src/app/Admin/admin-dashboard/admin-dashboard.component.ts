@@ -10,12 +10,18 @@ import { AdminService } from 'src/app/Services/admin/admin.service';
 })
 export class AdminDashboardComponent implements OnInit{
   constructor(private adminService:AdminService){}
-  examsData:any;
+  adminStats:any;
   ngOnInit(): void {
-   this.adminService.getExamData().subscribe((data:any)=>{
-    this.examsData=data;
-   })
+   this.getAdminStatistics();
   }
+  getAdminStatistics(){
+    this.adminService.getAdminStats().subscribe((data:any)=>{
+      this.adminStats=data;
+      console.log(this.adminStats);
+    })
+  }
+ 
+
    
 }
 

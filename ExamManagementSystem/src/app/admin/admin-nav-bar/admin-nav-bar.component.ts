@@ -22,7 +22,7 @@ export class AdminNavBarComponent implements OnInit{
   
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
-    console.log("screen : "+this.screenWidth);
+   
     
   }
 
@@ -37,13 +37,13 @@ export class AdminNavBarComponent implements OnInit{
 
 
   toggleCollapse(): void {
-    this.adminService.toggleClicked=true;
+    this.adminService.toggleClicked=!this.adminService.toggleClicked;
     this.collapsed = !this.collapsed;
      this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth:this.screenWidth});
   }
 
   closeSidenav(): void{
-    this.adminService.toggleClicked=false;
+    this.adminService.toggleClicked=!this.adminService.toggleClicked;
     this.collapsed = false;
     this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth:this.screenWidth});
   }

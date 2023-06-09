@@ -13,6 +13,9 @@ CREATE TABLE userRegisterData (
 	role varchar(10),
 	registeredAt DateTime
 );
+select * from userRegisterData
+drop table userRegisterData
+drop table usersExamData
 
 CREATE TABLE userLogin(
 	email varchar(50),
@@ -23,13 +26,8 @@ CREATE TABLE userLogin(
 INSERT INTO userRegisterData (firstname, lastname, email, mobile, gender, password, role, registeredAt)
 VALUES
     
-    ('Jane', 'Smith', 'siva@gmail.com', '9876543210', 'Female', 'admin', 'Admin', GETDATE());
+    ('Siva', 'Kumar', 'siva@gmail.com', '9876543210', 'Female', 'admin', 'Admin', GETDATE());
 
-
---drop table userRegisterData
-
-select * from userRegisterData;
-select * from userLogin;
 ------------- Table for Creating an new Exam -----------------------------
 
 create table exam
@@ -40,11 +38,9 @@ exam_description nvarchar(MAX),
 exam_duration int,
 question_mark int,
 exam_totalquestion int,
-exampass_marks int
+exampass_percent int
 
 )
-
-
 
 update exam set exampass_marks=2 where exam_id=1; 
 update exam set exampass_marks=1 where exam_id=2; 
@@ -59,15 +55,17 @@ create table questions(
 question_id int primary key identity(1,1),
 exam_id int,
 question_desc nvarchar(1000),
-option_1 nvarchar(50),
-option_2 nvarchar(50),
-option_3 nvarchar(50),
-option_4 varchar(50),
+option_1 nvarchar(500),
+option_2 nvarchar(500),
+option_3 nvarchar(500),
+option_4 varchar(500),
 correctAnswer int,
 
 )
 
-select * from exam
+drop table questions
+
+select * from questions;
 
 select * from userRegisterData
 
@@ -92,7 +90,6 @@ CREATE TABLE usersExamData (
     FOREIGN KEY (exam_id) REFERENCES exam (exam_id),
     FOREIGN KEY (question_id) REFERENCES Questions (question_id)
 );
-
 select * from questions;
 
 insert into usersExamData (userId,exam_id,question_id,answer,attemptedAt)
@@ -106,12 +103,19 @@ select * from usersExamData
 create table userResults(
 userId int,
 exam_id int,
-total_marks int,
+attempted_Questions int,
+notAttempted_Questions int,
+correct_answers int,
+wrong_answers int,
+total_marksObtained int,
+exam_total int,
+percentage decimal,
 pass_flag BIT,
 attemptedAt DateTime
 
 )
 
+drop table userResults
 -----------------Stored Procedure for calculating the total_marks and pass or fail and inserting into userResults Table -----------------
 
 CREATE PROCEDURE InsertUserResult
@@ -131,12 +135,12 @@ BEGIN
     WHERE ud.userId = @userId AND ud.exam_id = @examId AND ud.answer = q.correctAnswer
 
     -- Get the pass marks for the exam
-    SELECT @passMarks = exampass_marks
+    SELECT @passPercent = exampass_percent
     FROM exam
     WHERE exam_id = @examId
 
     -- Determine the pass flag
-    IF @totalMarks >= @passMarks
+    IF @totalMarks >= @passPercent
         SET @passFlag = 1
     ELSE
         SET @passFlag = 0
@@ -146,14 +150,195 @@ BEGIN
     VALUES (@userId, @examId, @totalMarks, @passFlag,GETDATE())
 END
 
-delete from userResults;
-drop procedure InsertUserResult
-EXEC InsertUserResult @userId=1,@examId=1;
 
 select * from userResults;
 
- SELECT SUM(e.question_mark) as total_marks
-    FROM usersExamData AS ud
-	join exam as e on e.exam_id=ud.exam_id
-    JOIN questions AS q ON ud.question_id = q.question_id
-    WHERE ud.userId =1 AND ud.exam_id = 2 AND ud.answer = q.correctAnswer
+
+
+select * from userResults
+select
+
+EXEC GetExamStatistics;
+
+
+
+
+CREATE PROCEDURE InsertUserResult
+    @userId INT,
+    @examId INT
+AS
+BEGIN
+    DECLARE @totalMarks INT
+    DECLARE @passPercent INT
+    DECLARE @passFlag BIT
+    DECLARE @totalQuestions INT
+    DECLARE @questionMark INT
+    DECLARE @attemptedQuestions INT
+    DECLARE @notAttemptedQuestions INT
+    DECLARE @correctAnswers INT
+    DECLARE @wrongAnswers INT
+    DECLARE @percentage DECIMAL(5, 2)
+    DECLARE @examTotal INT
+
+    -- Get the total questions and question mark for the exam
+    SELECT @totalQuestions = exam_totalquestion,
+           @questionMark = question_mark
+    FROM exam
+    WHERE exam_id = @examId
+
+    -- Calculate the exam total marks
+    SET @examTotal = @totalQuestions * @questionMark
+
+     SELECT @attemptedQuestions = COUNT(usersExamData.answer),
+           @correctAnswers = SUM(CASE WHEN usersExamData.answer = questions.correctAnswer THEN 1 ELSE 0 END),
+           @wrongAnswers = SUM(CASE WHEN usersExamData.answer <> questions.correctAnswer THEN 1 ELSE 0 END)
+    FROM usersExamData 
+    JOIN questions ON usersExamData.question_id =  questions.question_id AND usersExamData.exam_id = questions.exam_id
+    WHERE usersExamData.userId = @userId AND usersExamData.exam_id = @examId
+
+    -- Calculate the not attempted questions
+    SET @notAttemptedQuestions = @totalQuestions - @attemptedQuestions
+
+    -- Calculate total marks obtained by the user in the exam
+    SELECT @totalMarks =ISNULL(SUM(exam.question_mark), 0)
+    FROM usersExamData
+    JOIN questions ON usersExamData.question_id = questions.question_id
+	join exam on exam.exam_id=usersExamData.exam_id
+    WHERE usersExamData.userId = @userId AND usersExamData.exam_id = @examId AND usersExamData.answer = questions.correctAnswer
+
+    -- Calculate the percentage obtained
+    SET @percentage = (@totalMarks / (CAST(@examTotal AS DECIMAL) / 100))
+
+    -- Get the pass marks for the exam
+    SELECT @passPercent = exampass_percent
+    FROM exam
+    WHERE exam_id = @examId
+
+    -- Determine the pass flag
+    IF @percentage >= @passPercent
+        SET @passFlag = 1
+    ELSE
+        SET @passFlag = 0
+
+    -- Insert the result into userResults table
+    INSERT INTO userResults (
+        userId,
+        exam_id,
+        attempted_Questions,
+        notAttempted_Questions,
+        correct_answers,
+        wrong_answers,
+        total_marksObtained,
+        exam_total,
+        percentage,
+        pass_flag,
+        attemptedAt
+    )
+    VALUES (
+        @userId,
+        @examId,
+        @attemptedQuestions,
+        @notAttemptedQuestions,
+        @correctAnswers,
+        @wrongAnswers,
+        @totalMarks,
+        @examTotal,
+        @percentage,
+        @passFlag,
+        GETDATE()
+    )
+END
+
+drop procedure InsertUserResult
+
+exec InsertUserResult @userId=2,@examId=1;
+exec InsertUserResult @userId=2,@examId=2;
+exec InsertUserResult @userId=2,@examId=3;
+exec InsertUserResult @userId=3,@examId=2;
+exec InsertUserResult @userId=3,@examId=1;
+exec InsertUserResult @userId=4,@examId=1;
+exec InsertUserResult @userId=5,@examId=1;
+exec InsertUserResult @userId=5,@examId=3;
+exec InsertUserResult @userId=6,@examId=3;
+exec InsertUserResult @userId=7,@examId=3;
+exec InsertUserResult @userId=8,@examId=6;
+exec InsertUserResult @userId=9,@examId=6;
+exec InsertUserResult @userId=10,@examId=6;
+exec InsertUserResult @userId=11,@examId=6;
+exec InsertUserResult @userId=11,@examId=5;
+exec InsertUserResult @userId=13,@examId=5;
+
+exec InsertUserResult @userId=15,@examId=5;
+
+exec InsertUserResult @userId=17,@examId=3;
+exec InsertUserResult @userId=19,@examId=3;
+
+
+
+
+select * from userResults;
+delete from userResults;
+
+exec GetFailStatistics
+
+CREATE PROCEDURE GetAdminStatistics
+AS
+BEGIN
+    DECLARE @UserCount INT
+    DECLARE @ExamCount INT
+    DECLARE @StudentsWithExamCount INT
+    DECLARE @StudentsWithoutExamCount INT
+
+    -- Total number of users with role 'User'
+    SELECT @UserCount = COUNT(*)
+    FROM userRegisterData
+    WHERE role = 'User'
+
+    -- Total number of exams
+    SELECT @ExamCount = COUNT(*)
+    FROM exam
+
+    -- Total number of students who have taken at least one exam
+    SELECT @StudentsWithExamCount = COUNT(DISTINCT userId)
+    FROM usersExamData
+
+    -- Total number of students who didn't attend any exam
+    SELECT @StudentsWithoutExamCount = @UserCount - @StudentsWithExamCount
+
+  
+    -- Additional Information
+    SELECT 'Total number of users with role User: ' AS [Description], @UserCount AS [Count]
+    UNION ALL
+    SELECT 'Total number of exams: ', @ExamCount
+    UNION ALL
+    SELECT 'Total number of students who have taken at least one exam: ', @StudentsWithExamCount
+    UNION ALL
+    SELECT 'Total number of students who didn''t attend any exam: ', @StudentsWithoutExamCount
+END
+
+CREATE PROCEDURE GetExamPassStatistics
+AS
+BEGIN
+    SELECT e.exam_id, e.exam_name,
+        COUNT(CASE WHEN ur.pass_flag = 1 THEN ur.exam_id END) AS PassedCount,
+        COUNT(CASE WHEN ur.pass_flag = 0 THEN ur.exam_id END) AS FailedCount
+    FROM exam AS e
+    LEFT JOIN userResults AS ur ON e.exam_id = ur.exam_id
+    GROUP BY e.exam_id, e.exam_name
+END
+
+CREATE PROCEDURE CountStudentsAttemptedExams
+AS
+BEGIN
+    SELECT e.exam_id, e.exam_name, COUNT(DISTINCT ue.userId) AS StudentsAttempted
+    FROM exam e
+    LEFT JOIN usersExamData ue ON e.exam_id = ue.exam_id
+    GROUP BY e.exam_id, e.exam_name
+END
+
+
+exec GetExamPassStatistics
+
+exec CountStudentsAttemptedExams
+
+exec GetAdminStatistics;

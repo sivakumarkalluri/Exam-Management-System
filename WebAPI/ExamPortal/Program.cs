@@ -1,4 +1,5 @@
 using ExamPortal.Data;
+using ExamPortal.Repositories.AdminRepo;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
@@ -38,6 +39,7 @@ builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
     build.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
 }
 ));
+builder.Services.AddScoped<IAdminRepository, SqlAdminRepository>();
 
 var app = builder.Build();
 

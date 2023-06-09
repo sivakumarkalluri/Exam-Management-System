@@ -1,0 +1,14 @@
+.card {
+    height: 170px;
+  }
+  
+  .card-header {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .dashicon{
+   gap: 30px;
+  }

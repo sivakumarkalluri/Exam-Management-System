@@ -26,7 +26,7 @@ namespace ExamPortal.Models.Domain
         [Column("exam_totalquestion")]
         public int ExamTotalQuestion { get; set; }
 
-        [Column("exampass_marks")]
-        public int ExamPassMarks { get; set; }
+        [Column("exampass_percent")]
+        public int ExamPassPercent { get; set; }
     }
 }

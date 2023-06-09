@@ -23,7 +23,7 @@ export class AdminBodyComponent implements OnInit{
       styleClass = 'body-trimmed';
 
     }
-    console.log("scrren width : "+this.screenWidth)
+   
     if(this.collapsed && this.screenWidth >768 ) {
       styleClass = 'body-trimmed';
     }else if(this.collapsed && this.screenWidth <= 768 && this.screenWidth > 0) {

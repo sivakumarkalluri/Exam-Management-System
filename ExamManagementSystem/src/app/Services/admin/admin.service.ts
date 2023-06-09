@@ -12,10 +12,10 @@ export class AdminService implements OnInit{
    
   }
   
-  baseUrl="https://localhost:7058/api/Exam/"
+  baseUrl="https://localhost:7058/api/AdminDashboard/";
 
-  getExamData():any{
-   return this.http.get(this.baseUrl+'ExamsList');
+  getAdminStats():any{
+    return this.http.get(this.baseUrl+'AdminStatistics');
   }
 
 }

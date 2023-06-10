@@ -11,17 +11,24 @@ import { AdminService } from 'src/app/Services/admin/admin.service';
 export class AdminDashboardComponent implements OnInit{
   constructor(private adminService:AdminService){}
   adminStats:any;
+  loadingError:any;
   ngOnInit(): void {
    this.getAdminStatistics();
   }
-  getAdminStatistics(){
-    this.adminService.getAdminStats().subscribe((data:any)=>{
-      this.adminStats=data;
-      console.log(this.adminStats);
-    })
-  }
- 
+  getAdminStatistics() {
+    this.adminService.getAdminStats().subscribe(
+      (response: any) => {
+        this.adminStats = response.body;
+        console.log(this.adminStats);
+      },
+      (error: any) => {
+        this.loadingError = true;
+        console.log('Unable to fetch the data. Please try again.');
+      }
+    );
 
+ 
+    }
    
 }
 

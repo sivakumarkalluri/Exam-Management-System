@@ -2,6 +2,7 @@ import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard
 import { UserDashboardComponent } from './User/user-dashboard/user-dashboard.component';
 
 import { NgModule } from '@angular/core';
+
 import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './home-page/home-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
@@ -12,6 +13,8 @@ import { AdminExamsComponent } from './admin/admin-exams/admin-exams.component';
 import { AdminStudentsComponent } from './admin/admin-students/admin-students.component';
 import { AdminResultsComponent } from './admin/admin-results/admin-results.component';
 import { AdminEditExamsComponent } from './admin/admin-edit-exams/admin-edit-exams.component';
+import { AdminCategoryComponent } from './admin/admin-category/admin-category.component';
+import { AddCategoryComponent } from './admin/add-category/add-category.component';
 
 
 const routes: Routes = [
@@ -27,7 +30,9 @@ const routes: Routes = [
   { path: 'adminExams', component: AdminExamsComponent },
   { path: 'adminStudents', component: AdminStudentsComponent },
   { path: 'adminResults', component: AdminResultsComponent },
-  {path:'adminEditExams',component:AdminEditExamsComponent}
+  {path:'adminEditExams',component:AdminEditExamsComponent},
+  {path:'adminCategories',component:AdminCategoryComponent},
+  {path:'addCategory',component:AddCategoryComponent}
 ]}
 
  

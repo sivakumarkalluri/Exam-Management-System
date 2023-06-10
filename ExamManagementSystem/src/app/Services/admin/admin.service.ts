@@ -12,10 +12,13 @@ export class AdminService implements OnInit{
    
   }
   
-  baseUrl="https://localhost:7058/api/AdminDashboard/";
+  baseUrl="https://localhost:7058/api";
 
   getAdminStats():any{
-    return this.http.get(this.baseUrl+'AdminStatistics');
+    return this.http.get(this.baseUrl+"/AdminDashboard/AdminStatistics", { observe: 'response' });
   }
 
+  getCategories():any{
+    return this.http.get(this.baseUrl+'/Categories', { observe: 'response' })
+  }
 }

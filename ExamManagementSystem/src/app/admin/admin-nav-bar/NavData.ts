@@ -16,9 +16,9 @@ export const navbarData = [
         label:'Admin'
     },
     {
-        routeLink:'adminExams',
-        icon:'fal fa-bookmark',
-        label:'Exams'
+        routeLink:'adminCategories',
+        icon:'fa fa-list',
+        label:'Categories'
     },
     {
         routeLink:'adminEditExams',

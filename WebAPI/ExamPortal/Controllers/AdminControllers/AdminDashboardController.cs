@@ -50,5 +50,17 @@ namespace ExamPortal.Controllers.AdminControllers
             return Ok(result);
         }
 
+
+        [HttpGet("CategoryAttemptStats")]
+        public async Task<IActionResult> CategoryAttemptStats()
+        {
+            var result = await this.adminRepository.GetCategoryStudentStats();
+            if (result == null)
+            {
+                return Ok("Data not Found");
+            }
+            return Ok(result);
+        }
+
     }
 }

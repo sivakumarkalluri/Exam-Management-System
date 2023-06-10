@@ -1,4 +1,5 @@
-﻿using ExamPortal.Models.DTO;
+﻿using ExamPortal.Models.Domain;
+using ExamPortal.Models.DTO;
 
 namespace ExamPortal.Repositories.AdminRepo
 {
@@ -7,5 +8,9 @@ namespace ExamPortal.Repositories.AdminRepo
         Task<AdminStatisticsDTO> GetAdminStats();
         Task<List<CountStudentsAttemptedExamsDTO>> GetExamCountStats();
         Task<List<ExamPassStatsDTO>> GetExamPassStats();
+
+        Task<List<StudentsAttemptedByCategoryDTO>> GetCategoryStudentStats();
+
+        Task<List<Categories>> GetCategoriesData();
     }
 }

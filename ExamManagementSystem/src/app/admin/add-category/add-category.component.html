@@ -1,0 +1,44 @@
+<p>add-category works!</p>
+<mat-horizontal-stepper>
+    <mat-step [stepControl]="addCategoryForm">
+        <ng-template matStepLabel>Add Category</ng-template>
+        <form [formGroup]="addCategoryForm" >
+            <div  class="row px-3">
+                <div class="d-flex flex-column">
+                    <label class="mb-1"><h6 class="mb-0 text-sm">Category Name</h6></label>
+                    <input class="col-lg-4 col form-control" type="text" name="categoryName" formControlName="categoryName" placeholder="Enter the Category Name">
+                    <div class="form text text-danger" *ngIf="Name.errors?.['required'] && (Name.touched || Name.dirty)">
+                        <small>Category Name is Required</small>
+                    </div>
+                </div>
+            </div>
+            <div class="row px-3">
+                <div class="d-flex flex-column">
+                    <label class="mb-1 mt-4"><h6 class="mb-0 text-sm">Category Description</h6></label>
+                    <textarea class="col-lg-4 col " type="text" name="categoryDesc" formControlName="categoryDesc" placeholder="Enter the Category Name"></textarea>
+                    <div class="form text text-danger" *ngIf="Desc.errors?.['required'] && (Desc.touched || Desc.dirty)">
+                        <small>Category Description is Required</small>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <button type="button" class="btn btn-info mr-2"  mat-button matStepperNext>Next</button>
+    </mat-step>
+    <mat-step [optional]="true">
+        <ng-template matStepLabel>Add Exam</ng-template>
+        <button type="button" class="btn btn-info mr-2" matStepperPrevious>Back</button>
+        <button type="button" class="btn btn-info mr-2" mat-button matStepperNext>Next</button>
+    </mat-step>
+    <mat-step  [optional]="true">
+        <ng-template matStepLabel >Add Questions</ng-template>
+        <button type="button" class="btn btn-info mr-2" mat-button matStepperPrevious>Back</button>
+        <button type="button" class="btn btn-info mr-2" mat-button matStepperNext>Next</button>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <button type="button" class="btn btn-info mr-2" mat-button matStepperPrevious>Back</button>
+        <button type="button" class="btn btn-info mr-2" mat-button matStepperNext>Next</button>
+    </mat-step>
+    
+</mat-horizontal-stepper>

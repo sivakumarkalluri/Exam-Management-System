@@ -1,3 +1,6 @@
+import {MatStepperModule} from '@angular/material/stepper';
+
+import { AddCategoryComponent } from './admin/add-category/add-category.component';
 import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -20,6 +23,9 @@ import { AdminStudentsComponent } from './admin/admin-students/admin-students.co
 import { AdminExamsComponent } from './admin/admin-exams/admin-exams.component';
 import { AdminProfileComponent } from './admin/admin-profile/admin-profile.component';
 import { AdminEditExamsComponent } from './admin/admin-edit-exams/admin-edit-exams.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AdminCategoryComponent } from './admin/admin-category/admin-category.component';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 
 @NgModule({
@@ -39,14 +45,22 @@ import { AdminEditExamsComponent } from './admin/admin-edit-exams/admin-edit-exa
     AdminExamsComponent,
     AdminExamsComponent,
     AdminProfileComponent,
-    AdminEditExamsComponent
+    AdminEditExamsComponent,
+    AdminCategoryComponent,
+    AddCategoryComponent
+    
   ],
   imports: [
     BrowserModule,
+    MatStepperModule,
+
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    TooltipModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

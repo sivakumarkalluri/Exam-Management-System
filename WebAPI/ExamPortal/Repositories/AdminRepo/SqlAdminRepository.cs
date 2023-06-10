@@ -1,4 +1,5 @@
 ﻿using ExamPortal.Data;
+using ExamPortal.Models.Domain;
 using ExamPortal.Models.DTO;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,6 +33,19 @@ namespace ExamPortal.Repositories.AdminRepo
             var passStats = await this._dbContext.examPassStatsDTOs.FromSqlRaw("EXECUTE GetExamPassStatistics").ToListAsync();
             return passStats;
 
+        }
+
+        public async Task<List<StudentsAttemptedByCategoryDTO>> GetCategoryStudentStats()
+        {
+
+            var countStats = await this._dbContext.studentsAttemptedByCategoryDTOs.FromSqlRaw("EXECUTE CountStudentsAttemptedByCategory").ToListAsync();
+            return countStats;
+        }
+
+        public async Task<List<Categories>> GetCategoriesData()
+        {
+            var data= await this._dbContext.categories.ToListAsync();
+            return data;
         }
     }
 }

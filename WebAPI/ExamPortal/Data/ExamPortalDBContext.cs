@@ -13,6 +13,8 @@ namespace ExamPortal.Data
         }
 
         public DbSet<Exam> exams { get; set; }
+
+        public DbSet<Categories> categories { get; set; }
         public DbSet<Registration> register { get; set; }
 
         public DbSet<AdminStatisticsDTO> AdminStatisticsDTO { get; set; }
@@ -20,6 +22,8 @@ namespace ExamPortal.Data
         public DbSet<CountStudentsAttemptedExamsDTO> studentsAttemptedExamsDTOs { get; set; }
 
         public DbSet<ExamPassStatsDTO> examPassStatsDTOs { get; set; }
+
+        public DbSet<StudentsAttemptedByCategoryDTO> studentsAttemptedByCategoryDTOs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure AdminStatisticsDTO as a keyless entity type
@@ -28,6 +32,8 @@ namespace ExamPortal.Data
             modelBuilder.Entity<CountStudentsAttemptedExamsDTO>().HasNoKey();
 
             modelBuilder.Entity<ExamPassStatsDTO>().HasNoKey();
+
+            modelBuilder.Entity<StudentsAttemptedByCategoryDTO>().HasNoKey();
 
             // Other configurations
 

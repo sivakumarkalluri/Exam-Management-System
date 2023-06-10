@@ -1,11 +1,10 @@
 ﻿namespace ExamPortal.Models.DTO
 {
-    public class CountStudentsAttemptedExamsDTO
+    public class StudentsAttemptedByCategoryDTO
     {
-        public int Exam_Id { get; set; }
 
         public int Category_Id { get; set; }
-        public string Exam_Name { get; set; }
+        public string Category_Name { get; set; }
         public int StudentsAttempted { get; set; }
     }
 }

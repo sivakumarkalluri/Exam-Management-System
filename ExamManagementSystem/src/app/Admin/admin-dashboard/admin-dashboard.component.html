@@ -1,23 +1,9 @@
 <div>
   
 <div class="container" style="margin-left: 10px;">
-  <div class="row ">
-    <div class="col-lg-3 col-md-4 col-sm-6 col mb-4">
-      <div class="card text-center dashboardCard">
-        <div class="card-header bg-primary text-white">
-          <div class="row align-items-center">
-            <div class="row">
-                <div class="d-flex justify-content-around align-content-center">
-                    <i class="fa fa-list fa-xl-4x fa-sm-2x fa-4x"></i>
-                    <p class="display-4">{{adminStats.totalExams}}</p>
-                </div>
-                <h6>Totals Exams</h6>
-            </div>
-          </div>
-        </div>
-        
-      </div>
-    </div>
+
+  <div class="row " *ngIf="adminStats">
+    
     <div class="col-lg-3 col-md-4 col-sm-6 col">
       <div class="card text-center dashboardCard">
         <div class="card-header bg-success text-white">
@@ -32,6 +18,38 @@
           </div>
         </div>
         
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-6 col mb-4">
+      <div class="card text-center dashboardCard">
+        <div class="card-header bg-info text-white">
+          <div class="row align-items-center">
+            <div class="row">
+                <div class="d-flex justify-content-around align-content-center">
+                    <i class="fa fa-list fa-xl-4x fa-sm-2x fa-4x"></i>
+                    <p class="display-4">{{adminStats.totalCategories}}</p>
+                </div>
+                <h6>Totals Categories</h6>
+            </div>
+          </div>
+        </div>
+        
+        
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-6 col mb-4">
+      <div class="card text-center dashboardCard">
+        <div class="card-header bg-primary text-white">
+          <div class="row align-items-center">
+            <div class="row">
+                <div class="d-flex justify-content-around align-content-center">
+                    <i class="fal fa-file-pen fa-xl-4x fa-sm-2x fa-4x"></i>
+                    <p class="display-4">{{adminStats.totalExams}}</p>
+                </div>
+                <h6>Totals Exams</h6>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-lg-3 col-md-4 col-sm-6 col">
@@ -67,22 +85,12 @@
          
         </div>
       </div>
-    <div class="col-lg-3 col-md-4 col-sm-6 col">
-      <div class="card text-center dashboardCard">
-        <div class="card-header bg-secondary text-white">
-          <div class="row align-items-center">
-            <div class="row">
-                <div class="d-flex justify-content-around align-content-center">
-                    <i class="fa fa-graduation-cap fa-4x"></i>
-                    <p class="display-4">{{adminStats.studentsNotTakenAtLeastOneExam}}</p>
-                </div>
-                <h6>Students with Percent > 90%</h6>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    
   
+  </div>
+  <div class="col-12 mt-4" *ngIf="loadingError">
+    <p class="text-danger text-center fs-3"> <i class="fa fa-exclamation-triangle mr-2" ></i>Unable to fetch the data. Please try again later.</p>
   </div>
 </div>
 </div>
+

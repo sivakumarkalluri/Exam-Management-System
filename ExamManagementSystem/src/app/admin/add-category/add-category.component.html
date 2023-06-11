@@ -1,44 +1,129 @@
 <p>add-category works!</p>
-<mat-horizontal-stepper>
+<mat-horizontal-stepper [linear]="true" #stepper>
     <mat-step [stepControl]="addCategoryForm">
         <ng-template matStepLabel>Add Category</ng-template>
         <form [formGroup]="addCategoryForm" >
-            <div  class="row px-3">
-                <div class="d-flex flex-column">
-                    <label class="mb-1"><h6 class="mb-0 text-sm">Category Name</h6></label>
-                    <input class="col-lg-4 col form-control" type="text" name="categoryName" formControlName="categoryName" placeholder="Enter the Category Name">
-                    <div class="form text text-danger" *ngIf="Name.errors?.['required'] && (Name.touched || Name.dirty)">
+            <div class="row px-3">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingName" formControlName="categoryName" placeholder="Enter Category Name">
+                    <label for="name">Category Name</label>
+                    <div class="form-text text-danger" *ngIf="Name.errors?.['required'] && (Name.touched || Name.dirty)">
                         <small>Category Name is Required</small>
                     </div>
                 </div>
-            </div>
-            <div class="row px-3">
-                <div class="d-flex flex-column">
-                    <label class="mb-1 mt-4"><h6 class="mb-0 text-sm">Category Description</h6></label>
-                    <textarea class="col-lg-4 col " type="text" name="categoryDesc" formControlName="categoryDesc" placeholder="Enter the Category Name"></textarea>
-                    <div class="form text text-danger" *ngIf="Desc.errors?.['required'] && (Desc.touched || Desc.dirty)">
+                <div class="form-floating mb-3">
+                    <textarea type="desc" class="form-control" formControlName="categoryDesc" id="floatingDesc" placeholder="Enter Category Description" style="height: 100px;"></textarea>
+                    <label for="desc">Category Description</label>
+                    <div class="form-text text-danger" *ngIf="Desc.errors?.['required'] && (Desc.touched || Desc.dirty)">
                         <small>Category Description is Required</small>
                     </div>
                 </div>
             </div>
+            
+            <button type="button" class="btn btn-info mr-2" [disabled]="addCategoryForm.invalid" mat-button matStepperNext>Next</button>
+
 
         </form>
-        <button type="button" class="btn btn-info mr-2"  mat-button matStepperNext>Next</button>
     </mat-step>
-    <mat-step [optional]="true">
+    <mat-step  [stepControl]="addExamForm">
         <ng-template matStepLabel>Add Exam</ng-template>
-        <button type="button" class="btn btn-info mr-2" matStepperPrevious>Back</button>
-        <button type="button" class="btn btn-info mr-2" mat-button matStepperNext>Next</button>
-    </mat-step>
-    <mat-step  [optional]="true">
-        <ng-template matStepLabel >Add Questions</ng-template>
-        <button type="button" class="btn btn-info mr-2" mat-button matStepperPrevious>Back</button>
-        <button type="button" class="btn btn-info mr-2" mat-button matStepperNext>Next</button>
+        <form [formGroup]="addExamForm">
+            <div class="row px-3">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingCategoryId" formControlName="categoryName" >
+                    <label for="floatingCategoryId">Category Name</label>
+                    
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingExamName" formControlName="examName" placeholder="Enter Exam Name">
+                    <label for="floatingExamName">Exam Name</label>
+                    <div class="form-text text-danger" *ngIf="ExamName.errors?.['required'] && (ExamName.touched || ExamName.dirty)">
+                        <small>Exam Name is required</small>
+                    </div>
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" id="floatingExamDescription" formControlName="examDesc" placeholder="Enter Exam Description" style="height: 100px;"></textarea>
+                    <label for="floatingExamDescription">Exam Description</label>
+                    <div class="form-text text-danger" *ngIf="ExamDesc.errors?.['required'] && (ExamDesc.touched || ExamDesc.dirty)">
+                        <small>Exam Description is required</small>
+                    </div>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="number" class="form-control" id="floatingExamDuration" formControlName="examDuration" placeholder="Enter Exam Duration">
+                    <label for="floatingExamDuration">Exam Duration</label>
+                    <div class="form-text text-danger" *ngIf="ExamDur.errors?.['required'] && (ExamDur.touched || ExamDur.dirty)">
+                        <small>Exam Duration is required</small>
+                    </div>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="number" class="form-control" id="floatingQuestionMark" formControlName="questionMark" placeholder="Enter Question Mark">
+                    <label for="floatingQuestionMark">Question Mark</label>
+                    <div class="form-text text-danger" *ngIf="QueMark.errors?.['required'] && (QueMark.touched || QueMark.dirty)">
+                        <small>Question Mark is required</small>
+                    </div>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="number" class="form-control" id="floatingExamTotalQuestion" formControlName="examTotalQuestion" placeholder="Enter Total Questions">
+                    <label for="floatingExamTotalQuestion">Total Questions</label>
+                    <div class="form-text text-danger" *ngIf="TotalQue.errors?.['required'] && (TotalQue.touched || TotalQue.dirty)">
+                        <small>Total Questions is required</small>
+                    </div>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="number" class="form-control" id="floatingExamPassPercent" formControlName="examPassPercent" placeholder="Enter Pass Percentage">
+                    <label for="floatingExamPassPercent">Pass Percentage</label>
+                    <div class="form-text text-danger" *ngIf="PassPercent.errors?.['required'] && (PassPercent.touched || PassPercent.dirty)">
+                        <small>Pass Percentage is required</small>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="button" class="btn btn-info mr-2" matStepperPrevious>Back</button>
+            <button type="button" class="btn btn-info mr-2" [disabled]="addExamForm.invalid"  mat-button matStepperNext>Next</button>
+        </form>
+        
     </mat-step>
     <mat-step>
-        <ng-template matStepLabel>Done</ng-template>
-        <button type="button" class="btn btn-info mr-2" mat-button matStepperPrevious>Back</button>
-        <button type="button" class="btn btn-info mr-2" mat-button matStepperNext>Next</button>
-    </mat-step>
+        <ng-template matStepLabel>Add Questions</ng-template>
+            <form [formGroup]="currentForm" *ngIf="currentForm">
+                <h3>Question {{ currentQuestionIndex + 1 }}</h3>
+                <div>
+                  <label for="questionDescription">Question Description:</label>
+                  <input type="text" id="questionDescription" formControlName="questionDescription" />
+                </div>
+              
+                <div>
+                  <label for="option1">Option 1:</label>
+                  <input type="text" id="option1" formControlName="option1" />
+                </div>
+              
+                <div>
+                  <label for="option2">Option 2:</label>
+                  <input type="text" id="option2" formControlName="option2" />
+                </div>
+              
+                <div>
+                  <label for="option3">Option 3:</label>
+                  <input type="text" id="option3" formControlName="option3" />
+                </div>
+              
+                <div>
+                  <label for="option4">Option 4:</label>
+                  <input type="text" id="option4" formControlName="option4" />
+                </div>
+              
+                <div>
+                  <label for="answer">Answer:</label>
+                  <input type="text" id="answer" formControlName="answer" />
+                </div>
+              
+                <button type="button" (click)="goToPreviousQuestion()" [disabled]="currentQuestionIndex === 0">Previous</button>
+                <button type="button" (click)="goToNextQuestion()" [disabled]="currentQuestionIndex === questions.length - 1">Next</button>
+              
+                <button type="submit" (click)="onSubmit()" *ngIf="currentQuestionIndex === questions.length - 1">Submit</button>
+              </form>
+              
+          
+      </mat-step>
     
 </mat-horizontal-stepper>

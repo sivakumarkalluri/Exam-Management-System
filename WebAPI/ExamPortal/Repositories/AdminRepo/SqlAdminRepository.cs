@@ -98,5 +98,40 @@ namespace ExamPortal.Repositories.AdminRepo
             return result;
         }
 
+        public async Task<AddExamDTO> AddExam(AddExamDTO inputData)
+        {
+            var dataTable = new DataTable();
+            dataTable.Columns.Add("QuestionDesc", typeof(string));
+            dataTable.Columns.Add("Option1", typeof(string));
+            dataTable.Columns.Add("Option2", typeof(string));
+            dataTable.Columns.Add("Option3", typeof(string));
+            dataTable.Columns.Add("Option4", typeof(string));
+            dataTable.Columns.Add("CorrectAnswer", typeof(int));
+
+            foreach (var question in inputData.QuestionList)
+            {
+                dataTable.Rows.Add(question.QuestionDesc, question.Option1, question.Option2, question.Option3, question.Option4, question.CorrectAnswer);
+            }
+
+            var parameter = new SqlParameter("@questionList", SqlDbType.Structured);
+            parameter.Value = dataTable;
+            parameter.TypeName = "QuestionListType";
+
+            var result = await _dbContext.addExamDTOs
+                .FromSqlRaw("EXECUTE AddExam @categoryId,@examName, @examDesc, @examDuration, @questionMark, @examTotalQuestion, @examPassPercent, @questionList",
+                    new SqlParameter("@categoryId", inputData.CategoryId),
+                    new SqlParameter("@examName", inputData.ExamName),
+                    new SqlParameter("@examDesc", inputData.ExamDesc),
+                    new SqlParameter("@examDuration", inputData.ExamDuration),
+                    new SqlParameter("@questionMark", inputData.QuestionMark),
+                    new SqlParameter("@examTotalQuestion", inputData.ExamTotalQuestion),
+                    new SqlParameter("@examPassPercent", inputData.ExamPassPercent),
+                    parameter)
+                .ToListAsync();
+
+            // Process the result if needed
+
+            return inputData;
+        }
     }
 }

@@ -24,6 +24,10 @@ export class AddCategoryComponent implements OnInit {
   submitted = false;
   totalQuestion:any;
   currentIndex=0;
+  AddExamCheck=false;
+  categoryId:any;
+  categoryDesc:any;
+
 
   @ViewChild(MatStepper) stepper!: MatStepper;
 
@@ -33,11 +37,23 @@ export class AddCategoryComponent implements OnInit {
       this.addExamForm.patchValue({ categoryName: value });
     });
   }
-
   ngOnInit(): void {
     this.activatedRouter.queryParams.subscribe(params => {
-      this.currentIndex = +params['step'] || 0;
-      console.log("current index "+this.currentIndex);
+      if (params['categoryId']) {
+       this.categoryId=params['categoryId'];
+       this.AddExamCheck=true;
+       this.categoryDesc=params['categoryDesc'];
+       console.log(params['categoryDesc']);
+        this.currentIndex=1; // Move to the second step
+        this.addExamForm.patchValue({
+          categoryName: params['categoryName']
+        });
+        this.addCategoryForm = new FormGroup({
+          categoryName: new FormControl({ value: params['categoryName'], disabled: true }),
+          categoryDesc: new FormControl({ value: params['categoryDesc'], disabled: true })
+        });
+       
+      }
     });
     this.addExamForm.controls["examTotalQuestion"].valueChanges.subscribe(value => {
       this.totalQuestion = value;
@@ -195,7 +211,12 @@ export class AddCategoryComponent implements OnInit {
   
 
   finalSubmit(){
-    
+    if(this.AddExamCheck){
+      this.addExam();
+    }
+    else{
+
+      
     const categoryData = this.addCategoryForm.value;
     const examData = this.addExamForm.value;
     const questionList = this.formValues; // Assuming formValues is an array
@@ -233,8 +254,50 @@ export class AddCategoryComponent implements OnInit {
 
     });
     
+
+    }
+    
     
   }
 
+  addExam(){
+  
+    const questionList = this.formValues; // Assuming formValues is an array
+    const categoryId=this.categoryId;
+    const categoryName=this.categoryDesc;
+    const examDesc=this.addExamForm.value.examDesc;
+    const examName=this.addExamForm.value.examName;
+    const examDuration=this.addExamForm.value.examDuration;
+    const examTotalQuestion=this.addExamForm.value.examTotalQuestion;
+    const questionMark=this.addExamForm.value.questionMark;
+    const examPassPercent=this.addExamForm.value.examPassPercent;
+    // Combine the data into a single object
+    const data = {
+     categoryId,
+     examDesc,
+     examName,
+     examDuration,examTotalQuestion,
+     questionMark,
+     examPassPercent,
+      questionList
+    };
+    console.log(data);
+    console.log("********* Add Exam ***********");
+    this.dialogService.openSubmitDialog('Do you want to submit the changes ?')
+    .afterClosed().subscribe((res:any)=>{
+      if(res==true){
+        this.adminService.postNewExam(data).subscribe((response:any)=>{
+          console.log(response.body);
+          console.log("Posted Successfully...........");
+          this.toastr.success(examName+' Exam Added in to '+this.categoryDesc+ ' Category Successfully !');
+        this.router.navigate(['/adminHome/adminCategories']);
+        })
+        
+      }
+
+    });
+    
+
+  }
  
 }

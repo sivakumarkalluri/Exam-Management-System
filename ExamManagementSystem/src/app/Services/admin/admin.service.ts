@@ -29,4 +29,9 @@ export class AdminService implements OnInit{
   deleteCategory(id:any):any{
     return this.http.delete(this.baseUrl+'/DeleteCategory/'+id,{ observe: 'response' })
   }
+
+  postNewExam(data:any){
+    return this.http.post(this.baseUrl+'/AddExam',data, { observe: 'response' })
+  }
+
 }

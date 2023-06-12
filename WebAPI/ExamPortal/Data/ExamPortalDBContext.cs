@@ -30,6 +30,8 @@ namespace ExamPortal.Data
         public DbSet<QuestionsTypeDTO> questionTypesDTO { get; set; }
 
         public DbSet<DeleteCategoryDTO> deleteCategoryDTOs { get; set; }
+
+        public DbSet<AddExamDTO> addExamDTOs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure AdminStatisticsDTO as a keyless entity type
@@ -46,6 +48,8 @@ namespace ExamPortal.Data
             modelBuilder.Entity<QuestionsTypeDTO>().HasNoKey();
             
             modelBuilder.Entity<DeleteCategoryDTO>().HasNoKey();
+
+            modelBuilder.Entity<AddExamDTO>().HasNoKey();
 
             // Other configurations
 

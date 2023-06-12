@@ -1,5 +1,5 @@
 <p>add-category works!</p>
-<mat-horizontal-stepper [linear]="true" #stepper [linear]="currentIndex<=0">
+<mat-horizontal-stepper [linear]="true" #stepper [selectedIndex]="currentIndex">
     <mat-step [stepControl]="addCategoryForm" [completed]="currentIndex == 1">
         <ng-template matStepLabel>Add Category</ng-template>
         <form [formGroup]="addCategoryForm" >

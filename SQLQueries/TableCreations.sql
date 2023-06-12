@@ -46,13 +46,14 @@ category_id int not null,
 exam_name nvarchar(500) not null,
 exam_description nvarchar(MAX) not null,
 exam_duration int not null,
-question_mark int not null,
+question_mark decimal not null,
 exam_totalquestion int not null,
 exampass_percent decimal not null,
-foreign key(category_id) references Categories (category_id)
+Constraint [FK_exam_category] foreign key(category_id) references Categories (category_id)
 
 )
 
+drop table exam
 SELECT fk.name AS constraint_name
 FROM sys.foreign_keys fk
 INNER JOIN sys.columns c ON fk.parent_object_id = c.object_id
@@ -78,14 +79,14 @@ create table questions(
 question_id int primary key identity(1,1),
 exam_id int not null,
 category_id int not null,
-question_desc nvarchar(1000) not null,
+question_desc nvarchar(MAX) not null,
 option_1 nvarchar(500) not null,
 option_2 nvarchar(500) not null,
 option_3 nvarchar(500) not null,
 option_4 varchar(500) not null,
 correctAnswer int not null ,
-foreign key(exam_id) references exam (exam_id),
-foreign key(category_id) references categories(category_id)
+Constraint [FK_questions_exam] foreign  key(exam_id) references exam (exam_id),
+Constraint [FK_questions_category] foreign key(category_id) references categories(category_id)
 
 
 )
@@ -114,10 +115,10 @@ CREATE TABLE usersExamData (
     question_id INT not null,
     answer INT,
 	attemptedAt DateTime
-    FOREIGN KEY (userId) REFERENCES userRegisterData (userId),
-    FOREIGN KEY (exam_id) REFERENCES exam (exam_id),
-	FOREIGN KEY (category_id) REFERENCES categories (category_id),
-    FOREIGN KEY (question_id) REFERENCES Questions (question_id)
+    Constraint [FK_usersExamData_users] FOREIGN KEY (userId) REFERENCES userRegisterData (userId),
+    Constraint [FK_usersExamData_exam] FOREIGN KEY (exam_id) REFERENCES exam (exam_id),
+	Constraint [FK_usersExamData_categories] FOREIGN KEY (category_id) REFERENCES categories (category_id),
+    Constraint [FK_usersExamData_questions] FOREIGN KEY (question_id) REFERENCES Questions (question_id)
 );
 select * from questions;
 
@@ -138,14 +139,14 @@ attempted_Questions int,
 notAttempted_Questions int,
 correct_answers int,
 wrong_answers int,
-total_marksObtained int,
-exam_total int,
+total_marksObtained decimal,
+exam_total decimal,
 percentage decimal,
 pass_flag BIT,
 attemptedAt DateTime,
-foreign key (userId) references userRegisterData(userId),
-foreign key (exam_Id) references exam(exam_id),
-foreign key (category_id) references categories(category_id)
+Constraint [FK_usersResults_users] foreign key (userId) references userRegisterData(userId),
+Constraint [FK_usersResults_exam] foreign key (exam_Id) references exam(exam_id),
+Constraint [FK_usersResults_categories] foreign key (category_id) references categories(category_id)
 
 )
 
@@ -459,3 +460,101 @@ drop type QuestionListType
 
 select * from exam
 select * from Questions
+
+CREATE PROCEDURE DeleteCategoryData
+    @categoryId INT
+AS
+BEGIN
+    -- Delete from UsersExamData table
+    DELETE FROM UsersExamData
+    WHERE Exam_Id IN (
+        SELECT Exam_Id
+        FROM Exam
+        WHERE Category_Id = @categoryId
+    );
+
+	Delete from Questions 
+	where Exam_Id IN (
+        SELECT Exam_Id
+        FROM Exam
+        WHERE Category_Id = @categoryId
+    );
+
+    -- Delete from UserResults table
+    DELETE FROM UserResults
+    WHERE Exam_Id IN (
+        SELECT Exam_Id
+        FROM Exam
+        WHERE Category_Id = @categoryId
+    );
+
+    -- Delete from Exam table
+    DELETE FROM Exam
+    WHERE Category_Id = @categoryId;
+
+
+
+    -- Delete from Categories table
+    DELETE FROM Categories
+    WHERE Category_Id = @categoryId;
+
+	select @categoryId as categoryId
+END
+
+drop procedure DeleteCategoryData
+
+
+
+
+CREATE PROCEDURE AddExam
+    @categoryId int,
+    @examName NVARCHAR(50),
+    @examDesc NVARCHAR(100),
+    @examDuration INT,
+    @questionMark INT,
+    @examTotalQuestion INT,
+    @examPassPercent DECIMAL,
+    @questionList QuestionListType READONLY  -- Use the user-defined table type
+AS
+BEGIN
+    DECLARE @examId INT;
+
+    -- Insert into Exams table
+    INSERT INTO Exam (Category_Id, Exam_Name, Exam_Description, Exam_Duration, Question_Mark, Exam_TotalQuestion, ExamPass_Percent)
+    VALUES (@categoryId, @examName, @examDesc, @examDuration, @questionMark, @examTotalQuestion, @examPassPercent);
+
+    SET @examId = SCOPE_IDENTITY();
+
+    -- Insert into Questions table
+    INSERT INTO Questions (Exam_Id, Category_Id, Question_desc, Option_1, Option_2, Option_3, Option_4, CorrectAnswer)
+    SELECT @examId, @categoryId, QuestionDesc, Option1, Option2, Option3, Option4, CorrectAnswer
+    FROM @questionList;
+
+    -- Return a result indicating success
+    SELECT 'Success' AS Result;
+END
+
+
+
+drop procedure addExam
+
+
+
+ALTER TABLE exam DROP CONSTRAINT FK_exam_category
+
+Alter table questions drop constraint [FK_questions_category]
+ALTER TABLE questions DROP CONSTRAINT [FK_questions_exam]
+
+alter table userResults drop constraint [FK_usersResults_categories]
+alter table userResults drop constraint [FK_usersResults_exam]
+alter table userResults drop constraint [FK_usersResults_users]
+alter table usersExamData drop constraint [FK_usersExamData_categories]
+alter table usersExamData drop constraint [FK_usersExamData_exam]
+alter table usersExamData drop constraint [FK_usersExamData_questions]
+alter table usersExamData drop constraint [FK_usersExamData_users]
+
+exec  DeleteCategoryData @categoryId=4
+select * from categories;
+select * from exam
+select * from questions
+delete from questions where question_id between 55 and 56;

@@ -16,6 +16,7 @@ export class AdminCategoryComponent implements OnInit{
   categoryData:any;
   categoryName!: string;
   categoryId!: number;
+  categoryDesc!:string
   loadingError:any;
   ngOnInit(): void {
       this.getCategoriesData();
@@ -61,7 +62,8 @@ export class AdminCategoryComponent implements OnInit{
   addExam(category: any) {
     this.categoryName = category.categoryName;
     this.categoryId = category.categoryId;
-    this.router.navigate(['/adminHome/addCategory'], { queryParams: { categoryName: this.categoryName, categoryId: this.categoryId, step: 1 } });
+    this.categoryDesc=category.categoryDesc;
+    this.router.navigate(['/adminHome/addCategory'], { queryParams: { categoryName: this.categoryName, categoryId: this.categoryId,categoryDesc:this.categoryDesc, step: 1 } });
   }
 
   }

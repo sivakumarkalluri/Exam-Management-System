@@ -9,6 +9,7 @@ form{
         margin: 0 auto;
     }
 }
+
 .form-control{
     
     margin-top: 5px;
@@ -21,10 +22,10 @@ form{
 }
 .form-floating .form-control:focus,.form-floating .form-select:focus{
     box-shadow: none;
-    border-color:2px solid blue;
+    border-color:2px solid rgb(58, 58, 169);
 }
 .form-floating .form-control:focus+label,.form-floating .form-select:focus+label{
-    color: blue;
+    color: rgb(58, 58, 169);
 }
 .form-floating .form-control+label,.form-floating .form-select+label{
     padding-left: 0;

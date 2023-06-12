@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
+import { AdminService } from 'src/app/Services/admin/admin.service';
 
 @Component({
   selector: 'app-add-category',
@@ -11,68 +12,66 @@ export class AddCategoryComponent implements OnInit {
   questions: any[] = []; // Array to store the questions
   currentQuestionIndex = 0; // Index of the currently displayed question
   formValues: any[] = []; // Array to store the form values
-  currentForm!: FormGroup;
+  currentQuestionForm!: FormGroup;
   submitted = false;
   totalQuestion:any;
 
   @ViewChild(MatStepper) stepper!: MatStepper;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,private adminService:AdminService) {
     this.addCategoryForm.controls['categoryName'].valueChanges.subscribe(value => {
       this.addExamForm.patchValue({ categoryName: value });
     });
   }
 
   ngOnInit(): void {
-   
     this.addExamForm.controls["examTotalQuestion"].valueChanges.subscribe(value => {
       this.totalQuestion = value;
       this.createQuestions(this.totalQuestion);
       this.createForm();
       console.log(this.totalQuestion);
     });
-  
   }
   createQuestions(totalQuestions: number) {
     this.questions = [];
     for (let i = 0; i < totalQuestions; i++) {
       const question = {
-        questionDescription: '',
+        questionDesc: '',
         option1: '',
         option2: '',
         option3: '',
         option4: '',
-        answer: ''
+        correctAnswer: ''
       };
       this.questions.push(question);
     }
   }
 
   get formControls() {
-    return this.currentForm.controls;
+    return this.currentQuestionForm.controls;
   }
 
   createForm() {
     const currentQuestion = this.questions[this.currentQuestionIndex];
-    this.currentForm = this.formBuilder.group({
-      questionDescription: [currentQuestion.questionDescription, Validators.required],
+    this.currentQuestionForm = this.formBuilder.group({
+      questionDesc: [currentQuestion.questionDescription, Validators.required],
       option1: [currentQuestion.option1, Validators.required],
       option2: [currentQuestion.option2, Validators.required],
       option3: [currentQuestion.option3, Validators.required],
       option4: [currentQuestion.option4, Validators.required],
-      answer: [currentQuestion.answer, Validators.required]
+      correctAnswer: [currentQuestion.answer, Validators.required]
     });
 
     // Set the form values from the stored array if they exist
     if (this.formValues[this.currentQuestionIndex]) {
-      this.currentForm.patchValue(this.formValues[this.currentQuestionIndex]);
+      this.currentQuestionForm.patchValue(this.formValues[this.currentQuestionIndex]);
     }
   }
 
   goToPreviousQuestion() {
     if (this.currentQuestionIndex > 0) {
       // Store the form values before moving to the previous question
-      this.formValues[this.currentQuestionIndex] = this.currentForm.value;
+      this.formValues[this.currentQuestionIndex] = this.currentQuestionForm.value;
 
       this.currentQuestionIndex--;
       this.createForm();
@@ -80,9 +79,9 @@ export class AddCategoryComponent implements OnInit {
   }
 
   goToNextQuestion() {
-    if (this.currentForm.valid) {
+    if (this.currentQuestionForm.valid) {
       // Store the form values before moving to the next question
-      this.formValues[this.currentQuestionIndex] = this.currentForm.value;
+      this.formValues[this.currentQuestionIndex] = this.currentQuestionForm.value;
 
       this.currentQuestionIndex++;
       if (this.currentQuestionIndex === this.questions.length) {
@@ -99,9 +98,9 @@ export class AddCategoryComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    if (this.currentForm.valid) {
+    if (this.currentQuestionForm.valid) {
       // Store the form values before submitting
-      this.formValues[this.currentQuestionIndex] = this.currentForm.value;
+      this.formValues[this.currentQuestionIndex] = this.currentQuestionForm.value;
 
       console.log('Form submitted successfully!');
       console.log(this.formValues);
@@ -113,17 +112,15 @@ export class AddCategoryComponent implements OnInit {
     categoryDesc: new FormControl("", [Validators.required])
   });
 
-  addExamForm = new FormGroup(
-    {
-      categoryName: new FormControl({ value: this.addCategoryForm.value.categoryName, disabled: true }),
-      examName: new FormControl("", [Validators.required]),
-      examDesc: new FormControl("", [Validators.required]),
-      examDuration: new FormControl("", [Validators.required]),
-      questionMark: new FormControl("", [Validators.required]),
-      examTotalQuestion: new FormControl("", [Validators.required]),
-      examPassPercent: new FormControl("", [Validators.required])
-    }
-  );
+  addExamForm = new FormGroup({
+    categoryName: new FormControl({ value: this.addCategoryForm.value.categoryName, disabled: true }),
+    examName: new FormControl("", [Validators.required]),
+    examDesc: new FormControl("", [Validators.required]),
+    examDuration: new FormControl("", [Validators.required, Validators.pattern("^[1-9][0-9]*$")]),
+    questionMark: new FormControl("", [Validators.required, Validators.min(0)]),
+    examTotalQuestion: new FormControl("", [Validators.required, Validators.min(1),Validators.pattern("^[1-9][0-9]*$")]),
+    examPassPercent: new FormControl("", [Validators.required, Validators.min(0), Validators.max(100)])
+  });
 
   get Name(): FormControl {
     return this.addCategoryForm.get("categoryName") as FormControl;
@@ -155,5 +152,56 @@ export class AddCategoryComponent implements OnInit {
 
   get PassPercent(): FormControl {
     return this.addExamForm.get("examPassPercent") as FormControl;
+  }
+
+  get QuesDesc():FormControl{
+    return this.currentQuestionForm.get("questionDesc") as FormControl
+  }
+  get Option1():FormControl{
+    return this.currentQuestionForm.get("option1") as FormControl
+  }
+  get Option2():FormControl{
+    return this.currentQuestionForm.get("option2") as FormControl
+  }
+  get Option3():FormControl{
+    return this.currentQuestionForm.get("option3") as FormControl
+  }
+  get Option4():FormControl{
+    return this.currentQuestionForm.get("option4") as FormControl
+  }
+  get Answer():FormControl{
+    return this.currentQuestionForm.get("correctAnswer") as FormControl
+  }
+
+  finalSubmit(){
+    const categoryData = this.addCategoryForm.value;
+    const examData = this.addExamForm.value;
+    const questionList = this.formValues; // Assuming formValues is an array
+    const categoryName=this.addCategoryForm.value.categoryName;
+    const categoryDesc=this.addCategoryForm.value.categoryDesc;
+    const examDesc=this.addExamForm.value.examDesc;
+    const examName=this.addExamForm.value.examName;
+    const examDuration=this.addExamForm.value.examDuration;
+    const examTotalQuestion=this.addExamForm.value.examTotalQuestion;
+    const questionMark=this.addExamForm.value.questionMark;
+    const examPassPercent=this.addExamForm.value.examPassPercent;
+    // Combine the data into a single object
+    const data = {
+     categoryName,
+     categoryDesc,
+     examDesc,
+     examName,
+     examDuration,examTotalQuestion,
+     questionMark,
+     examPassPercent,
+      questionList
+    };
+    console.log(data);
+
+    this.adminService.postCategoryExamsQuestions(data).subscribe((response:any)=>{
+      console.log(response.body);
+      console.log("Posted Successfully...........");
+    })
+    
   }
 }

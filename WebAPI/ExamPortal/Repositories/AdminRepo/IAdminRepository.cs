@@ -12,5 +12,7 @@ namespace ExamPortal.Repositories.AdminRepo
         Task<List<StudentsAttemptedByCategoryDTO>> GetCategoryStudentStats();
 
         Task<List<Categories>> GetCategoriesData();
+
+        Task<InsertCategoryExamQuestionsDTO> InsertCategoryExamQuestions(InsertCategoryExamQuestionsDTO inputData);
     }
 }

@@ -1,7 +1,9 @@
 ﻿using ExamPortal.Data;
 using ExamPortal.Models.Domain;
 using ExamPortal.Models.DTO;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace ExamPortal.Repositories.AdminRepo
 {
@@ -47,5 +49,43 @@ namespace ExamPortal.Repositories.AdminRepo
             var data= await this._dbContext.categories.ToListAsync();
             return data;
         }
+
+        public async Task<InsertCategoryExamQuestionsDTO> InsertCategoryExamQuestions(InsertCategoryExamQuestionsDTO inputData)
+        {
+            var dataTable = new DataTable();
+            dataTable.Columns.Add("QuestionDesc", typeof(string));
+            dataTable.Columns.Add("Option1", typeof(string));
+            dataTable.Columns.Add("Option2", typeof(string));
+            dataTable.Columns.Add("Option3", typeof(string));
+            dataTable.Columns.Add("Option4", typeof(string));
+            dataTable.Columns.Add("CorrectAnswer", typeof(int));
+
+            foreach (var question in inputData.QuestionList)
+            {
+                dataTable.Rows.Add(question.QuestionDesc, question.Option1, question.Option2, question.Option3, question.Option4, question.CorrectAnswer);
+            }
+
+            var parameter = new SqlParameter("@questionList", SqlDbType.Structured);
+            parameter.Value = dataTable;
+            parameter.TypeName = "QuestionListType";
+
+            var result = await _dbContext.insertCategoryExamQuestionsDTOs
+                .FromSqlRaw("EXECUTE InsertCategoryExamQuestions @categoryName, @categoryDesc, @examName, @examDesc, @examDuration, @questionMark, @examTotalQuestion, @examPassPercent, @questionList",
+                    new SqlParameter("@categoryName", inputData.CategoryName),
+                    new SqlParameter("@categoryDesc", inputData.CategoryDesc),
+                    new SqlParameter("@examName", inputData.ExamName),
+                    new SqlParameter("@examDesc", inputData.ExamDesc),
+                    new SqlParameter("@examDuration", inputData.ExamDuration),
+                    new SqlParameter("@questionMark", inputData.QuestionMark),
+                    new SqlParameter("@examTotalQuestion", inputData.ExamTotalQuestion),
+                    new SqlParameter("@examPassPercent", inputData.ExamPassPercent),
+                    parameter)
+                .ToListAsync();
+
+            // Process the result if needed
+
+            return inputData;
+        }
+
     }
 }

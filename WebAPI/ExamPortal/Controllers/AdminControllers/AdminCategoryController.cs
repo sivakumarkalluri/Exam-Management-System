@@ -1,11 +1,12 @@
-﻿using ExamPortal.Repositories.AdminRepo;
+﻿using ExamPortal.Models.DTO;
+using ExamPortal.Repositories.AdminRepo;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ExamPortal.Controllers.AdminControllers
 {
-    [Route("api/Categories")]
+    [Route("api/")]
     [ApiController]
     public class AdminCategoryController : ControllerBase
     {
@@ -16,7 +17,7 @@ namespace ExamPortal.Controllers.AdminControllers
             this.adminRepository = adminRepository;
         }
 
-        [HttpGet]
+        [HttpGet("Categories")]
         public async Task<IActionResult> GetCategories()
         {
             var result=await this.adminRepository.GetCategoriesData();
@@ -28,10 +29,15 @@ namespace ExamPortal.Controllers.AdminControllers
         }
 
         // GET api/<AdminCategoryController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpPost("CreateCategoryExamQuestions")]
+        public async Task<IActionResult> PostCategoryExamQuestions(InsertCategoryExamQuestionsDTO inputData)
         {
-            return "value";
+            var result= await this.adminRepository.InsertCategoryExamQuestions(inputData);
+            if (result == null)
+            {
+                return Ok("Unable to Post Data");
+            }
+            return Ok(result);
         }
 
         // POST api/<AdminCategoryController>

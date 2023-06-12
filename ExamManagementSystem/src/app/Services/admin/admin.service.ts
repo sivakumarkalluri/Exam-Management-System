@@ -21,4 +21,9 @@ export class AdminService implements OnInit{
   getCategories():any{
     return this.http.get(this.baseUrl+'/Categories', { observe: 'response' })
   }
+
+  postCategoryExamsQuestions(data:any):any{
+    return this.http.post(this.baseUrl+'/CreateCategoryExamQuestions',data, { observe: 'response' })
+  }
+
 }

@@ -1,6 +1,6 @@
 <p>add-category works!</p>
-<mat-horizontal-stepper [linear]="true" #stepper>
-    <mat-step [stepControl]="addCategoryForm">
+<mat-horizontal-stepper [linear]="true" #stepper [linear]="currentIndex<=0">
+    <mat-step [stepControl]="addCategoryForm" [completed]="currentIndex == 1">
         <ng-template matStepLabel>Add Category</ng-template>
         <form [formGroup]="addCategoryForm" >
             <div class="row px-3">
@@ -27,7 +27,7 @@
 
         </form>
     </mat-step>
-    <mat-step  [stepControl]="addExamForm">
+    <mat-step  [stepControl]="addExamForm" >
         <ng-template matStepLabel>Add Exam</ng-template>
         <form [formGroup]="addExamForm">
             <div class="row px-3">
@@ -112,7 +112,7 @@
                 </div>
               </div>
               
-            <button type="button" class="btn actionBtn mr-2" style="background-color: rgb(58, 58, 169); color: white;"  matStepperPrevious><i class='fas fa-less-than mr-1'></i>
+            <button type="button" class="btn actionBtn mr-2" style="background-color: rgb(58, 58, 169); color: white;" [disabled]="disableFirstStep()"  matStepperPrevious><i class='fas fa-less-than mr-1'></i>
                 Back</button>
             <button type="button" class="btn actionBtn" style="background-color: rgb(58, 58, 169); color: white;"  [disabled]="addExamForm.invalid"  mat-button matStepperNext>Next <i class='fas fa-greater-than ml-1'></i></button>
         </form>
@@ -206,11 +206,11 @@
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>Done</ng-template>
-        <form>
-             <h3>Category Name : {{addCategoryForm.value.categoryName}}<h2>
-             <h3>Exam Name : {{addExamForm.value.examName}}</h3>
-             <h3>Number of Questions : {{questions.length}}</h3>
-            <button type="submit" class="btn btn-primary" (click)="finalSubmit()">Submit Data</button>
+        <form style="height: 250px;">
+             <h4>Category Name : {{addCategoryForm.value.categoryName}}</h4>
+             <h4>Exam Name : {{addExamForm.value.examName}}</h4>
+             <h4 class="mb-3">Number of Questions : {{questions.length}}</h4>
+            <button type="submit" class="btn btnAction"  style="background-color: rgb(58, 58, 169); color: white; margin: auto;"  (click)="finalSubmit()">Save Changes</button>
         </form>
       </mat-step>
     

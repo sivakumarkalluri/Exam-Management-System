@@ -40,6 +40,8 @@ namespace ExamPortal.Controllers.AdminControllers
             return Ok(result);
         }
 
+
+
         // POST api/<AdminCategoryController>
         [HttpPost]
         public void Post([FromBody] string value)
@@ -47,15 +49,17 @@ namespace ExamPortal.Controllers.AdminControllers
         }
 
         // PUT api/<AdminCategoryController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
+        
         // DELETE api/<AdminCategoryController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("DeleteCategory/{id}")]
+        public async Task<DeleteCategoryDTO> Delete(int id)
         {
+            var result = await this.adminRepository.DeleteCategory(id);
+            if (result == null)
+            {
+                return null;
+            }
+            return result;
         }
     }
 }

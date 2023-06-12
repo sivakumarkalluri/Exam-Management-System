@@ -52,6 +52,17 @@ exampass_percent decimal not null,
 foreign key(category_id) references Categories (category_id)
 
 )
+
+SELECT fk.name AS constraint_name
+FROM sys.foreign_keys fk
+INNER JOIN sys.columns c ON fk.parent_object_id = c.object_id
+INNER JOIN sys.tables t ON fk.referenced_object_id = t.object_id
+WHERE t.name = 'exam' AND c.name = 'category_id';
+
+
+ALTER TABLE exam
+ALTER COLUMN question_mark DECIMAL;
+
 drop table exam
 drop table usersExamData
 update exam set exampass_marks=2 where exam_id=1; 
@@ -329,6 +340,8 @@ END
 exec GetExamPassStatistics
 drop procedure GetExamPassStatistics
 
+
+
 CREATE PROCEDURE CountStudentsAttemptedExams
 AS
 BEGIN
@@ -359,3 +372,90 @@ exec GetExamPassStatistics
 exec CountStudentsAttemptedExams
 
 exec GetAdminStatistics;
+
+
+CREATE TYPE QuestionListType AS TABLE (
+    QuestionDesc NVARCHAR(1000),
+    Option1 NVARCHAR(500),
+    Option2 NVARCHAR(500),
+    Option3 NVARCHAR(500),
+    Option4 NVARCHAR(500),
+    CorrectAnswer INT
+);
+
+CREATE PROCEDURE InsertCategoryExamQuestions
+    @categoryName NVARCHAR(50),
+    @categoryDesc NVARCHAR(100),
+    @examName NVARCHAR(50),
+    @examDesc NVARCHAR(100),
+    @examDuration INT,
+    @questionMark INT,
+    @examTotalQuestion INT,
+    @examPassPercent DECIMAL,
+    @questionList QuestionListType READONLY  -- Use the user-defined table type
+AS
+BEGIN
+    DECLARE @categoryId INT;
+    DECLARE @examId INT;
+
+    -- Insert into Categories table
+    INSERT INTO Categories (Category_Name, category_desc)
+    VALUES (@categoryName, @categoryDesc);
+
+    SET @categoryId = SCOPE_IDENTITY();
+
+    -- Insert into Exams table
+    INSERT INTO Exam (Category_Id, Exam_Name, Exam_Description, Exam_Duration, Question_Mark, Exam_TotalQuestion, ExamPass_Percent)
+    VALUES (@categoryId, @examName, @examDesc, @examDuration, @questionMark, @examTotalQuestion, @examPassPercent);
+
+    SET @examId = SCOPE_IDENTITY();
+
+    -- Insert into Questions table
+    INSERT INTO Questions (Exam_Id, Category_Id, Question_desc, Option_1, Option_2, Option_3, Option_4, CorrectAnswer)
+    SELECT @examId, @categoryId, QuestionDesc, Option1, Option2, Option3, Option4, CorrectAnswer
+    FROM @questionList;
+	select @categoryName as CategoryName,@categoryDesc as categoryDesc,
+	@examName as examName,
+	@examDesc as examDesc,@examDuration as examDuration,
+	@questionMark as questionMark,@examTotalQuestion as examTotalQuestion,@examPassPercent as examPassPercent,
+	questionDesc ,option1, option2, option3, option4, correctAnswer
+    FROM @questionList;
+END
+
+
+drop procedure InsertCategoryExamQuestions
+
+-- Sample data for input parameters
+DECLARE @categoryName NVARCHAR(50) = 'Category 1';
+DECLARE @categoryDesc NVARCHAR(100) = 'Category 1 Description';
+DECLARE @examName NVARCHAR(50) = 'Exam 1';
+DECLARE @examDesc NVARCHAR(100) = 'Exam 1 Description';
+DECLARE @examDuration INT = 60;
+DECLARE @questionMark INT = 5;
+DECLARE @examTotalQuestion INT = 10;
+DECLARE @examPassPercent DECIMAL = 70.0;
+
+DECLARE @questionList QuestionListType;
+INSERT INTO @questionList (QuestionDesc, Option1, Option2, Option3, Option4, CorrectAnswer)
+VALUES
+    ('Question 1', 'Option 1', 'Option 2', 'Option 3', 'Option 4', 2),
+    ('Question 2', 'Option 1', 'Option 2', 'Option 3', 'Option 4', 3),
+    ('Question 3', 'Option 1', 'Option 2', 'Option 3', 'Option 4', 1);
+EXEC InsertCategoryExamQuestions
+    @categoryName,
+    @categoryDesc,
+    @examName,
+    @examDesc,
+    @examDuration,
+    @questionMark,
+    @examTotalQuestion,
+    @examPassPercent,
+    @questionList;
+
+select * from Categories
+
+-- Execute the stored procedure
+drop type QuestionListType
+
+select * from exam
+select * from Questions

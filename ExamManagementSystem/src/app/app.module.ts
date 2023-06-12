@@ -1,4 +1,7 @@
 import {MatStepperModule} from '@angular/material/stepper';
+import {MatDialogModule} from '@angular/material/dialog';
+import { ToastrModule } from 'ngx-toastr';
+
 
 import { AddCategoryComponent } from './admin/add-category/add-category.component';
 import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -26,6 +29,9 @@ import { AdminEditExamsComponent } from './admin/admin-edit-exams/admin-edit-exa
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminCategoryComponent } from './admin/admin-category/admin-category.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { SaveDialogComponent } from './admin/Dialogs/save-dialog/save-dialog.component';
+import { MatIconModule } from '@angular/material/icon';
+import { DeleteDialogComponent } from './admin/Dialogs/delete-dialog/delete-dialog.component';
 
 
 @NgModule({
@@ -47,7 +53,9 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     AdminProfileComponent,
     AdminEditExamsComponent,
     AdminCategoryComponent,
-    AddCategoryComponent
+    AddCategoryComponent,
+    SaveDialogComponent,
+    DeleteDialogComponent
     
   ],
   imports: [
@@ -60,9 +68,12 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     TooltipModule,
-    
+    MatDialogModule,
+    MatIconModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[SaveDialogComponent]
 })
 export class AppModule { }

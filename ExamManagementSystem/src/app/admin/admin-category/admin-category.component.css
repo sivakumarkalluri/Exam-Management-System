@@ -57,3 +57,8 @@ admin-category.css
     font-size: 14px;
 }
 }
+.toast-success {
+    padding: 5px;
+    color: white;
+    width: 200px;
+   }

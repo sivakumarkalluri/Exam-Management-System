@@ -1,7 +1,15 @@
+import { DialogsService } from './../../Services/Dialogs/dialogs.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
+import { MatStepperModule } from '@angular/material/stepper';
+
 import { AdminService } from 'src/app/Services/admin/admin.service';
+import { MatDialog } from '@angular/material/dialog';
+import { SaveDialogComponent } from '../Dialogs/save-dialog/save-dialog.component';
+import { ToastrService} from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-add-category',
@@ -15,16 +23,22 @@ export class AddCategoryComponent implements OnInit {
   currentQuestionForm!: FormGroup;
   submitted = false;
   totalQuestion:any;
+  currentIndex=0;
 
   @ViewChild(MatStepper) stepper!: MatStepper;
 
-  constructor(private formBuilder: FormBuilder,private adminService:AdminService) {
+  constructor(private formBuilder: FormBuilder,private adminService:AdminService,
+    private dialogService:DialogsService,private toastr: ToastrService,private router:Router,private activatedRouter:ActivatedRoute) {
     this.addCategoryForm.controls['categoryName'].valueChanges.subscribe(value => {
       this.addExamForm.patchValue({ categoryName: value });
     });
   }
 
   ngOnInit(): void {
+    this.activatedRouter.queryParams.subscribe(params => {
+      this.currentIndex = +params['step'] || 0;
+      console.log("current index "+this.currentIndex);
+    });
     this.addExamForm.controls["examTotalQuestion"].valueChanges.subscribe(value => {
       this.totalQuestion = value;
       this.createQuestions(this.totalQuestion);
@@ -32,6 +46,11 @@ export class AddCategoryComponent implements OnInit {
       console.log(this.totalQuestion);
     });
   }
+
+  disableFirstStep() {
+    return this.currentIndex > 0;
+  }
+
   createQuestions(totalQuestions: number) {
     this.questions = [];
     for (let i = 0; i < totalQuestions; i++) {
@@ -173,7 +192,10 @@ export class AddCategoryComponent implements OnInit {
     return this.currentQuestionForm.get("correctAnswer") as FormControl
   }
 
+  
+
   finalSubmit(){
+    
     const categoryData = this.addCategoryForm.value;
     const examData = this.addExamForm.value;
     const questionList = this.formValues; // Assuming formValues is an array
@@ -197,11 +219,22 @@ export class AddCategoryComponent implements OnInit {
       questionList
     };
     console.log(data);
+    this.dialogService.openSubmitDialog('Do you want to submit the changes ?')
+    .afterClosed().subscribe((res:any)=>{
+      if(res==true){
+        this.adminService.postCategoryExamsQuestions(data).subscribe((response:any)=>{
+          console.log(response.body);
+          console.log("Posted Successfully...........");
+          this.toastr.success('New Category Added Successfully !');
+        this.router.navigate(['/adminHome/adminCategories']);
+        })
+        
+      }
 
-    this.adminService.postCategoryExamsQuestions(data).subscribe((response:any)=>{
-      console.log(response.body);
-      console.log("Posted Successfully...........");
-    })
+    });
+    
     
   }
+
+ 
 }

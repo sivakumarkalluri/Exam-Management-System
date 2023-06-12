@@ -14,5 +14,7 @@ namespace ExamPortal.Repositories.AdminRepo
         Task<List<Categories>> GetCategoriesData();
 
         Task<InsertCategoryExamQuestionsDTO> InsertCategoryExamQuestions(InsertCategoryExamQuestionsDTO inputData);
+
+        Task<DeleteCategoryDTO?> DeleteCategory(int categoryId);
     }
 }

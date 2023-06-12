@@ -31,3 +31,8 @@ form{
     padding-left: 0;
     transition:  all o.5s;
 }
+.toast-success {
+   padding: 5px;
+   color: white;
+   width: 200px;
+  }

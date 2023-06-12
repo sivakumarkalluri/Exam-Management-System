@@ -87,5 +87,16 @@ namespace ExamPortal.Repositories.AdminRepo
             return inputData;
         }
 
+        public async Task<DeleteCategoryDTO> DeleteCategory(int categoryId)
+        {
+            var result =  _dbContext.deleteCategoryDTOs.FromSqlRaw("EXECUTE DeleteCategoryData @categoryId",
+                    new SqlParameter("@categoryId", categoryId))
+                .AsEnumerable()
+                .FirstOrDefault();
+
+            // Process the result if needed
+            return result;
+        }
+
     }
 }

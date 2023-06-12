@@ -133,5 +133,17 @@ namespace ExamPortal.Repositories.AdminRepo
 
             return inputData;
         }
+
+        public async Task<List<UsersDataDTO>> GetUsersData()
+        {
+            var result = await this._dbContext.usersDataDTOs.FromSqlRaw("Execute GetUsersData").ToListAsync();
+            return result;
+        }
+
+        public async Task<List<AdminUserResultsDTO>> GetAdminUserResults()
+        {
+            var result = await this._dbContext.adminUserResultsDTOs.FromSqlRaw("Execute GetAdminUserResultsData").ToListAsync();
+            return result;
+        }
     }
 }

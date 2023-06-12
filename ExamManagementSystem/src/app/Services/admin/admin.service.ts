@@ -34,4 +34,24 @@ export class AdminService implements OnInit{
     return this.http.post(this.baseUrl+'/AddExam',data, { observe: 'response' })
   }
 
+  getExamPassStatistics():any{
+    return this.http.get(this.baseUrl+'/AdminDashboard/ExamPassStats', { observe: 'response' });
+  }
+  getCategoryAttemptsStatistics():any{
+    return this.http.get(this.baseUrl+'/AdminDashboard/CategoryAttemptStats', { observe: 'response' });
+  }
+  getExamAttemptsStatistics():any{
+    return this.http.get(this.baseUrl+'/AdminDashboard/ExamAttemptsStats', { observe: 'response' })
+  }
+
+  getUsersData():any{
+    return this.http.get(this.baseUrl+'/AdminDashboard/GetUsersData', { observe: 'response' })
+
+  }
+
+  getUserResults():any{
+    return this.http.get(this.baseUrl+'/AdminDashboard/GetAdminUserResults', { observe: 'response' })
+
+  }
+
 }

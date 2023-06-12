@@ -62,5 +62,31 @@ namespace ExamPortal.Controllers.AdminControllers
             return Ok(result);
         }
 
+        [HttpGet("GetUsersData")]
+        public async Task<IActionResult> GetUsersData()
+        {
+            var result = await this.adminRepository.GetUsersData();
+            if (result == null)
+            {
+                return Ok("Data not Found");
+            }
+            return Ok(result);
+
+        }
+
+        [HttpGet("GetAdminUserResults")]
+        public async Task<IActionResult> GetAdminUserResults()
+        {
+            var result = await this.adminRepository.GetAdminUserResults();
+            if (result == null)
+            {
+                return Ok("Data not Found");
+            }
+            return Ok(result);
+
+        }
+
+
+
     }
 }

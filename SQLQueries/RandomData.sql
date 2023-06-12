@@ -372,16 +372,4 @@ VALUES
     (19, 3,1,  23, 2, GETDATE()),
 	 (19, 3,1,  24, 1, GETDATE());
 
-		  delete from usersExamData where userid=15 and exam_id=5;
-
-	
-
-
-	select * from usersExamData
-
-	SELECT userId FROM userRegisterData;
-	
-
-
-	select * from exam;
-	select * from questions
+		 

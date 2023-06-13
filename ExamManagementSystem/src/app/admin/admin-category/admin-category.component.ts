@@ -63,7 +63,11 @@ export class AdminCategoryComponent implements OnInit{
     this.categoryName = category.categoryName;
     this.categoryId = category.categoryId;
     this.categoryDesc=category.categoryDesc;
-    this.router.navigate(['/adminHome/addCategory'], { queryParams: { categoryName: this.categoryName, categoryId: this.categoryId,categoryDesc:this.categoryDesc, step: 1 } });
+    this.router.navigate(['/adminHome/addCategory'], { queryParams: { categoryName: this.categoryName, categoryId: this.categoryId,categoryDesc:this.categoryDesc, step: 1,editFlag:0 } });
+  }
+  editCategory(categoryId:any,categoryName:any,categoryDesc:any){
+   
+    this.router.navigate(['/adminHome/addCategory'],{ queryParams: { categoryName: categoryName, categoryId: categoryId,categoryDesc:categoryDesc, editFlag: 1 } })
   }
 
   }

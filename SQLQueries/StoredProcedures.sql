@@ -385,6 +385,24 @@ END
 
 
 
+--Stored Procedure for getting data for Exam Crud Operation
+
+CREATE PROCEDURE AdminCRUDExamData
+AS
+BEGIN
+    SELECT c.Category_Id, c.Category_Name, e.Exam_Id, e.Exam_Name, e.exam_totalquestion
+    FROM Categories c
+    INNER JOIN Exam e ON c.Category_Id = e.Category_Id
+	order by c.category_id
+END
+
+
+drop procedure AdminCrudExamData
+exec AdminCRUDExamData
+
+
+
+
 
 
 exec InsertUserResult @userId=2,@examId=1;
@@ -408,5 +426,8 @@ exec InsertUserResult @userId=15,@examId=5;
 
 exec InsertUserResult @userId=17,@examId=3;
 exec InsertUserResult @userId=19,@examId=3;
+
+
+
 
 

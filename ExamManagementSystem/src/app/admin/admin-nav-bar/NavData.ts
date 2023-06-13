@@ -2,7 +2,7 @@
 export const navbarData = [
     {
         routeLink:'/homePage',
-        icon:'fal fa-home',
+        icon:'fa-solid fa-house',
         label:'Home'
     },
     {
@@ -12,7 +12,7 @@ export const navbarData = [
     },
     {
         routeLink:'adminProfile',
-        icon:'fal fa-user',
+        icon:'fa-solid fa-address-card',
         label:'Admin'
     },
     {
@@ -22,17 +22,17 @@ export const navbarData = [
     },
     {
         routeLink:'adminEditExams',
-        icon:'fal fa-file-pen',
+        icon:'fa-solid fa-file-pen',
         label:'Edit Exam'
     },
     {
         routeLink:'adminStudents',
-        icon:'fal fa-user-group',
+        icon:'fa-solid fa-user-group',
         label:'Students'
     },
     {
         routeLink:'adminResults',
-        icon:'fal fa-chart-bar',
+        icon:'fa-solid fa-square-poll-vertical',
         label:'Results'
     },
 ];

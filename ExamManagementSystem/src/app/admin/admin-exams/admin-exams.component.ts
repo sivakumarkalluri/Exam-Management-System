@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AdminService } from 'src/app/Services/admin/admin.service';
 
 @Component({
   selector: 'app-admin-exams',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./admin-exams.component.css']
 })
 export class AdminExamsComponent {
+ 
 
 }

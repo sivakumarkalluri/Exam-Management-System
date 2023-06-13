@@ -2,6 +2,7 @@ import { AuthenticationService } from './../Services/authentication/authenticati
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login-page',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class LoginPageComponent implements OnInit{
 
-  constructor(private authService:AuthenticationService,private router:Router){}
+  constructor(private authService:AuthenticationService,private router:Router,private toastr: ToastrService){}
    ngOnInit(): void {
   
       
@@ -27,16 +28,18 @@ export class LoginPageComponent implements OnInit{
     this.authService.loginUser([this.loginForm.value.email as String,this.loginForm.value.pwd as String]).subscribe(res=>{
       if(res=="failure"){
         this.isUserValid=false;
-        alert("Login UnSuccessfull");
+        this.toastr.error("Log in UnSuccessfull");
       }
       else{
         this.isUserValid=true;
         this.authService.setToken(res);
         if(this.authService.roleCheck=="User"){
           this.router.navigate(['/userDashboard']);
+          this.toastr.success("Logged in Successfully");
         }
         else{
           this.router.navigate(['adminHome/adminDashboard']);
+          this.toastr.success("Logged in Successfully");
         }
       }
 

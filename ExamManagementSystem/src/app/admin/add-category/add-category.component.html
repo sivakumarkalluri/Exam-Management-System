@@ -1,5 +1,4 @@
-<p>add-category works!</p>
-<mat-horizontal-stepper [linear]="true" #stepper [selectedIndex]="currentIndex">
+<mat-horizontal-stepper [linear]="true" #stepper [selectedIndex]="currentIndex" [hidden]="editCategory">
     <mat-step [stepControl]="addCategoryForm" [completed]="currentIndex == 1">
         <ng-template matStepLabel>Add Category</ng-template>
         <form [formGroup]="addCategoryForm" >
@@ -215,3 +214,29 @@
       </mat-step>
     
 </mat-horizontal-stepper>
+<div [hidden]="!editCategory">
+  <form [formGroup]="addCategoryForm" >
+    <div class="row px-3">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingName" formControlName="categoryName" placeholder="Enter Category Name">
+            <label for="name">Category Name</label>
+            <div class="form-text text-danger" *ngIf="Name.errors?.['required'] && (Name.touched || Name.dirty)">
+                <small>Category Name is Required</small>
+            </div>
+        </div>
+        <div class="form-floating mb-3">
+            <textarea type="desc" class="form-control" formControlName="categoryDesc" id="floatingDesc" placeholder="Enter Category Description" style="height: 100px;"></textarea>
+            <label for="desc">Category Description</label>
+            <div class="form-text text-danger" *ngIf="Desc.errors?.['required'] && (Desc.touched || Desc.dirty)">
+                <small>Category Description is Required</small>
+            </div>
+        </div>
+    </div>
+    
+  <button type="button" class="btn actionBtn" style="background-color: rgb(58, 58, 169); color: white;" (click)="saveCategory()">Save 
+  </button>
+
+
+
+  </form>
+</div>

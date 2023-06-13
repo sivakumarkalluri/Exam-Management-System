@@ -68,16 +68,16 @@
                         <label for="gender" class="form-label">Gender</label>
                         <div class="col-md-12"  style="display: flex; gap: 5px;">
                             <div class="col-md-3" style="display: flex;">
-                                <input type="radio" for="male" name="gender" value="male" class="form-check-input"  formControlName="gender">
+                                <input type="radio" for="male" name="gender" value="male" class="form-check-input"  formControlName="gender" style="width: 2px; height: 2px;">
                                 <label class="form-check-lable" style="margin-right: 5px; margin-left: 5px;">male</label>
                             </div>
                             <div class="col-md-3" style="display: flex;">
-                                <input type="radio" for="female" name="gender" value="female" class="form-check-input" formControlName="gender">
+                                <input type="radio" for="female" name="gender" value="female" class="form-check-input" formControlName="gender"  style="width: 2px; height: 2px;">
                                 <label class="form-check-lable" style="margin-right: 10px; margin-left: 5px;">female</label>
                             </div>
                             <div class="col-md-3" style="display: flex;">
-                                <input type="radio" for="other" name="gender" value="other" class="form-check-input" style="margin-left: 15px;" formControlName="gender">
-                                <label class="form-check-lable" style="margin-right: 5px; margin-left: 5px;">others</label>
+                                <input type="radio" for="other" name="gender" value="other" class="form-check-input" style="margin-left: 15px;" formControlName="gender"  style="width: 2px; height: 2px; margin-left: 1px; margin-right: 5px;">
+                                <label class="form-check-lable" style=" margin-left: 25px;">others</label>
                             </div>
                         </div>
                         <div class="form text text-danger" *ngIf="Gender.errors?.['required'] && (Gender.touched || Gender.dirty)">
@@ -108,7 +108,7 @@
                     </div>
                     <p class="text-center fs-3" [ngClass]="isAccountCreated? 'text-success pb-1':'text-danger pb-1'"></p>
                     <div class="row mb-4 px-3">
-                        <small class="font-weight-bold">Already have an account? <a class="text-danger ">Login</a></small>
+                        <small class="font-weight-bold">Already have an account? <a class="text-danger " routerLink="/loginPage">Login</a></small>
                     </div>
                     </form>
                 </div>

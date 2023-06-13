@@ -145,5 +145,26 @@ namespace ExamPortal.Repositories.AdminRepo
             var result = await this._dbContext.adminUserResultsDTOs.FromSqlRaw("Execute GetAdminUserResultsData").ToListAsync();
             return result;
         }
+
+        public async Task<Categories> EditCategory(Categories categories,int categoryId)
+        {
+            var data = await this._dbContext.categories.FindAsync(categoryId);
+            if (data == null)
+            {
+                return null;
+            }
+
+            data.CategoryDesc = categories.CategoryDesc;
+            data.CategoryName = categories.CategoryName;
+            await this._dbContext.SaveChangesAsync();
+            return data;
+
+        }
+
+        public async Task<List<AdminCRUDExamDTO>> GetAdminCRUDExamData()
+        {
+            var result = await this._dbContext.adminCRUDExamDTOs.FromSqlRaw("Execute AdminCRUDExamData").ToListAsync();
+            return result;
+        }
     }
 }

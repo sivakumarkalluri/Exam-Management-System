@@ -27,7 +27,7 @@ export class AddCategoryComponent implements OnInit {
   AddExamCheck=false;
   categoryId:any;
   categoryDesc:any;
-
+  editCategory=false;
 
   @ViewChild(MatStepper) stepper!: MatStepper;
 
@@ -39,7 +39,7 @@ export class AddCategoryComponent implements OnInit {
   }
   ngOnInit(): void {
     this.activatedRouter.queryParams.subscribe(params => {
-      if (params['categoryId']) {
+      if (params['categoryId'] && params['editFlag']!=1) {
        this.categoryId=params['categoryId'];
        this.AddExamCheck=true;
        this.categoryDesc=params['categoryDesc'];
@@ -53,6 +53,15 @@ export class AddCategoryComponent implements OnInit {
           categoryDesc: new FormControl({ value: params['categoryDesc'], disabled: true })
         });
        
+      }
+      else if (params['categoryId'] && params['editFlag']==1){
+        this.editCategory=true;
+        this.categoryId=params['categoryId'];
+        this.addCategoryForm.patchValue({
+          categoryName: params['categoryName'],
+          categoryDesc:  params['categoryDesc'] 
+        });
+
       }
     });
     this.addExamForm.controls["examTotalQuestion"].valueChanges.subscribe(value => {
@@ -290,6 +299,38 @@ export class AddCategoryComponent implements OnInit {
           console.log(response.body);
           console.log("Posted Successfully...........");
           this.toastr.success(examName+' Exam Added in to '+this.categoryDesc+ ' Category Successfully !');
+        this.router.navigate(['/adminHome/adminCategories']);
+        })
+        
+      }
+
+    });
+    
+
+  }
+
+  saveCategory(){
+   const data={
+      categoryId:parseInt(this.categoryId),
+      categoryName:this.addCategoryForm.value.categoryName,
+      categoryDesc:this.addCategoryForm.value.categoryDesc
+    }
+    this.categoryId=parseInt(this.categoryId);
+    this.adminService.getCategories().subscribe(
+      (response: any) => {
+       
+        console.log(response.body);
+      })
+
+    console.log(data);
+    console.log("********* Edit Exam ***********");
+    this.dialogService.openSubmitDialog('Do you want to submit the changes ?')
+    .afterClosed().subscribe((res:any)=>{
+      if(res==true){
+        this.adminService.editCategory(data,this.categoryId).subscribe((response:any)=>{
+          console.log(response.body);
+          console.log("Putted Successfully...........");
+          this.toastr.success(this.addCategoryForm.value.categoryName+' Category Edited Successfully !');
         this.router.navigate(['/adminHome/adminCategories']);
         })
         

@@ -54,4 +54,11 @@ export class AdminService implements OnInit{
 
   }
 
+  editCategory(data:any,id:any){
+    return this.http.put(this.baseUrl+'/EditCategory/'+id,data, { observe: 'response' });
+  }
+
+  getCRUDExamData(){
+    return this.http.get(this.baseUrl+'/GetExamCrudData',{ observe: 'response' })
+  }
 }

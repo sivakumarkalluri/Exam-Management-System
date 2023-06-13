@@ -22,5 +22,9 @@ namespace ExamPortal.Repositories.AdminRepo
         Task<List<UsersDataDTO>> GetUsersData();
 
         Task<List<AdminUserResultsDTO>> GetAdminUserResults();
+
+        Task<Categories> EditCategory(Categories categories,int categoryId);
+
+        Task<List<AdminCRUDExamDTO>> GetAdminCRUDExamData();
     }
 }

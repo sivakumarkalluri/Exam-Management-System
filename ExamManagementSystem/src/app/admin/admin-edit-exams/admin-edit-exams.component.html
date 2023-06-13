@@ -1,29 +1,31 @@
-<table class="table table-bordered">
-    <thead>
-      <tr>
+<table class="table table-bordered table-hover " >
+    <thead style="background-color: aqua;">
+      <tr style="background-color: rgb(58, 58, 169); text-align: center;">
         <th>Category</th>
         <th>Exam Name</th>
-        <th style="text-align: center;">Action</th>
+        <th>Total Questions</th>
+        <th >Action</th>
       </tr>
     </thead>
     <tbody>
       <ng-container *ngFor="let category of transformedData">
-        <tr>
+        <tr style="text-align: center;" >
           <ng-container *ngIf="category.exams.length > 0; else emptyRow">
-            <td [attr.rowspan]="category.exams.length + 1">{{ category.category_Name }}</td>
+            <td [attr.rowspan]="category.exams.length + 1" class="fw-bold">{{ category.category_Name }}</td>
           </ng-container>
         </tr>
         <ng-container *ngFor="let exam of category.exams">
-          <tr>
+          <tr style="text-align: center;">
             <td>{{ exam.exam_Name }}</td>
-            <td>
-              <button class="btn btn-primary"><i class="fa fa-pencil"></i> Edit Exam</button>
-              <button class="btn btn-success"><i class="fa fa-plus"></i> Add Question</button>
-              <button class="btn btn-danger"><i class="fa fa-trash"></i> Delete Questions</button>
-              <button class="btn btn-danger"><i class="fa fa-trash"></i> Delete Exam</button>
+            <td>{{exam.exam_totalquestion}}</td>
+            <td class="d-flex gap-2">
+                <button class="btn" style="background-color: rgb(58, 58, 169); font-size: 12px; color: white;" (click)="ViewQuestions(exam.exam_Id)">View Questions</button>
+              <button class="btn" style="background-color: rgb(58, 58, 169); font-size: 12px; color: white;"><i class="fa fa-pencil mr-1"></i> Edit Exam</button>
+              <button class="btn" style="background-color: rgb(58, 58, 169); font-size: 12px;  color: white;"><i class="fa fa-plus mr-1"></i> Add Question</button>
+              <button class="btn btn-danger " style="color: white; font-size: 12px;"><i class="fa fa-trash mr-1"></i> Delete Exam</button>
             </td>
           </tr>
-        </ng-container>
+        </ng-container >
         <ng-template #emptyRow>
           <tr>
             <td colspan="3">No exams available in this category.</td>

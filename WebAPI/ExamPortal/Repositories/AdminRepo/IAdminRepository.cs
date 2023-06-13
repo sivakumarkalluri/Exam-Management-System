@@ -26,5 +26,17 @@ namespace ExamPortal.Repositories.AdminRepo
         Task<Categories> EditCategory(Categories categories,int categoryId);
 
         Task<List<AdminCRUDExamDTO>> GetAdminCRUDExamData();
+
+        Task<List<Questions>> GetExamQuestionsData(int id);
+
+        Task<Questions> EditQuestion(Questions inputData,int id);
+
+        Task<Questions> DeleteQuestion(int id);
+
+        Task<Questions> AddQuestion(Questions inputData);
+
+        Task<DeleteExamDTO> DeleteExam(int id);
+
+        Task<Exam> EditExam(Exam inputData,int id);
     }
 }

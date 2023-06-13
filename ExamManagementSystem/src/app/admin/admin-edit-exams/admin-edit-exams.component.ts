@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AdminService } from 'src/app/Services/admin/admin.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { AdminService } from 'src/app/Services/admin/admin.service';
   styleUrls: ['./admin-edit-exams.component.css']
 })
 export class AdminEditExamsComponent implements OnInit{
-  constructor(private adminService:AdminService){}
+  constructor(private adminService:AdminService,private router:Router){}
   examData:any;
   ngOnInit(): void {
       this.getCRUDExamData();
@@ -57,7 +58,10 @@ export class AdminEditExamsComponent implements OnInit{
       console.log(this.transformedData);
     }
   
-  
+    
+    ViewQuestions(exam_Id:any){
+        this.router.navigate(['/adminHome/ViewQuestions'], { queryParams: { exam_Id: exam_Id, editFlag:1 }})
+    }
   
 
 

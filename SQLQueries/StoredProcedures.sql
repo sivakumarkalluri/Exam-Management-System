@@ -386,15 +386,42 @@ END
 
 
 --Stored Procedure for getting data for Exam Crud Operation
-
 CREATE PROCEDURE AdminCRUDExamData
 AS
 BEGIN
-    SELECT c.Category_Id, c.Category_Name, e.Exam_Id, e.Exam_Name, e.exam_totalquestion
+    SELECT c.Category_Id, c.Category_Name, e.Exam_Id, e.Exam_Name, e.exam_totalquestion,
+        (SELECT COUNT(*) FROM Exam WHERE Category_Id = c.Category_Id) AS Total_Exams
     FROM Categories c
     INNER JOIN Exam e ON c.Category_Id = e.Category_Id
-	order by c.category_id
+    ORDER BY c.Category_Id
 END
+
+
+-- Stored Procedure for Deleting an Exam
+
+CREATE PROCEDURE DeleteExamWithQuestions
+    @examId INT
+AS
+BEGIN
+   
+        -- Delete questions related to the exam
+        DELETE FROM questions
+        WHERE exam_id = @examId;
+
+        -- Delete the exam
+        DELETE FROM exam
+        WHERE exam_id = @examId;
+
+		select @examID as exam_Id
+      
+END
+
+drop procedure DeleteExamWithQuestions
+
+
+
+
+
 
 
 drop procedure AdminCrudExamData
@@ -428,6 +455,13 @@ exec InsertUserResult @userId=17,@examId=3;
 exec InsertUserResult @userId=19,@examId=3;
 
 
+ SELECT c.Category_Id, c.Category_Name, e.Exam_Id, e.Exam_Name, e.exam_totalquestion
+    FROM Categories c
+    INNER JOIN Exam e ON c.Category_Id = e.Category_Id
+	group by c.Category_Id,c.Category_Name
+	order by c.category_id 
+
+	select * from questions;
 
 
 

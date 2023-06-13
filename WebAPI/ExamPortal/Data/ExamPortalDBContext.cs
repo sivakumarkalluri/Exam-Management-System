@@ -38,6 +38,12 @@ namespace ExamPortal.Data
         public DbSet<AdminUserResultsDTO> adminUserResultsDTOs { get; set; }
 
         public DbSet<AdminCRUDExamDTO> adminCRUDExamDTOs { get; set; }
+
+        public DbSet<Questions> questions { get; set; }
+
+        public DbSet<EditQuestionDTO> editQuestionDTOs { get; set; }
+
+        public DbSet<DeleteExamDTO> deleteExamDTOs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure AdminStatisticsDTO as a keyless entity type
@@ -59,9 +65,13 @@ namespace ExamPortal.Data
 
             modelBuilder.Entity<UsersDataDTO>().HasNoKey();
 
+            modelBuilder.Entity<EditQuestionDTO>().HasNoKey();
+
             modelBuilder.Entity<AdminUserResultsDTO>().HasNoKey();
 
             modelBuilder.Entity<AdminCRUDExamDTO>().HasNoKey();
+
+            modelBuilder.Entity<DeleteExamDTO>().HasNoKey();
 
             // Other configurations
 

@@ -8,8 +8,11 @@ namespace ExamPortal.Models.Domain
     {
         [Key]
 
-        [Column("exam_id")]
+        [Column("exam_Id")]
         public int ExamId { get; set; }
+
+        [Column("category_Id")]
+        public int Category_Id { get; set; }
 
         [Column("exam_name")]
         public string ExamName { get; set; }
@@ -21,12 +24,12 @@ namespace ExamPortal.Models.Domain
         public int ExamDuration { get; set; }
 
         [Column("question_mark")]
-        public int QuestionMark { get; set; }
+        public decimal QuestionMark { get; set; }
 
         [Column("exam_totalquestion")]
         public int ExamTotalQuestion { get; set; }
 
         [Column("exampass_percent")]
-        public int ExamPassPercent { get; set; }
+        public decimal ExamPassPercent { get; set; }
     }
 }

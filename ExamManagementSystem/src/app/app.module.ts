@@ -32,6 +32,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { SaveDialogComponent } from './admin/Dialogs/save-dialog/save-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
 import { DeleteDialogComponent } from './admin/Dialogs/delete-dialog/delete-dialog.component';
+import { CRUDExamsComponent } from './admin/crudexams/crudexams.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { DeleteDialogComponent } from './admin/Dialogs/delete-dialog/delete-dial
     AdminCategoryComponent,
     AddCategoryComponent,
     SaveDialogComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    CRUDExamsComponent
     
   ],
   imports: [

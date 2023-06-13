@@ -166,5 +166,78 @@ namespace ExamPortal.Repositories.AdminRepo
             var result = await this._dbContext.adminCRUDExamDTOs.FromSqlRaw("Execute AdminCRUDExamData").ToListAsync();
             return result;
         }
+
+        public async Task<List<Questions>> GetExamQuestionsData(int id)
+        {
+            var result= await this._dbContext.questions.Where(x => x.exam_id == id).ToListAsync(); ;
+            return result;
+        }
+
+        public async Task<Questions> EditQuestion(Questions inputData, int id)
+        {
+            var data = await this._dbContext.questions.FindAsync(id);
+            if (data == null)
+            {
+                return null;
+            }
+
+            data.question_desc = inputData.question_desc;
+            data.option_1 = inputData.option_1;
+            data.option_2 = inputData.option_2;
+            data.option_3 = inputData.option_3;
+            data.option_4 = inputData.option_4;
+            data.correctAnswer = inputData.correctAnswer;
+            await this._dbContext.SaveChangesAsync();
+            return data;
+
+        }
+
+        public async Task<Questions> DeleteQuestion(int id)
+        {
+            var result = await this._dbContext.questions.FindAsync(id);
+            if(result == null)
+            {
+                return null;
+            }
+            this._dbContext.questions.Remove(result);
+            await this._dbContext.SaveChangesAsync();
+
+            return result;
+
+        }
+
+        public async Task<Questions> AddQuestion(Questions inputData)
+        {
+           await this._dbContext.AddAsync(inputData);
+            await this._dbContext.SaveChangesAsync();
+            return inputData;
+        }
+
+      
+
+        public async Task<DeleteExamDTO> DeleteExam(int id)
+        {
+            var result = this._dbContext.deleteExamDTOs.FromSqlRaw("Execute DeleteExamWithQuestions @examId",
+                    new SqlParameter("@examId", id)).AsEnumerable()
+                .FirstOrDefault();
+            
+            return result;
+        }
+
+        public async Task<Exam> EditExam(Exam inputData,int id)
+        {
+            var data = await this._dbContext.exams.FindAsync(id);
+            if (data == null)
+            {
+                return null;
+            }
+            data.ExamDescription = inputData.ExamDescription;
+            data.ExamDuration= inputData.ExamDuration;
+            data.QuestionMark= inputData.QuestionMark;
+            data.ExamName= inputData.ExamName;
+            data.ExamPassPercent= inputData.ExamPassPercent;
+            await this._dbContext.SaveChangesAsync();
+            return data;
+        }
     }
 }

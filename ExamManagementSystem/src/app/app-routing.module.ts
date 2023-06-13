@@ -15,6 +15,7 @@ import { AdminResultsComponent } from './admin/admin-results/admin-results.compo
 import { AdminEditExamsComponent } from './admin/admin-edit-exams/admin-edit-exams.component';
 import { AdminCategoryComponent } from './admin/admin-category/admin-category.component';
 import { AddCategoryComponent } from './admin/add-category/add-category.component';
+import { CRUDExamsComponent } from './admin/crudexams/crudexams.component';
 
 
 const routes: Routes = [
@@ -32,7 +33,8 @@ const routes: Routes = [
   { path: 'adminResults', component: AdminResultsComponent },
   {path:'adminEditExams',component:AdminEditExamsComponent},
   {path:'adminCategories',component:AdminCategoryComponent},
-  {path:'addCategory',component:AddCategoryComponent}
+  {path:'addCategory',component:AddCategoryComponent},
+  {path:'ViewQuestions',component:CRUDExamsComponent}
 ]}
 
  

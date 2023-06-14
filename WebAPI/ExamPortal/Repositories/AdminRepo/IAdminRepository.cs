@@ -31,12 +31,14 @@ namespace ExamPortal.Repositories.AdminRepo
 
         Task<Questions> EditQuestion(Questions inputData,int id);
 
-        Task<Questions> DeleteQuestion(int id);
+        Task<DeleteQuestionDTO> DeleteQuestion(int id);
 
         Task<Questions> AddQuestion(Questions inputData);
 
         Task<DeleteExamDTO> DeleteExam(int id);
 
         Task<Exam> EditExam(Exam inputData,int id);
+
+        Task<Exam> GetExamData(int id);
     }
 }

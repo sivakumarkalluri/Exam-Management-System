@@ -192,15 +192,11 @@ namespace ExamPortal.Repositories.AdminRepo
 
         }
 
-        public async Task<Questions> DeleteQuestion(int id)
+        public async Task<DeleteQuestionDTO> DeleteQuestion(int id)
         {
-            var result = await this._dbContext.questions.FindAsync(id);
-            if(result == null)
-            {
-                return null;
-            }
-            this._dbContext.questions.Remove(result);
-            await this._dbContext.SaveChangesAsync();
+            var result = this._dbContext.deleteQuestionDTOs.FromSqlRaw("Execute DeleteQuestion @questionId",
+                     new SqlParameter("@questionId", id)).AsEnumerable()
+                 .FirstOrDefault();
 
             return result;
 
@@ -208,8 +204,20 @@ namespace ExamPortal.Repositories.AdminRepo
 
         public async Task<Questions> AddQuestion(Questions inputData)
         {
-           await this._dbContext.AddAsync(inputData);
-            await this._dbContext.SaveChangesAsync();
+           var result= this._dbContext.deleteExamDTOs.FromSqlRaw("Execute AddQuestionToExam  @examId, @categoryId,@questionDesc, @option1, @option2, @option3, @option4, @correctAnswer", 
+               new SqlParameter("@examId", inputData.exam_id),
+               new SqlParameter("@categoryId", inputData.category_id),
+               new SqlParameter("@questionDesc", inputData.question_desc),
+               new SqlParameter("@option1", inputData.option_1),
+               new SqlParameter("@option2", inputData.option_2),
+               new SqlParameter("@option3", inputData.option_3),
+               new SqlParameter("@option4", inputData.option_4),
+               new SqlParameter("@correctAnswer", inputData.correctAnswer)
+
+
+               ).AsEnumerable()
+                 .FirstOrDefault();
+           
             return inputData;
         }
 
@@ -237,6 +245,16 @@ namespace ExamPortal.Repositories.AdminRepo
             data.ExamName= inputData.ExamName;
             data.ExamPassPercent= inputData.ExamPassPercent;
             await this._dbContext.SaveChangesAsync();
+            return data;
+        }
+
+        public async Task<Exam> GetExamData(int id)
+        {
+            var data = await this._dbContext.exams.FindAsync(id);
+            if (data == null)
+            {
+                return null;
+            }
             return data;
         }
     }

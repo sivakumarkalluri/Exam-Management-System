@@ -44,6 +44,19 @@ namespace ExamPortal.Controllers.AdminControllers
 
         }
 
+        [HttpGet("ExamData/{id}")]
+        public async Task<IActionResult> GetExamData(int id)
+        {
+            var result = await this.adminRepository.GetExamData(id);
+            if (result == null)
+            {
+                return Ok("Data not Found");
+            }
+            return Ok(result);
+
+        }
+
+
         [HttpPut("EditQuestion/{id}")]
         public async Task<IActionResult> EditQuestion(Questions question, int id)
         {

@@ -22,17 +22,17 @@
                         <label class="mb-1"><h6 class="mb-0 text-sm">Email Address</h6></label>
                         <input class="mb-4" type="text" name="email" formControlName="email" placeholder="Enter a valid email address">
                         <div class="form text text-danger" *ngIf="Email.errors?.['required'] && (Email.touched || Email.dirty)">
-                            Email is Required
+                            <small>Email is Required</small>
                         </div>
                         <div class="form text text-danger" *ngIf="Email.errors?.['email'] && (Email.touched || Email.dirty)">
-                            Email is Invalid
+                            <small>Email is Invalid</small> 
                         </div>
                     </div>
                     <div class="row px-3">
                         <label class="mb-1"><h6 class="mb-0 text-sm">Password</h6></label>
                         <input type="password" name="password" formControlName="pwd" placeholder="Enter password">
                         <div class="form text text-danger" *ngIf="Pwd.errors?.['required'] && (Email.touched || Email.dirty)">
-                            Password is Required
+                            <small>Password is Required</small>
                         </div>
                     </div>
                     <div class="row px-3 mb-4">

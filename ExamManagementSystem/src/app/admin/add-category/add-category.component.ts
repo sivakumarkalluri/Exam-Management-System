@@ -28,7 +28,14 @@ export class AddCategoryComponent implements OnInit {
   categoryId:any;
   categoryDesc:any;
   editCategory=false;
-
+  categoryName:any;
+  editExam=false;
+  editExamData:any;
+  editExamId:any;
+  editFlag=false;
+  addQuestionExamId:any;
+  addQuestionCategoryId:any;
+  addQuestionFlag=false;
   @ViewChild(MatStepper) stepper!: MatStepper;
 
   constructor(private formBuilder: FormBuilder,private adminService:AdminService,
@@ -39,9 +46,11 @@ export class AddCategoryComponent implements OnInit {
   }
   ngOnInit(): void {
     this.activatedRouter.queryParams.subscribe(params => {
-      if (params['categoryId'] && params['editFlag']!=1) {
+      if (params['categoryId'] && params['editFlag']!=1 && params['editCategoryFlag']!=1) {
+        console.log("step1");
        this.categoryId=params['categoryId'];
        this.AddExamCheck=true;
+       this.categoryName=params['categoryName'];
        this.categoryDesc=params['categoryDesc'];
        console.log(params['categoryDesc']);
         this.currentIndex=1; // Move to the second step
@@ -54,22 +63,128 @@ export class AddCategoryComponent implements OnInit {
         });
        
       }
-      else if (params['categoryId'] && params['editFlag']==1){
+      else if (params['categoryId'] && params['editCategoryFlag']==1){
+        console.log("yes");
         this.editCategory=true;
+        this.editFlag=true;
         this.categoryId=params['categoryId'];
         this.addCategoryForm.patchValue({
           categoryName: params['categoryName'],
           categoryDesc:  params['categoryDesc'] 
         });
-
       }
+        else if(params['exam_Id'] && params['editExamFlag']==1){
+          this.editExam=true;
+          this.editFlag=true;
+          
+          this.editExamId=params['exam_Id'];
+          this.getExamData(this.editExamId);
+          console.log(this.editExamData);
+          
+        }
+        else if(params['exam_Id'] && params['AddQuestionFlag']==1){
+          console.log("yes");
+          this.totalQuestion=1;
+          this.addQuestionFlag=true;
+          this.editFlag=true;
+          this.createQuestions(this.totalQuestion);
+      this.createForm();
+          this.addQuestionExamId=params['exam_Id'];
+          this.addQuestionCategoryId=params['category_Id'];
+
+        }
+
+      
     });
+
     this.addExamForm.controls["examTotalQuestion"].valueChanges.subscribe(value => {
       this.totalQuestion = value;
       this.createQuestions(this.totalQuestion);
       this.createForm();
       console.log(this.totalQuestion);
     });
+   
+  }
+
+
+  
+  saveExam(){
+    const data={
+      examId: this.editExamId,
+      category_Id: this.editExamData.category_Id,
+      examName: this.addExamForm.value.examName,
+      examDescription: this.addExamForm.value.examDesc,
+      examDuration: this.addExamForm.value.examDuration,
+      questionMark: this.addExamForm.value.questionMark,
+      examTotalQuestion: this.addExamForm.value.examTotalQuestion,
+      examPassPercent: this.addExamForm.value.examPassPercent
+    };
+
+    this.dialogService.openSubmitDialog('Do you want to submit the changes ?')
+    .afterClosed().subscribe((res:any)=>{
+      if(res==true){
+        this.adminService.EditExam(data,data.examId).subscribe((response:any)=>{
+          console.log(response.body);
+          console.log("Posted Successfully...........");
+          this.toastr.success(data.examName+' Exam Edited Successfully !');
+        this.router.navigate(['/adminHome/adminEditExams']);
+        })
+      }})
+
+
+    
+
+    }
+  getExamData(id:any){
+    this.adminService.getExamData(id).subscribe((data:any)=>{
+      this.editExamData=data.body;
+      this.examPatchData();
+    })
+  }
+
+  saveQuestion(){
+    this.onSubmit();
+    console.log("formValues: "+this.formValues);
+    const data={
+      exam_id: this.addQuestionExamId,
+      category_id: this.addQuestionCategoryId,
+      question_desc: this.formValues[0]["questionDesc"],
+      option_1: this.formValues[0]["option1"],
+      option_2: this.formValues[0]["option2"],
+      option_3: this.formValues[0]["option3"],
+      option_4: this.formValues[0]["option4"],
+      correctAnswer: this.formValues[0]["correctAnswer"],
+   }
+   
+   console.log("addQuestionData: "+data);
+   this.dialogService.openSubmitDialog('Do you want to submit the changes ?')
+    .afterClosed().subscribe((res:any)=>{
+      if(res==true){
+        this.adminService.AddQuestion(data).subscribe((response:any)=>{
+          console.log(response.body);
+          console.log("Posted Successfully...........");
+          this.toastr.success("Question Added Successfully !");
+        this.router.navigate(['/adminHome/adminEditExams']);
+        })
+        
+      }
+
+    });
+    
+  }
+
+  examPatchData(){
+    if(this.editExamData){
+      this.addExamForm.patchValue({
+        categoryName: "default",
+        examName: this.editExamData.examName,
+        examDesc: this.editExamData.examDescription,
+        examDuration: this.editExamData.examDuration,
+        questionMark: this.editExamData.questionMark,
+        examTotalQuestion: this.editExamData.examTotalQuestion,
+        examPassPercent: this.editExamData.examPassPercent
+      })
+    }
   }
 
   disableFirstStep() {
@@ -273,7 +388,7 @@ export class AddCategoryComponent implements OnInit {
   
     const questionList = this.formValues; // Assuming formValues is an array
     const categoryId=this.categoryId;
-    const categoryName=this.categoryDesc;
+    const categoryName=this.addExamForm.value.categoryName;
     const examDesc=this.addExamForm.value.examDesc;
     const examName=this.addExamForm.value.examName;
     const examDuration=this.addExamForm.value.examDuration;
@@ -298,7 +413,7 @@ export class AddCategoryComponent implements OnInit {
         this.adminService.postNewExam(data).subscribe((response:any)=>{
           console.log(response.body);
           console.log("Posted Successfully...........");
-          this.toastr.success(examName+' Exam Added in to '+this.categoryDesc+ ' Category Successfully !');
+          this.toastr.success(examName+' Exam Added in to '+this.categoryName+ ' Category Successfully !');
         this.router.navigate(['/adminHome/adminCategories']);
         })
         

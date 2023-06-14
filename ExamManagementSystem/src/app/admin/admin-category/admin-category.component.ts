@@ -67,7 +67,7 @@ export class AdminCategoryComponent implements OnInit{
   }
   editCategory(categoryId:any,categoryName:any,categoryDesc:any){
    
-    this.router.navigate(['/adminHome/addCategory'],{ queryParams: { categoryName: categoryName, categoryId: categoryId,categoryDesc:categoryDesc, editFlag: 1 } })
+    this.router.navigate(['/adminHome/addCategory'],{ queryParams: { categoryName: categoryName, categoryId: categoryId,categoryDesc:categoryDesc, editCategoryFlag: 1 } })
   }
 
   }

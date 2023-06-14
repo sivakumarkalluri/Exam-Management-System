@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { DialogsService } from 'src/app/Services/Dialogs/dialogs.service';
 import { AdminService } from 'src/app/Services/admin/admin.service';
 
 @Component({
@@ -8,7 +10,7 @@ import { AdminService } from 'src/app/Services/admin/admin.service';
   styleUrls: ['./admin-edit-exams.component.css']
 })
 export class AdminEditExamsComponent implements OnInit{
-  constructor(private adminService:AdminService,private router:Router){}
+  constructor(private adminService:AdminService,private router:Router,private dialogService:DialogsService,private toastr:ToastrService){}
   examData:any;
   ngOnInit(): void {
       this.getCRUDExamData();
@@ -59,8 +61,40 @@ export class AdminEditExamsComponent implements OnInit{
     }
   
     
-    ViewQuestions(exam_Id:any){
-        this.router.navigate(['/adminHome/ViewQuestions'], { queryParams: { exam_Id: exam_Id, editFlag:1 }})
+    ViewQuestions(exam_Id:any,exam_Name:any){
+        this.router.navigate(['/adminHome/ViewQuestions'], { queryParams: { exam_Id: exam_Id,exam_Name:exam_Name, editFlag:1 }})
+    }
+    EditExam(exam_Id:any){
+      this.router.navigate(['/adminHome/addCategory'], { queryParams: { exam_Id:exam_Id , editExamFlag:1 }})
+
+    }
+
+    AddQuestion(id:any,categoryId:any){
+      this.router.navigate(['/adminHome/addCategory'], { queryParams: { exam_Id:id ,category_Id:categoryId, AddQuestionFlag:1 }})
+
+    }
+    DeleteExam(id:any,examName:any){
+
+      console.log("dialog opened");
+      this.dialogService.openDeleteDialog("Do you want to delete the "+ examName+"? \n All the related data will be deleted.").afterClosed().subscribe((res: any) => {
+        if (res === true) {
+          this.adminService.deleteExam(id).subscribe((response: any) => {
+            if (response.body.exam_Id === id) {
+              this.getCRUDExamData();
+              this.toastr.success(examName + " Exam Deleted Successfully");
+              
+            } else {
+              console.log(response.categoryID);
+              
+              this.toastr.error("An error occurred while deleting the Exam.");
+            }
+          }, (error: any) => {
+            console.log(error);
+            this.toastr.error("An error occurred while deleting the Exam.");
+          });
+        }
+      });
+
     }
   
 

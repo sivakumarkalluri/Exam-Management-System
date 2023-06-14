@@ -33,6 +33,7 @@ import { SaveDialogComponent } from './admin/Dialogs/save-dialog/save-dialog.com
 import { MatIconModule } from '@angular/material/icon';
 import { DeleteDialogComponent } from './admin/Dialogs/delete-dialog/delete-dialog.component';
 import { CRUDExamsComponent } from './admin/crudexams/crudexams.component';
+import { LogoutComponent } from './admin/Dialogs/logout/logout.component';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { CRUDExamsComponent } from './admin/crudexams/crudexams.component';
     AddCategoryComponent,
     SaveDialogComponent,
     DeleteDialogComponent,
-    CRUDExamsComponent
+    CRUDExamsComponent,
+    LogoutComponent
     
   ],
   imports: [

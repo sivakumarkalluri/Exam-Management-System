@@ -1,4 +1,4 @@
-
+at
 --- Stored Procedure for calculating user results -----------------
 
 CREATE PROCEDURE InsertUserResult
@@ -416,7 +416,65 @@ BEGIN
       
 END
 
-drop procedure DeleteExamWithQuestions
+
+-- Stored Procedure for Deleting and Question and reducing the number Total Questions in Exam
+
+CREATE PROCEDURE DeleteQuestion
+    @questionId INT
+AS
+BEGIN
+    
+    -- Get the exam_id for the question being deleted
+    DECLARE @examId INT;
+    SELECT @examId = exam_id
+    FROM questions
+    WHERE question_id = @questionId;
+
+    -- Delete the question from the questions table
+    DELETE FROM questions
+    WHERE question_id = @questionId;
+
+    -- Update the total_questions value in the exam table
+    UPDATE exam
+    SET exam_totalquestion = exam_totalquestion - 1
+    WHERE exam_id = @examId;
+
+	select @questionId as question_Id
+END
+
+
+
+-- Stored Procedure for adding question and incrementing the questions count in exam
+DELIMITER //
+
+CREATE PROCEDURE AddQuestionToExam(
+  @examId int,
+  @categoryId int,
+  @questionDesc varchar(max),
+  @option1 varchar(500),
+  @option2 varchar(500),
+  @option3 varchar(500),
+  @option4 varchar(500),
+  @correctAnswer INT
+)
+as 
+BEGIN
+   DECLARE @exam_Id INT;
+
+  -- Insert the question into the questions table
+  INSERT INTO questions (exam_id,category_id, option_1, option_2, option_3, option_4, correctAnswer)
+  VALUES (@examId,@categoryId,@questionDesc, @option1, @option2, @option3, @option4, @correctAnswer);
+
+ 
+
+  -- Increment the totalQuestions count in the exam table
+  UPDATE exam
+  SET exam_totalquestion = exam_totalquestion + 1
+  WHERE exam_id = @examId;
+
+  -- Return the question ID
+  SELECT @exam_Id;
+END
 
 
 
@@ -427,7 +485,8 @@ drop procedure DeleteExamWithQuestions
 drop procedure AdminCrudExamData
 exec AdminCRUDExamData
 
-
+update exam set exam_totalquestion=1 where exam_id=1024;
+select * from exam
 
 
 

@@ -1,3 +1,4 @@
+import { DialogsService } from './../Services/Dialogs/dialogs.service';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './../Services/authentication/authentication.service';
 import { Component, OnInit } from '@angular/core';
@@ -10,31 +11,28 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit {
-  constructor(private authService:AuthenticationService,private router:Router,private toastr: ToastrService){}
+  constructor(private authService:AuthenticationService,private router:Router,private toastr: ToastrService,private dialogService:DialogsService){}
   access="";
   ngOnInit(): void {
     const access_token = localStorage.getItem('access_token');
     this.access = access_token !== null ? access_token : ''; 
   }
   logOut() {
+    this.dialogService.openLogOutDialog("Are you sure want to Log Out ?").afterClosed().subscribe((res: any) => {
+      if (res === true) {
     this.authService.removeToken();
     this.router.navigate(['/']).then(() => {
       window.location.reload();
     });
+  }
+  setTimeout(() => {
+    this.toastr.success("Logged Out Successfully...");
+  }, 3000);
   
-    function waitOneSecond(callback: () => void): void {
-      setTimeout(callback, 1000);
-    }
+});
   
-    // Example usage
-    console.log("Start");
-    waitOneSecond(() => {
-      console.log("One second has passed");
-    });
-  
-    window.addEventListener("load", () => {
-      this.toastr.success("Logged Out Successfully...");
-    });
+   
+
   }
   
   

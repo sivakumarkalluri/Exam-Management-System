@@ -1,3 +1,14 @@
 .nav_action{
     margin-right: 15px;
 }
+.nav-link:hover{
+     background-color: #1A237E;
+    color: white;
+    transition: all 0.3s ease-in-out;
+    border-radius: 5px;
+}
+.nav-link{
+    border-radius: 5px;
+    font-weight: bold;
+    margin-right: 1rem;
+}

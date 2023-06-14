@@ -22,8 +22,8 @@
 
         </ul>
         <form class="d-flex" role="search">
-          <button type="button" class="btn btn-outline-primary btn-rounded nav_action" data-mdb-ripple-color="dark" *ngIf="!access" routerLink="/loginPage">Login</button>
-          <button type="button" class="btn btn-primary btn-rounded nav_action" *ngIf="!access" routerLink="/signUpPage">Register/Sign Up</button>
+          <button type="button" class="btn btn-outline-primary btn-rounded nav_action fw-bold" data-mdb-ripple-color="dark" *ngIf="!access" routerLink="/loginPage">Login</button>
+          <button type="button" class="btn btn-rounded nav_action" style="background-color: #1A237E; color: white;" *ngIf="!access" routerLink="/signUpPage">Register/Sign Up</button>
 
           <button type="button" class="btn btn-danger btn-rounded nav_action" *ngIf="access" (click)="logOut()">Log Out</button>
         </form>

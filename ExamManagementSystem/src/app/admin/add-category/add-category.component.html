@@ -1,4 +1,5 @@
-<mat-horizontal-stepper [linear]="true" #stepper [selectedIndex]="currentIndex" [hidden]="editCategory">
+
+<mat-horizontal-stepper [linear]="true" #stepper [selectedIndex]="currentIndex" [hidden]="editCategory || editFlag">
     <mat-step [stepControl]="addCategoryForm" [completed]="currentIndex == 1">
         <ng-template matStepLabel>Add Category</ng-template>
         <form [formGroup]="addCategoryForm" >
@@ -79,7 +80,7 @@
                       <small>Question Mark is required</small>
                     </div>
                     <div class="form-text text-danger" *ngIf="(QueMark.value < 0 ) && (QueMark.touched || QueMark.dirty)">
-                        <small>Total Questions should be a positive number</small>
+                        <small>Mark should be a positive number</small>
                     </div>
                   </div>
                 </div>
@@ -238,5 +239,155 @@
 
 
 
+  </form>
+</div>
+
+<div [hidden]="!editExam">
+
+  <form [formGroup]="addExamForm">
+    <div class="row px-3">
+        
+        <div class="col-12">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="examName" formControlName="examName" />
+            <label for="examName">Exam Name:</label>
+            <div class="form-text text-danger" *ngIf="ExamName.errors?.['required'] && (ExamName.touched || ExamName.dirty)">
+              <small>Exam Name is required</small>
+            </div>
+          </div>
+        </div>
+      
+        <div class="col-12">
+          <div class="form-floating mb-3">
+            <textarea class="form-control" id="examDesc" formControlName="examDesc"></textarea>
+            <label for="examDesc">Exam Description:</label>
+            <div class="form-text text-danger" *ngIf="ExamDesc.errors?.['required'] && (ExamDesc.touched || ExamDesc.dirty)">
+              <small>Exam Description is required</small>
+            </div>
+          </div>
+        </div>
+      
+        <div class="col-6">
+          <div class="form-floating mb-3">
+            <input class="form-control" id="examDuration" formControlName="examDuration">
+            <label for="examDuration">Exam Duration (mins):</label>
+            
+            <div class="form-text text-danger" *ngIf="ExamDur.errors?.['required'] && (ExamDur.touched || ExamDur.dirty)">
+              <small>Exam Duration is required</small>
+            </div>
+            <div class="form-text text-danger" *ngIf="ExamDur.errors?.['pattern'] && (ExamDur.touched || ExamDur.dirty)">
+                <small>Exam Duration should be an integer greater than 0</small>
+              </div>
+          </div>
+        </div>
+      
+        <div class="col-6">
+          <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="questionMark" formControlName="questionMark" min="0" />
+            <label for="questionMark">Question Mark:</label>
+            <div class="form-text text-danger" *ngIf="QueMark.errors?.['required'] && (QueMark.touched || QueMark.dirty)">
+              <small>Question Mark is required</small>
+            </div>
+            <div class="form-text text-danger" *ngIf="(QueMark.value < 0 ) && (QueMark.touched || QueMark.dirty)">
+                <small>Mark should be a positive number</small>
+            </div>
+          </div>
+        </div>
+      
+        
+      
+        <div class="col-6">
+          <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="examPassPercent" formControlName="examPassPercent" min="0" max="100" />
+            <label for="examPassPercent">Pass Percentage:</label>
+            <div class="form-text text-danger" *ngIf="PassPercent.errors?.['required'] && (PassPercent.touched || PassPercent.dirty)">
+              <small>Pass Percentage is required</small>
+            </div>
+            <div class="form-text text-danger" *ngIf="(PassPercent.value < 0 || PassPercent.value > 100) && (PassPercent.touched || PassPercent.dirty)">
+                <small>Pass Percentage should be between 0 and 100</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <button type="button" class="btn actionBtn" style="background-color: rgb(58, 58, 169); color: white;" (click)="saveExam()">Save 
+      </button>
+</form>
+
+</div>
+
+<div [hidden]="!addQuestionFlag">
+  <form [formGroup]="currentQuestionForm" *ngIf="currentQuestionForm">
+              
+    <div class="row px-3">
+        <div class="col-sm-12">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="questionDesc" formControlName="questionDesc" >
+            <label for="questionDescription">Question Description:</label>
+            <div class="form-text text-danger" *ngIf="QuesDesc.errors?.['required'] && (QuesDesc.touched || QuesDesc.dirty)">
+              <small>Question Description is required</small>
+            </div>
+          </div>
+        </div>
+      
+        <div class="col-sm-12 col-md-6">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="option1" formControlName="option1" >
+            <label for="option1">Option 1:</label>
+            <div class="form-text text-danger" *ngIf="Option1.errors?.['required'] && (Option1.touched || Option1.dirty)">
+              <small>Option 1 is required</small>
+            </div>
+          </div>
+        </div>
+      
+        <div class="col-sm-12 col-md-6">
+          <div class="form-floating mb-3">
+            <input type="text" id="option2" class="form-control" formControlName="option2" >
+            <label for="option2">Option 2:</label>
+            <div class="form-text text-danger" *ngIf="Option2.errors?.['required'] && (Option2.touched || Option2.dirty)">
+              <small>Option 2 is required</small>
+            </div>
+          </div>
+        </div>
+      
+        <div class="col-sm-12 col-md-6">
+          <div class="form-floating mb-3">
+            <input type="text" id="option3" class="form-control" formControlName="option3" >
+            <label for="option3">Option 3:</label>
+            <div class="form-text text-danger" *ngIf="Option3.errors?.['required'] && (Option3.touched || Option3.dirty)">
+              <small>Option 3 is required</small>
+            </div>
+          </div>
+        </div>
+      
+        <div class="col-sm-12 col-md-6">
+          <div class="form-floating mb-3">
+            <input type="text" id="option4" class="form-control" formControlName="option4" >
+            <label for="option4">Option 4:</label>
+            <div class="form-text text-danger" *ngIf="Option4.errors?.['required'] && (Option4.touched || Option4.dirty)">
+              <small>Option 4 is required</small>
+            </div>
+          </div>
+        </div>
+      
+        <div class="col-sm-6 col-md-4">
+          <div class="form-floating mb-3">
+            <select class="form-select form-control" aria-label="Correct Answer" id="answer" formControlName="correctAnswer">
+                <option selected>Select the Correct Answer</option>
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+                <option value="3">Option 3</option>
+                <option value="4">Option 4</option>
+              </select>
+            <label for="answer">Answer:</label>
+            <div class="form-text text-danger" *ngIf="Answer.errors?.['required'] && (Answer.touched || Answer.dirty)">
+              <small>Please select any Option</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <button type="button" class="btn actionBtn" style="background-color: rgb(58, 58, 169); color: white;" (click)="saveQuestion()">Save 
+      </button>
   </form>
 </div>

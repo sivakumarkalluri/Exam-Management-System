@@ -61,4 +61,33 @@ export class AdminService implements OnInit{
   getCRUDExamData(){
     return this.http.get(this.baseUrl+'/GetExamCrudData',{ observe: 'response' })
   }
+
+  getExamQuestionsById(id:any){
+    return this.http.get(this.baseUrl+"/GetExamQuestions/"+id,{ observe: 'response' })
+  }
+
+  deleteQuestion(id:any){
+    return this.http.delete(this.baseUrl+'/DeleteQuestion/'+id,{ observe: 'response' })
+  }
+
+  editQuestion(data:any,id:any){
+    return this.http.put(this.baseUrl+'/EditQuestion/'+id,data,{ observe: 'response' })
+  }
+
+  getExamData(id:any){
+    return this.http.get(this.baseUrl+'/ExamData/'+id,{observe:'response'})
+  }
+
+  EditExam(data:any,id:any){
+    return this.http.put(this.baseUrl+'/EditExam/'+id,data,{ observe: 'response' })
+  }
+
+  AddQuestion(data:any){
+    return this.http.post(this.baseUrl+'/AddQuestion',data,{ observe: 'response' })
+  }
+
+  deleteExam(id:any){
+    return this.http.delete(this.baseUrl+'/DeleteExam/'+id,{ observe: 'response' })
+  }
+
 }

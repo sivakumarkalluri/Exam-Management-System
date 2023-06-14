@@ -44,6 +44,8 @@ namespace ExamPortal.Data
         public DbSet<EditQuestionDTO> editQuestionDTOs { get; set; }
 
         public DbSet<DeleteExamDTO> deleteExamDTOs { get; set; }
+
+        public DbSet<DeleteQuestionDTO> deleteQuestionDTOs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure AdminStatisticsDTO as a keyless entity type
@@ -73,6 +75,7 @@ namespace ExamPortal.Data
 
             modelBuilder.Entity<DeleteExamDTO>().HasNoKey();
 
+            modelBuilder.Entity<DeleteQuestionDTO>().HasNoKey();    
             // Other configurations
 
             base.OnModelCreating(modelBuilder);

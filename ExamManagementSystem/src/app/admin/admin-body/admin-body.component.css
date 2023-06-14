@@ -1,9 +1,9 @@
 .body {
     width: calc(100% - 5rem);
-    height: 100vh;
+    min-height: 100vh;
     margin-left: 5rem;
     z-index: 0;
-   
+   background-color: #eceff1;
     position: relative;
     top:0;
 

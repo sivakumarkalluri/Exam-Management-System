@@ -1,9 +1,9 @@
+import { UserHomeComponent } from './User/user-home/user-home.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { UserDashboardComponent } from './User/user-dashboard/user-dashboard.component';
 
 import { NgModule } from '@angular/core';
-
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, CanActivate } from '@angular/router';
 import { HomePageComponent } from './home-page/home-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { SignUpPageComponent } from './sign-up-page/sign-up-page.component';
@@ -16,6 +16,11 @@ import { AdminEditExamsComponent } from './admin/admin-edit-exams/admin-edit-exa
 import { AdminCategoryComponent } from './admin/admin-category/admin-category.component';
 import { AddCategoryComponent } from './admin/add-category/add-category.component';
 import { CRUDExamsComponent } from './admin/crudexams/crudexams.component';
+import { AuthGuard } from './Guards/Auth/auth.guard';
+import { UserProfileComponent } from './User/user-profile/user-profile.component';
+import { UserExamsComponent } from './User/user-exams/user-exams.component';
+import { UserResultsComponent } from './User/user-results/user-results.component';
+import { UserTestComponent } from './User/user-test/user-test.component';
 
 
 const routes: Routes = [
@@ -23,9 +28,9 @@ const routes: Routes = [
  {path:'homePage',component:HomePageComponent},
  {path:'loginPage',component:LoginPageComponent},
  {path:'signUpPage',component:SignUpPageComponent},
- {path:'userDashboard',component:UserDashboardComponent},
 
- { path: 'adminHome', component: AdminHomeComponent, children: [
+ { path: 'adminHome', component: AdminHomeComponent,canActivate: [AuthGuard], data: { roles: ['Admin'] }, 
+ children: [
   { path: 'adminDashboard', component: AdminDashboardComponent },
   { path: 'adminProfile', component: AdminProfileComponent },
   { path: 'adminExams', component: AdminExamsComponent },
@@ -35,7 +40,19 @@ const routes: Routes = [
   {path:'adminCategories',component:AdminCategoryComponent},
   {path:'addCategory',component:AddCategoryComponent},
   {path:'ViewQuestions',component:CRUDExamsComponent}
-]}
+]},
+
+{path:'userHome',component:UserHomeComponent,canActivate: [AuthGuard], data: { roles: ['User'] },
+children:[
+  {path:'userDashboard',component:UserDashboardComponent},
+  {path:'userProfile',component:UserProfileComponent},
+  {path:'userExams',component:UserExamsComponent},
+  {path:'userResults',component:UserResultsComponent},
+  {path:'userTest',component:UserTestComponent}
+]
+
+},
+
 
  
 ];

@@ -34,6 +34,9 @@ namespace ExamPortal.Models.Domain.Auth
 
         public string Role { get; set; }
 
+        [Column("imagePath")]
+        public string? ImagePath { get; set; }
+
         [Column("registeredAt")]
         public DateTime registeredAt { get; set; }
     }

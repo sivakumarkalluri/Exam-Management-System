@@ -1,5 +1,6 @@
 ﻿using ExamPortal.Models.Domain;
 using ExamPortal.Models.DTO;
+using ExamPortal.Models.DTO.Users;
 
 namespace ExamPortal.Repositories.AdminRepo
 {
@@ -40,5 +41,13 @@ namespace ExamPortal.Repositories.AdminRepo
         Task<Exam> EditExam(Exam inputData,int id);
 
         Task<Exam> GetExamData(int id);
+
+        Task<UserDashboardStats> GetDashboardStats(int id);
+
+        Task<List<UserPassStats>> GetUserPassStats(int id);
+
+        Task<List<UserResults>> GetUserResultsAll(int id);
+
+        Task<List<UserExamSheetDTO>> GetUserExamSheet(int id);
     }
 }

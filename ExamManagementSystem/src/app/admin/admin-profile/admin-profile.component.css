@@ -1,0 +1,7 @@
+.avatar{
+    width:250px;
+    height:250px;
+    }
+    .row_pass {
+        display: none; /* Hide the new password and confirm password fields initially */
+    }

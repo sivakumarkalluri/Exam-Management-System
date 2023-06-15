@@ -2,6 +2,8 @@ create database ExamPortal
 use ExamPortal
 
 --  UserLogin Data ------------------------------------------------------
+
+
 CREATE TABLE userRegisterData (
     userId INT PRIMARY KEY Identity(1,1),
     firstname VARCHAR(50) not null,
@@ -10,6 +12,7 @@ CREATE TABLE userRegisterData (
     mobile VARCHAR(20) not null,
     gender VARCHAR(10) not null,
 	password Varchar(20) not null,
+	imagePath nvarchar(Max),
 	role varchar(10) not null,
 	registeredAt DateTime not null
 );
@@ -21,18 +24,22 @@ CREATE TABLE userLogin(
 	role varchar(10)
 )
 
+-----------------------------------------
 INSERT INTO userRegisterData (firstname, lastname, email, mobile, gender, password, role, registeredAt)
 VALUES
     
     ('Siva', 'Kumar', 'siva@gmail.com', '9876543210', 'Female', 'admin', 'Admin', GETDATE());
 
-
+	---------------------------------------------------------------------------------------------------
 create table Categories(
 category_id int primary key identity(1,1),
 category_name nvarchar(500) not null,
 category_desc nvarchar(1000) not null
 
 )
+
+
+---------------------------------------------------------------------------------
 
 
 ------------- Table for Creating an new Exam -----------------------------
@@ -72,10 +79,11 @@ Constraint [FK_questions_category] foreign key(category_id) references categorie
 
 
 )
-
+select * from questions where exam_id=1
 ----Table containing users attempted questions data -----------------------------
 
 CREATE TABLE usersExamData (
+	testId INT not null,
     userId INT not null,
     exam_id INT not null,
 	category_id int not null,
@@ -93,6 +101,7 @@ CREATE TABLE usersExamData (
 
 create table userResults(
 resultId int primary Key identity(1,1),
+testId int not null,
 userId int not null,
 exam_id int not null,
 category_id int not null,
@@ -107,7 +116,7 @@ pass_flag BIT,
 attemptedAt DateTime,
 Constraint [FK_usersResults_users] foreign key (userId) references userRegisterData(userId),
 Constraint [FK_usersResults_exam] foreign key (exam_Id) references exam(exam_id),
-Constraint [FK_usersResults_categories] foreign key (category_id) references categories(category_id)
+Constraint [FK_usersResults_categories] foreign key (category_id) references categories(category_id),
 
 )
 
@@ -126,3 +135,5 @@ alter table usersExamData drop constraint [FK_usersExamData_categories]
 alter table usersExamData drop constraint [FK_usersExamData_exam]
 alter table usersExamData drop constraint [FK_usersExamData_questions]
 alter table usersExamData drop constraint [FK_usersExamData_users]
+
+

@@ -92,12 +92,28 @@
     <p class="text-danger text-center fs-3"> <i class="fa fa-exclamation-triangle mr-2" ></i>Unable to fetch the data. Please try again later.</p>
   </div>
 </div>
-<h1>Exam Pass Statistics</h1>
-{{passStatistics | json}}
-<h1>Exam Attempts Statistics</h1>
-{{examAttemptStatistics | json}}
-<h1>Category Attempt Statistics</h1>
-{{categoryAttemptStatistics | json}}
+
+
+
+<div class="chart-container">
+  <div class="chart-wrapper">
+    <h3>Exam Pass Statistics</h3>
+    <canvas id="barchart"></canvas>
+  </div>
+  <div class="chart-wrapper">
+    <h3>Exam Attempts Statistics</h3>
+    <canvas id="piechart"></canvas>
+  </div>
+</div>
+
+<div class="chart-container">
+  <div class="chart-wrapper">
+    <h3>Category Attempt Statistics</h3>
+    <canvas id="barchartType2"></canvas>
+  </div>
+  
+</div>
+
 
 
 

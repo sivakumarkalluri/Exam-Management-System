@@ -1,7 +1,8 @@
-at
+
 --- Stored Procedure for calculating user results -----------------
 
 CREATE PROCEDURE InsertUserResult
+	@testId INT,
     @userId INT,
     @examId INT
 AS
@@ -34,7 +35,7 @@ BEGIN
            @wrongAnswers = SUM(CASE WHEN usersExamData.answer <> questions.correctAnswer THEN 1 ELSE 0 END)
     FROM usersExamData 
     JOIN questions ON usersExamData.question_id = questions.question_id AND usersExamData.exam_id = questions.exam_id
-    WHERE usersExamData.userId = @userId AND usersExamData.exam_id = @examId
+    WHERE usersExamData.testId = @testId AND usersExamData.exam_id = @examId and usersExamData.userId=@userId
 
     -- Calculate the not attempted questions
     SET @notAttemptedQuestions = @totalQuestions - @attemptedQuestions
@@ -44,7 +45,7 @@ BEGIN
     FROM usersExamData
     JOIN questions ON usersExamData.question_id = questions.question_id
     JOIN exam ON exam.exam_id = usersExamData.exam_id
-    WHERE usersExamData.userId = @userId AND usersExamData.exam_id = @examId AND usersExamData.answer = questions.correctAnswer
+    WHERE usersExamData.userId = @userId AND usersExamData.exam_id = @examId AND usersExamData.answer = questions.correctAnswer and usersExamData.testId = @testId
 
     -- Calculate the percentage obtained
     SET @percentage = (@totalMarks / (CAST(@examTotal AS DECIMAL) / 100))
@@ -62,6 +63,7 @@ BEGIN
 
     -- Insert the result into userResults table
     INSERT INTO userResults (
+		testId,
         userId,
         exam_id,
         category_id,
@@ -76,6 +78,7 @@ BEGIN
         attemptedAt
     )
     VALUES (
+		@testId,
         @userId,
         @examId,
         @categoryId,
@@ -91,7 +94,7 @@ BEGIN
     )
 END
 
-
+--------------------------------------------------------------------------------------------------
 --- Stored Procedure for getting AdminDashboard Card Statistics
 
 
@@ -133,25 +136,34 @@ BEGIN
 END
 
 
+exec GetAdminStatistics
 
 
-
+---------------------------------------------------------------------------------------------------------
 ---Stored Procedure for ExamPass/Fail Statistics
+
 
 CREATE PROCEDURE GetExamPassStatistics
 AS
 BEGIN
+    WITH LatestUserResults AS (
+        SELECT userId, exam_id, MAX(attemptedAt) AS latestAttemptedAt
+        FROM userResults
+        GROUP BY userId, exam_id
+    )
     SELECT e.exam_id, e.exam_name, e.category_id,
         COUNT(CASE WHEN ur.pass_flag = 1 THEN ur.exam_id END) AS PassedCount,
         COUNT(CASE WHEN ur.pass_flag = 0 THEN ur.exam_id END) AS FailedCount
     FROM exam AS e
-    LEFT JOIN userResults AS ur ON e.exam_id = ur.exam_id
+    LEFT JOIN LatestUserResults AS lur ON e.exam_id = lur.exam_id
+    LEFT JOIN userResults AS ur ON lur.userId = ur.userId AND lur.exam_id = ur.exam_id AND lur.latestAttemptedAt = ur.attemptedAt
     GROUP BY e.exam_id, e.exam_name, e.category_id
 END
 
+exec GetExamPassStatistics
 
 
-
+-------------------------------------------------------------------------------------------------------------
 ---Stored procedure for Counting Students Attempted by Exams Name
 
 CREATE PROCEDURE CountStudentsAttemptedExams
@@ -159,12 +171,11 @@ AS
 BEGIN
     SELECT e.exam_id, e.exam_name, e.category_id, COUNT(DISTINCT ue.userId) AS StudentsAttempted
     FROM exam e
-    LEFT JOIN usersExamData ue ON e.exam_id = ue.exam_id
-    GROUP BY e.exam_id, e.exam_name, e.category_id
+    LEFT JOIN userResults ue ON e.exam_id = ue.exam_id
+	group by e.exam_id,e.exam_name,e.category_id
+ 
 END
-
-
-
+-----------------------------------------------------------------------------------------------------------
 ---Stored procedure for Counting Students Attempted by Category Name
 
 CREATE PROCEDURE CountStudentsAttemptedByCategory
@@ -177,8 +188,10 @@ BEGIN
     GROUP BY c.category_id, c.category_name
 END
 
+exec CountStudentsAttemptedByCategory
 
 
+------------------------------------------------------------------------------------------------------------
 ---Question List Type for inserting data
 
 CREATE TYPE QuestionListType AS TABLE (
@@ -189,7 +202,6 @@ CREATE TYPE QuestionListType AS TABLE (
     Option4 NVARCHAR(500),
     CorrectAnswer INT
 );
-
 
 
 
@@ -236,7 +248,7 @@ END
 
 
 
-
+--------------------------------------------------------------------------------------------------------------
 --- Stored Procedure for UsersData in Admin Dispaly
 
 CREATE PROCEDURE GetUsersData
@@ -265,7 +277,7 @@ BEGIN
 END
 
 
-
+-----------------------------------------------------------------------------------------------------------------
 
 ---Stored Procedure for Getting Admin User Results Data
 
@@ -302,7 +314,7 @@ END
 
 
 
-
+----------------------------------------------------------------------------------------------------------------
 --- Stored Procedure of Deleting category
 
 
@@ -348,7 +360,7 @@ END
 
 
 
-
+-----------------------------------------------------------------------------------------------------------
 ----stored Procedure for Adding Exam
 
 CREATE PROCEDURE AddExam
@@ -384,6 +396,7 @@ BEGIN
 END
 
 
+-----------------------------------------------------------------------------------------------------
 
 --Stored Procedure for getting data for Exam Crud Operation
 CREATE PROCEDURE AdminCRUDExamData
@@ -396,7 +409,7 @@ BEGIN
     ORDER BY c.Category_Id
 END
 
-
+------------------------------------------------------------------------------------------------------------
 -- Stored Procedure for Deleting an Exam
 
 CREATE PROCEDURE DeleteExamWithQuestions
@@ -416,7 +429,7 @@ BEGIN
       
 END
 
-
+----------------------------------------------------------------------------------------------------------
 -- Stored Procedure for Deleting and Question and reducing the number Total Questions in Exam
 
 CREATE PROCEDURE DeleteQuestion
@@ -443,11 +456,11 @@ BEGIN
 END
 
 
-
+-------------------------------------------------------------------------------------------------------
 -- Stored Procedure for adding question and incrementing the questions count in exam
-DELIMITER //
 
-CREATE PROCEDURE AddQuestionToExam(
+
+CREATE PROCEDURE AddQuestionToExam
   @examId int,
   @categoryId int,
   @questionDesc varchar(max),
@@ -456,13 +469,13 @@ CREATE PROCEDURE AddQuestionToExam(
   @option3 varchar(500),
   @option4 varchar(500),
   @correctAnswer INT
-)
+
 as 
 BEGIN
-   DECLARE @exam_Id INT;
+  
 
   -- Insert the question into the questions table
-  INSERT INTO questions (exam_id,category_id, option_1, option_2, option_3, option_4, correctAnswer)
+  INSERT INTO questions (exam_id,category_id,question_desc, option_1, option_2, option_3, option_4, correctAnswer)
   VALUES (@examId,@categoryId,@questionDesc, @option1, @option2, @option3, @option4, @correctAnswer);
 
  
@@ -473,7 +486,77 @@ BEGIN
   WHERE exam_id = @examId;
 
   -- Return the question ID
-  SELECT @exam_Id;
+  SELECT @examId as exam_Id;
+END
+
+
+
+------------------------------------------------------------------------------
+
+
+
+CREATE PROCEDURE UserDashBoardStatistics
+	@userId INT
+AS
+BEGIN
+    SELECT
+        -- Calculate total exams available
+        (SELECT COUNT(DISTINCT exam_id) FROM exam) AS totalExamsAvailable,
+        
+        -- Calculate total exams written by the user
+        (SELECT COUNT(DISTINCT exam_id) FROM userResults WHERE userId = @userId) AS totalExamsWritten,
+        
+        -- Calculate total tests attempted by the user
+        (SELECT COUNT(*) FROM userResults WHERE userId = @userId) AS totalTestsAttempted;
+END;
+
+
+---------------------------------------------------------------------------------------------
+
+
+CREATE PROCEDURE GetUserPassStats
+	@userId INT
+AS
+BEGIN
+    SELECT e.exam_name, MAX(ur.percentage) AS maxPercentage
+    FROM exam AS e
+    INNER JOIN userResults AS ur ON e.exam_id = ur.exam_id
+    WHERE ur.userId = @userId
+    GROUP BY e.exam_name;
+END;
+
+-------------------------------------------------------------------------
+
+CREATE PROCEDURE UserExamSheet
+    @testId INT
+AS
+BEGIN
+    SELECT
+        ued.testId,
+        ued.userId,
+        ued.exam_id,
+        ued.category_id,
+        ued.question_id,
+        ued.answer,
+        ued.attemptedAt,
+        e.exam_name,
+        c.category_name,
+        e.exampass_percent AS pass_percentage,
+        q.question_desc,
+        q.option_1,
+        q.option_2,
+        q.option_3,
+        q.option_4,
+        q.correctAnswer,
+        ur.total_marksObtained,
+        ur.percentage AS percentage_obtained,
+        ur.pass_flag AS pass_fail
+    FROM usersExamData AS ued
+    INNER JOIN exam AS e ON ued.exam_id = e.exam_id
+    INNER JOIN categories AS c ON ued.category_id = c.category_id
+    INNER JOIN questions AS q ON ued.question_id = q.question_id
+    INNER JOIN userResults AS ur ON ued.testId = ur.testId
+    WHERE ued.testId = @testId;
 END
 
 
@@ -482,45 +565,30 @@ END
 
 
 
-drop procedure AdminCrudExamData
-exec AdminCRUDExamData
-
-update exam set exam_totalquestion=1 where exam_id=1024;
-select * from exam
 
 
+exec InsertUserResult @testId=1,@userId=2,@examId=1;
+exec InsertUserResult @testId=2, @userId=2,@examId=2;
+exec InsertUserResult @testId=3,@userId=2,@examId=3;
+exec InsertUserResult @testId=4,@userId=3,@examId=2;
+exec InsertUserResult @testId=5, @userId=3,@examId=1;
+exec InsertUserResult @testId=6,@userId=4,@examId=1;
+exec InsertUserResult @testId=7,@userId=4,@examId=1;
+exec InsertUserResult @testId=8,@userId=4,@examId=1;
+exec InsertUserResult @testId=9,@userId=5,@examId=1;
+
+exec InsertUserResult @testId=10,@userId=5,@examId=3;
+exec InsertUserResult @testId=11,@userId=6,@examId=3;
+exec InsertUserResult @testId=12,@userId=7,@examId=3;
+exec InsertUserResult @testId=13,@userId=8,@examId=6;
+exec InsertUserResult @testId=14,@userId=9,@examId=6;
+exec InsertUserResult @testId=15,@userId=10,@examId=6;
+exec InsertUserResult @testId=16,@userId=11,@examId=6;
+exec InsertUserResult @testId=17,@userId=11,@examId=5;
+exec InsertUserResult @testId=18,@userId=13,@examId=5;
+exec InsertUserResult @testId=19,@userId=15,@examId=5;
+exec InsertUserResult @testId=20,@userId=17,@examId=3;
+exec InsertUserResult @testId=21,@userId=19,@examId=3;
 
 
-exec InsertUserResult @userId=2,@examId=1;
-exec InsertUserResult @userId=2,@examId=2;
-exec InsertUserResult @userId=2,@examId=3;
-exec InsertUserResult @userId=3,@examId=2;
-exec InsertUserResult @userId=3,@examId=1;
-exec InsertUserResult @userId=4,@examId=1;
-exec InsertUserResult @userId=5,@examId=1;
-exec InsertUserResult @userId=5,@examId=3;
-exec InsertUserResult @userId=6,@examId=3;
-exec InsertUserResult @userId=7,@examId=3;
-exec InsertUserResult @userId=8,@examId=6;
-exec InsertUserResult @userId=9,@examId=6;
-exec InsertUserResult @userId=10,@examId=6;
-exec InsertUserResult @userId=11,@examId=6;
-exec InsertUserResult @userId=11,@examId=5;
-exec InsertUserResult @userId=13,@examId=5;
-
-exec InsertUserResult @userId=15,@examId=5;
-
-exec InsertUserResult @userId=17,@examId=3;
-exec InsertUserResult @userId=19,@examId=3;
-
-
- SELECT c.Category_Id, c.Category_Name, e.Exam_Id, e.Exam_Name, e.exam_totalquestion
-    FROM Categories c
-    INNER JOIN Exam e ON c.Category_Id = e.Category_Id
-	group by c.Category_Id,c.Category_Name
-	order by c.category_id 
-
-	select * from questions;
-
-
-
+select * from userResults

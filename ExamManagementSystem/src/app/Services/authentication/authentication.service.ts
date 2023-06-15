@@ -17,6 +17,7 @@ export class AuthenticationService {
   jwtHelperService=new JwtHelperService();
   
   roleCheck="";
+  userInfo:any;
   loggedIn=false;
   accessToken!:string;
   baseUrl="https://localhost:7058/api/UserData";
@@ -28,7 +29,8 @@ export class AuthenticationService {
      Mobile:data[3],
      Password:data[4],
      Gender:data[5],
-     Role:data[6]
+     Role:data[6],
+     ImagePath:data[7]
     },{
       responseType:'text'
     });
@@ -51,21 +53,31 @@ export class AuthenticationService {
     this.loadCurrentUser();
   }
 
+  
+
   loadCurrentUser(){
     const token=localStorage.getItem("access_token");
+    if(token==null){
+      return "none";
+    }
     
     const userInfo=token !=null ? this.jwtHelperService.decodeToken(token):null;
-    console.log(userInfo);
+   
     this.roleCheck=userInfo.role;
+    console.log("roleCheck : "+this.roleCheck);
     const data=userInfo ?{
       id:userInfo.id,
       firstName:userInfo.firstName,
       lastName:userInfo.lastName,
       email:userInfo.email,
       mobile:userInfo.mobile,
-      role:userInfo.role
+      role:userInfo.role,
+
     }:null;
+    this.userInfo=data;
+    
     this.currentUser.next(data);
+    return userInfo.role;
   }
 
   removeToken(){

@@ -1,6 +1,7 @@
 ﻿using ExamPortal.Models.Domain;
 using ExamPortal.Models.Domain.Auth;
 using ExamPortal.Models.DTO;
+using ExamPortal.Models.DTO.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExamPortal.Data
@@ -46,6 +47,14 @@ namespace ExamPortal.Data
         public DbSet<DeleteExamDTO> deleteExamDTOs { get; set; }
 
         public DbSet<DeleteQuestionDTO> deleteQuestionDTOs { get; set; }
+
+        public DbSet<UserDashboardStats> userDashboardStats { get; set; }
+
+        public DbSet<UserPassStats> userPassStats { get; set; }
+
+        public DbSet<UserResults> userResults { get; set; }
+
+        public DbSet<UserExamSheetDTO> userExamSheetDTOs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure AdminStatisticsDTO as a keyless entity type
@@ -75,7 +84,15 @@ namespace ExamPortal.Data
 
             modelBuilder.Entity<DeleteExamDTO>().HasNoKey();
 
-            modelBuilder.Entity<DeleteQuestionDTO>().HasNoKey();    
+            modelBuilder.Entity<DeleteQuestionDTO>().HasNoKey();
+
+            modelBuilder.Entity<UserDashboardStats>().HasNoKey();
+
+            modelBuilder.Entity<UserPassStats>().HasNoKey();
+
+            modelBuilder.Entity<UserResults>().HasNoKey();
+
+            modelBuilder.Entity<UserExamSheetDTO>().HasNoKey();
             // Other configurations
 
             base.OnModelCreating(modelBuilder);

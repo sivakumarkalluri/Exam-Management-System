@@ -3,7 +3,8 @@ export const navbarData = [
     {
         routeLink:'/homePage',
         icon:'fa-solid fa-house',
-        label:'Home'
+        label:'Home',
+      
     },
     {
         routeLink:'adminDashboard',

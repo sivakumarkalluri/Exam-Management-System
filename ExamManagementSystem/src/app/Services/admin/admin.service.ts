@@ -90,4 +90,8 @@ export class AdminService implements OnInit{
     return this.http.delete(this.baseUrl+'/DeleteExam/'+id,{ observe: 'response' })
   }
 
+  getUserData(id:any){
+    return this.http.get(this.baseUrl+'/UserData/UserData/'+id,{ observe: 'response' })
+  }
+
 }

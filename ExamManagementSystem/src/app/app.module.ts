@@ -34,6 +34,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { DeleteDialogComponent } from './admin/Dialogs/delete-dialog/delete-dialog.component';
 import { CRUDExamsComponent } from './admin/crudexams/crudexams.component';
 import { LogoutComponent } from './admin/Dialogs/logout/logout.component';
+import { Chart } from 'chart.js';
+import { UserBodyComponent } from './User/user-body/user-body.component';
+import { UserNavBarComponent } from './User/user-nav-bar/user-nav-bar.component';
+import { UserHomeComponent } from './User/user-home/user-home.component';
+import { UserExamsComponent } from './User/user-exams/user-exams.component';
+import { UserResultsComponent } from './User/user-results/user-results.component';
+import { UserTestComponent } from './User/user-test/user-test.component';
+import { UserProfileComponent } from './User/user-profile/user-profile.component';
+
 
 
 @NgModule({
@@ -59,7 +68,14 @@ import { LogoutComponent } from './admin/Dialogs/logout/logout.component';
     SaveDialogComponent,
     DeleteDialogComponent,
     CRUDExamsComponent,
-    LogoutComponent
+    LogoutComponent,
+    UserBodyComponent,
+    UserNavBarComponent,
+    UserHomeComponent,
+    UserExamsComponent,
+    UserResultsComponent,
+    UserTestComponent,
+    UserProfileComponent
     
   ],
   imports: [

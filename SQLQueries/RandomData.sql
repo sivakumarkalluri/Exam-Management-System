@@ -24,14 +24,19 @@ VALUES
 
 	select * from userRegisterData
 
+
+
+	------------------------------------------------------------------------------------------------------
+
 INSERT INTO Categories (category_name, category_desc)
 VALUES
     ('Programming Languages', 'This category includes programming languages such as Java, C++, Python.'),
     ('Aptitude', 'This category includes aptitude questions on various topics.'),
     ('Operating Systems', 'This category includes questions related to operating systems concepts.');
-
 select * from Categories;
 
+
+--------------------------------------------------------------------------------------------------------------------
 INSERT INTO exam (exam_name,category_id, exam_description, exam_duration, question_mark, exam_totalquestion, exampass_percent)
 VALUES
     ('Python', 1,'This is a Python exam', 60, 5, 10, 30),
@@ -42,11 +47,13 @@ VALUES
     ('Operating System',3, 'This is an Operating System exam', 45, 5, 8, 30);
 
 
+	----------------------------------------------------------------------------------------------------------
+
 	INSERT INTO questions (exam_id,category_id, question_desc, option_1, option_2, option_3, option_4, correctAnswer)
 VALUES
-    (1,1, 'What is the output of the following Python code?\n\nx = 5\nprint(x + 3)', '5', '8', '3', 'Error', 2),
+    (1,1, 'What is the output of the following Python code? x = 5 print(x + 3)', '5', '8', '3', 'Error', 2),
     (1, 1,'Which of the following data types is not supported in Python?', 'int', 'float', 'string', 'list', 4),
-    (1,1, 'What is the result of the following expression in Python?\n\n5 > 3 and 2 < 4', 'True', 'False', 'Error', 'None of the above', 1),
+    (1,1, 'What is the result of the following expression in Python? \5 > 3 and 2 < 4', 'True', 'False', 'Error', 'None of the above', 1),
     (1,1, 'What is the correct way to declare a variable in Python?', 'var x = 5', 'int x = 5', 'x = 5', 'x := 5', 3),
     (1,1, 'What is the output of the following Python code?\n\nfruits = ["apple", "banana", "cherry"]\nprint(len(fruits))', '0', '3', '5', 'Error', 2),
     (1,1, 'What is the output of the following Python code?\n\nx = 10\ny = 5\nprint(x % y)', '2', '0', '1', '5', 2),
@@ -56,7 +63,7 @@ VALUES
     (1,1, 'What is the output of the following Python code?\n\nfruits = ["apple", "banana", "cherry"]\nprint(fruits[1])', 'apple', 'banana', 'cherry', 'IndexError', 2);
 
 
-
+---------------------------------------------------------------------------------------------------------------------------
 	INSERT INTO questions (exam_id,category_id, question_desc, option_1, option_2, option_3, option_4, correctAnswer)
 VALUES
     (2,1, 'What is the output of the following Java code?\n\nint x = 5;\nSystem.out.println(x + 3);', '5', '8', '3', 'Error', 2),
@@ -68,6 +75,8 @@ VALUES
     (2,1, 'Which of the following is a built-in Java method to find the length of a string?', 'length()', 'count()', 'size()', 'len()', 1),
     (2,1, 'What will be the result of the following expression in Java?\n\nMath.pow(3, 2)', '6', '9', '3', '0', 2);
 
+
+	-------------------------------------------------------------------------------------------------------------
 INSERT INTO questions (exam_id,category_id, question_desc, option_1, option_2, option_3, option_4, correctAnswer)
 VALUES
     (3,1, 'What is the output of the following C# code?\n\nint x = 5;\nConsole.WriteLine(x + 3);', '5', '8', '3', 'Error', 2),
@@ -78,6 +87,7 @@ VALUES
     (3,1, 'What is the purpose of the "using" statement in C#?', 'To include a namespace', 'To define a class', 'To create an object', 'To perform file I/O operations', 1);
 
 
+	--------------------------------------------------------------------------------------------------------------------
 INSERT INTO questions (exam_id,category_id, question_desc, option_1, option_2, option_3, option_4, correctAnswer)
 VALUES
     (4,2, 'A train running at the speed of 60 km/hr crosses a pole in 9 seconds. What is the length of the train?', '120 meters', '180 meters', '324 meters', '150 meters', 1),
@@ -91,7 +101,7 @@ VALUES
     (4,2,  'If the perimeter of a square is 40 cm, what is the area of the square?', '100 cm²', '144 cm²', '196 cm²', '400 cm²', 3),
     (4,2,  'A fruit seller sells mangoes at $15 per dozen. How many mangoes can he buy for $90?', '4 dozen', '5 dozen', '6 dozen', '7 dozen', 3);
 
-
+-----------------------------------------------------------------------------------------------------------
 INSERT INTO questions (exam_id,category_id, question_desc, option_1, option_2, option_3, option_4, correctAnswer)
 VALUES
     (5,1, 'Which of the following is not a type of database model?', 'Relational Model', 'Hierarchical Model', 'Network Model', 'Linear Model', 4),
@@ -107,7 +117,7 @@ VALUES
     (5,1, 'What is the maximum number of tables that can be included in a single SQL query?', 'No limit', '256', '1024', 'Depends on the database management system', 1),
     (5,1, 'Which SQL keyword is used to add new rows to a database table?', 'INSERT', 'SELECT', 'UPDATE', 'DELETE', 1);
 
-	
+	-------------------------------------------------------------------------------------------------------------------
 
 	INSERT INTO questions (exam_id,category_id, question_desc, option_1, option_2, option_3, option_4, correctAnswer)
 VALUES
@@ -122,254 +132,463 @@ VALUES
 
 select * from questions
 
-INSERT INTO usersExamData (userId, exam_id,category_id, question_id, answer, attemptedAt)
-VALUES
-    (2, 1,1, 1, 1, GETDATE()),
-    (2, 1, 1,2, NULL, GETDATE()),
-    (2, 1,1, 3, 3, GETDATE()),
-    (2, 1,1, 4, NULL, GETDATE()),
-    (2, 1,1, 5, 2, GETDATE()),
-	(2, 1,1, 6, 2, GETDATE()),
-    (2, 1,1, 7, 3, GETDATE()),
-    (2, 1,1, 8, 1, GETDATE()),
-    (2, 1,1, 9, 1, GETDATE()),
-    (2, 1,1, 10, 2, GETDATE());
 
-	INSERT INTO usersExamData (userId, exam_id,category_id, question_id, answer, attemptedAt)
-VALUES
-    (2, 2,1, 11, NULL, GETDATE()),
-    (2, 2,1, 12, 3, GETDATE()),
-    (2, 2,1, 13, 2, GETDATE()),
-    (2, 2,1, 14, 1, GETDATE()),
-    (2, 2,1, 15, 2, GETDATE()),
-    (2, 2,1, 16, 2, GETDATE()),
-    (2, 2,1, 17, 1, GETDATE()),
-	(2, 2,1, 18, 2, GETDATE());
+----------------------------------------------------------------------------------------------
 
-	INSERT INTO usersExamData (userId, exam_id,category_id ,question_id, answer, attemptedAt)
-VALUES
-    (2, 3,1, 19, 3, GETDATE()),
-    (2, 3,1, 20, NULL, GETDATE()),
-    (2, 3,1, 21, 2, GETDATE()),
-    (2, 3,1, 22, NULL, GETDATE()),
-    (2, 3,1, 23, 4, GETDATE()),
-    (2, 3,1, 24, 1, GETDATE());
+DECLARE @DataList ExamDataListType;
 
+INSERT INTO @DataList (TestId, UserId, ExamId, CategoryId, QuestionId, Answer, AttemptedAt)
+VALUES
+    (1,2, 1,1, 1, 1, GETDATE()),
+    (1,2, 1, 1,2, NULL, GETDATE()),
+    (1,2, 1,1, 3, 3, GETDATE()),
+    (1,2, 1,1, 4, NULL, GETDATE()),
+    (1,2, 1,1, 5, 2, GETDATE()),
+	(1,2, 1,1, 6, 2, GETDATE()),
+    (1,2, 1,1, 7, 2, GETDATE()),
+    (1,2, 1,1, 8, 4, GETDATE()),
+    (1,2, 1,1, 9, 3, GETDATE()),
+    (1,2, 1,1, 10, 2, GETDATE());
+    -- Add more rows as needed
+
+EXEC InsertExamDataList @ExamDataList = @DataList;
+
+
+
+-----------------------------------------------------------------------------------------------------------
+
+DECLARE @DataList ExamDataListType;
+
+INSERT INTO @DataList (TestId, UserId, ExamId, CategoryId, QuestionId, Answer, AttemptedAt)
+VALUES
+    (2,2, 2,1, 11, NULL, GETDATE()),
+    (2,2, 2,1, 12, 3, GETDATE()),
+    (2,2, 2,1, 13, 2, GETDATE()),
+    (2,2, 2,1, 14, 1, GETDATE()),
+    (2,2, 2,1, 15, 2, GETDATE()),
+    (2,2, 2,1, 16, 2, GETDATE()),
+    (2,2, 2,1, 17, 1, GETDATE()),
+	(2,2, 2,1, 18, 2, GETDATE());
+    -- Add more rows as needed
+
+EXEC InsertExamDataList @ExamDataList = @DataList;
+
+
+------------------------------------------------------------------------------------------------------------------
+	
+DECLARE @DataList ExamDataListType;
+
+INSERT INTO @DataList (TestId, UserId, ExamId, CategoryId, QuestionId, Answer, AttemptedAt)
+VALUES
+    (3,2, 3,1, 19, 3, GETDATE()),
+    (3,2, 3,1, 20, NULL, GETDATE()),
+    (3,2, 3,1, 21, 2, GETDATE()),
+    (3,2, 3,1, 22, NULL, GETDATE()),
+    (3,2, 3,1, 23, 4, GETDATE()),
+    (3,2, 3,1, 24, 1, GETDATE());
+    -- Add more rows as needed
+
+EXEC InsertExamDataList @ExamDataList = @DataList;
 
 	
-	INSERT INTO usersExamData (userId, exam_id,category_id, question_id, answer, attemptedAt)
-VALUES
-    (3, 2,1, 11, NULL, GETDATE()),
-    (3, 2,1, 12, 1, GETDATE()),
-    (3, 2,1, 13, 3, GETDATE()),
-    (3, 2,1, 14, 4, GETDATE()),
-    (3, 2,1, 15, 2, GETDATE()),
-    (3, 2,1, 16, 1, GETDATE()),
-    (3, 2,1, 17, 1, GETDATE()),
-	(3, 2,1, 18, 2, GETDATE());
-
-
-	
-INSERT INTO usersExamData (userId, exam_id,category_id, question_id, answer, attemptedAt)
-VALUES
-    (3, 1,1, 1, 2, GETDATE()),
-    (3, 1,1, 2, NULL, GETDATE()),
-    (3, 1,1, 3, 3, GETDATE()),
-    (3, 1,1, 4, 1, GETDATE()),
-    (3, 1,1, 5, 2, GETDATE()),
-	(3, 1,1, 6, 2, GETDATE()),
-    (3, 1,1, 7, 3, GETDATE()),
-    (3, 1,1, 8, 1, GETDATE()),
-    (3, 1,1, 9, 1, GETDATE()),
-    (3, 1,1, 10, 2, GETDATE());
-
+	------------------------------------------------------------------------------------------------------------
 
 
 		
-INSERT INTO usersExamData (userId, exam_id,category_id, question_id, answer, attemptedAt)
+DECLARE @DataList ExamDataListType;
+
+INSERT INTO @DataList (TestId, UserId, ExamId, CategoryId, QuestionId, Answer, AttemptedAt)
 VALUES
-    (4, 1,1, 1, 2, GETDATE()),
-    (4, 1,1, 2, 1, GETDATE()),
-    (4, 1,1, 3, 3, GETDATE()),
-    (4, 1,1, 4, 1, GETDATE()),
-    (4, 1,1, 5, 3, GETDATE()),
-	(4, 1,1, 6, 2, GETDATE()),
-    (4, 1,1, 7, 4, GETDATE()),
-    (4, 1,1, 8, 1, GETDATE()),
-    (4, 1,1, 9, 1, GETDATE()),
-    (4, 1,1, 10, 2, GETDATE());
+    (4,3, 2,1, 11, NULL, GETDATE()),
+    (4,3, 2,1, 12, 1, GETDATE()),
+    (4,3, 2,1, 13, 3, GETDATE()),
+    (4,3, 2,1, 14, 4, GETDATE()),
+    (4,3, 2,1, 15, 2, GETDATE()),
+    (4,3, 2,1, 16, 1, GETDATE()),
+    (4,3, 2,1, 17, 1, GETDATE()),
+	(4,3, 2,1, 18, 2, GETDATE());
+    -- Add more rows as needed
+
+EXEC InsertExamDataList @ExamDataList = @DataList;
+
+
+-------------------------------------------------------------------------------------------------------------	
+
+DECLARE @DataList ExamDataListType;
+
+INSERT INTO @DataList (TestId, UserId, ExamId, CategoryId, QuestionId, Answer, AttemptedAt)
+VALUES
+    (5,3, 1,1, 1, 2, GETDATE()),
+    (5,3, 1,1, 2, NULL, GETDATE()),
+    (5,3, 1,1, 3, 3, GETDATE()),
+    (5,3, 1,1, 4, 1, GETDATE()),
+    (5,3, 1,1, 5, 2, GETDATE()),
+	(5,3, 1,1, 6, 2, GETDATE()),
+    (5,3, 1,1, 7, 3, GETDATE()),
+    (5,3, 1,1, 8, 1, GETDATE()),
+    (5,3, 1,1, 9, 1, GETDATE()),
+    (5,3, 1,1, 10, 2, GETDATE());
+    -- Add more rows as needed
+
+EXEC InsertExamDataList @ExamDataList = @DataList;
+
+-------------------------------------------------------------------------------------------------------------------------
+
+	
+DECLARE @DataList ExamDataListType;
+
+INSERT INTO @DataList (TestId, UserId, ExamId, CategoryId, QuestionId, Answer, AttemptedAt)
+VALUES
+     (6,4, 1,1, 1, 2, GETDATE()),
+    (6,4, 1,1, 2, 1, GETDATE()),
+    (6,4, 1,1, 3, 3, GETDATE()),
+    (6,4, 1,1, 4, 1, GETDATE()),
+    (6,4, 1,1, 5, 3, GETDATE()),
+	(6,4, 1,1, 6, 2, GETDATE()),
+    (6,4, 1,1, 7, 4, GETDATE()),
+    (6,4, 1,1, 8, 1, GETDATE()),
+    (6,4, 1,1, 9, 1, GETDATE()),
+    (6,4, 1,1, 10, 2, GETDATE());
+
+    -- Add more rows as needed
+
+EXEC InsertExamDataList @ExamDataList = @DataList;
+
+select * from usersExamData
+	-----------------------------------------------------------------------------
+
+
+	
+DECLARE @DataList ExamDataListType;
+
+INSERT INTO @DataList (TestId, UserId, ExamId, CategoryId, QuestionId, Answer, AttemptedAt)
+VALUES
+      (7,4, 1,1, 1, 2, GETDATE()),
+    (7,4, 1,1, 2, 1, GETDATE()),
+    (7,4, 1,1, 3, null, GETDATE()),
+    (7,4, 1,1, 4, 1, GETDATE()),
+    (7,4, 1,1, 5, null, GETDATE()),
+	(7,4, 1,1, 6, null, GETDATE()),
+    (7,4, 1,1, 7, null, GETDATE()),
+    (7,4, 1,1, 8, null, GETDATE()),
+    (7,4, 1,1, 9, null, GETDATE()),
+    (7,4, 1,1, 10, 2, GETDATE());
+
+
+    -- Add more rows as needed
+
+EXEC InsertExamDataList @ExamDataList = @DataList;
+
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+	
+DECLARE @DataList ExamDataListType;
+
+INSERT INTO @DataList (TestId, UserId, ExamId, CategoryId, QuestionId, Answer, AttemptedAt)
+VALUES
+      (8,4, 1,1, 1, 2, GETDATE()),
+    (8,4, 1,1, 2, 1, GETDATE()),
+    (8,4, 1,1, 3, 3, GETDATE()),
+    (8,4, 1,1, 4, 1, GETDATE()),
+    (8,4, 1,1, 5, 3, GETDATE()),
+	(8,4, 1,1, 6, 2, GETDATE()),
+    (8,4, 1,1, 7, 4, GETDATE()),
+    (8,4, 1,1, 8, 1, GETDATE()),
+    (8,4, 1,1, 9, 2, GETDATE()),
+    (8,4, 1,1, 10, 2, GETDATE());
+
+
+    -- Add more rows as needed
+
+EXEC InsertExamDataList @ExamDataList = @DataList;
+	
+
+---------------------------------------------------------------------------------------------------------------------
 
 		
-INSERT INTO usersExamData (userId, exam_id,category_id, question_id, answer, attemptedAt)
-VALUES
-    (5, 1,1, 1, 2, GETDATE()),
-    (5, 1,1, 2, NULL, GETDATE()),
-    (5, 1,1, 3, NULL, GETDATE()),
-    (5, 1,1, 4, 2, GETDATE()),
-    (5, 1,1, 5, 2, GETDATE()),
-	(5, 1,1, 6, 2, GETDATE()),
-    (5, 1,1, 7, 4, GETDATE()),
-    (5, 1,1, 8, 4, GETDATE()),
-    (5, 1,1, 9, 4, GETDATE()),
-    (5, 1,1, 10, 4, GETDATE());
+DECLARE @DataList ExamDataListType;
 
+INSERT INTO @DataList (TestId, UserId, ExamId, CategoryId, QuestionId, Answer, AttemptedAt)
+VALUES
+     (9,5, 1,1, 1, 2, GETDATE()),
+    (9,5, 1,1, 2, NULL, GETDATE()),
+    (9,5, 1,1, 3, NULL, GETDATE()),
+    (9,5, 1,1, 4, 2, GETDATE()),
+    (9,5, 1,1, 5, 2, GETDATE()),
+	(9,5, 1,1, 6, 2, GETDATE()),
+    (9,5, 1,1, 7, 4, GETDATE()),
+    (9,5, 1,1, 8, 4, GETDATE()),
+    (9,5, 1,1, 9, 4, GETDATE()),
+    (9,5, 1,1, 10, 4, GETDATE());
+
+
+    -- Add more rows as needed
+
+EXEC InsertExamDataList @ExamDataList = @DataList;
+	
+
+------------------------------------------------------------------------------------------------------------------
+
+	
 
 		
-INSERT INTO usersExamData (userId, exam_id,category_id, question_id, answer, attemptedAt)
+DECLARE @DataList ExamDataListType;
+
+INSERT INTO @DataList (TestId, UserId, ExamId, CategoryId, QuestionId, Answer, AttemptedAt)
 VALUES
-    (5, 3,1, 19, 2, GETDATE()),
-    (5, 3,1, 20, 4, GETDATE()),
-    (5, 3,1, 21, 1, GETDATE()),
-    (5, 3,1, 22, 3, GETDATE()),
-    (5, 3,1, 23, 2, GETDATE()),
-	 (5, 3,1, 24, 1, GETDATE());
+        (10,5, 3,1, 19, 2, GETDATE()),
+    (10,5, 3,1, 20, 4, GETDATE()),
+    (10,5, 3,1, 21, 1, GETDATE()),
+    (10,5, 3,1, 22, 3, GETDATE()),
+    (10,5, 3,1, 23, 2, GETDATE()),
+	 (10,5, 3,1, 24, 1, GETDATE());
+
+
+
+    -- Add more rows as needed
+
+EXEC InsertExamDataList @ExamDataList = @DataList;
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+DECLARE @DataList ExamDataListType;
+
+INSERT INTO @DataList (TestId, UserId, ExamId, CategoryId, QuestionId, Answer, AttemptedAt)
+VALUES
+        (11,6, 3,1, 19, 2, GETDATE()),
+    (11,6, 3,1, 20, 3, GETDATE()),
+    (11,6, 3,1, 21, 1, GETDATE()),
+    (11,6, 3,1, 22, 2, GETDATE()),
+    (11,6, 3,1, 23, 2, GETDATE()),
+	 (11,6, 3,1, 24, 1, GETDATE());
+
+
+
+    -- Add more rows as needed
+
+EXEC InsertExamDataList @ExamDataList = @DataList;
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+
+DECLARE @DataList ExamDataListType;
+
+INSERT INTO @DataList (TestId, UserId, ExamId, CategoryId, QuestionId, Answer, AttemptedAt)
+VALUES
+       (12,7, 3,1, 19, 1, GETDATE()),
+    (12,7, 3,1, 20, 2, GETDATE()),
+    (12,7, 3,1, 21, 1, GETDATE()),
+    (12,7, 3,1, 22, 2, GETDATE()),
+    (12,7, 3,1, 23, 2, GETDATE()),
+	 (12,7, 3,1, 24, 1, GETDATE());
+
+
+
+    -- Add more rows as needed
+
+EXEC InsertExamDataList @ExamDataList = @DataList;
+    
+
+----------------------------------------------------------------------------------------------------------------
+	
+DECLARE @DataList ExamDataListType;
+
+INSERT INTO @DataList (TestId, UserId, ExamId, CategoryId, QuestionId, Answer, AttemptedAt)
+VALUES
+       (13,8, 6,3, 47, 1, GETDATE()),
+    (13,8, 6,3, 48, 1, GETDATE()),
+    (13,8, 6,3, 49, 1, GETDATE()),
+    (13,8, 6,3, 50, 1, GETDATE()),
+    (13,8, 6,3, 51, 2, GETDATE()),
+	 (13,8, 6,3, 52, 1, GETDATE()),
+	 (13,8, 6,3, 53, 1, GETDATE()),
+	 (13,8, 6,3, 54, 1, GETDATE());
+
+
+
+    -- Add more rows as needed
+
+EXEC InsertExamDataList @ExamDataList = @DataList;
+    
+-------------------------------------------------------------------------------------------------------------------------
+	
+DECLARE @DataList ExamDataListType;
+
+INSERT INTO @DataList (TestId, UserId, ExamId, CategoryId, QuestionId, Answer, AttemptedAt)
+VALUES
+        (14,9, 6,3, 47, 1, GETDATE()),
+    (14,9, 6,3, 48, 2, GETDATE()),
+    (14,9, 6,3, 49, 1, GETDATE()),
+    (14,9, 6,3, 50, 1, GETDATE()),
+    (14,9, 6,3, 51, 2, GETDATE()),
+	 (14,9, 6,3, 52, 2, GETDATE()),
+	 (14,9, 6,3, 53, 1, GETDATE()),
+	 (14,9, 6,3, 54, 1, GETDATE());
+
+EXEC InsertExamDataList @ExamDataList = @DataList;
+ 
+ 
+ ---------------------------------------------------------------------------------------------------
+
+ 
+DECLARE @DataList ExamDataListType;
+
+INSERT INTO @DataList (TestId, UserId, ExamId, CategoryId, QuestionId, Answer, AttemptedAt)
+VALUES
+       (15,10, 6,3, 47, 1, GETDATE()),
+    (15, 10,6,3, 48, 2, GETDATE()),
+    (15,10, 6,3, 49, 2, GETDATE()),
+    (15,10, 6,3, 50, 2, GETDATE()),
+    (15,10, 6,3, 51, 2, GETDATE()),
+	 (15,10, 6,3, 52, 2, GETDATE()),
+	 (15,10, 6,3, 53, 1, GETDATE()),
+	 (15,10, 6,3, 54, 2, GETDATE());
+
+EXEC InsertExamDataList @ExamDataList = @DataList;
+
+------------------------------------------------------------------------------------------------------------------------
+			
+DECLARE @DataList ExamDataListType;
+
+INSERT INTO @DataList (TestId, UserId, ExamId, CategoryId, QuestionId, Answer, AttemptedAt)
+VALUES
+     (16,11, 6,3, 47, 1, GETDATE()),
+    (16,11, 6,3, 48, 1, GETDATE()),
+    (16,11, 6,3, 49, 1, GETDATE()),
+    (16,11, 6,3, 50, 1, GETDATE()),
+    (16,11, 6,3, 51, 2, GETDATE()),
+	 (16,11, 6,3, 52, 2, GETDATE()),
+	 (16,11, 6,3, 53, 1, GETDATE()),
+	 (16,11, 6,3, 54, 2, GETDATE())
+
+
+
+
+    -- Add more rows as needed
+
+EXEC InsertExamDataList @ExamDataList = @DataList;
+
+
+-------------------------------------------------------------------------------------------------------------
+
+			
+DECLARE @DataList ExamDataListType;
+
+INSERT INTO @DataList (TestId, UserId, ExamId, CategoryId, QuestionId, Answer, AttemptedAt)
+VALUES
+      (17,11, 5,1, 35, 1, GETDATE()),
+    (17,11, 5,1,  36, 1, GETDATE()),
+    (17,11, 5,1,  37, 1, GETDATE()),
+    (17,11, 5,1,  38, 1, GETDATE()),
+    (17,11, 5,1,  39, 2, GETDATE()),
+	 (17,11, 5,1,  40, 2, GETDATE()),
+	 (17,11, 5,1,  41, 1, GETDATE()),
+	 (17,11, 5,1,  42, 1, GETDATE()),
+	 (17,11, 5,1,  43, 1, GETDATE()),
+	 (17,11, 5,1,  44, 1, GETDATE()),
+	 	 (17,11, 5,1,  45, 2, GETDATE()),
+		  (17,11, 5,1,  46, 1, GETDATE());
+
+
+EXEC InsertExamDataList @ExamDataList = @DataList;
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+
+			
+DECLARE @DataList ExamDataListType;
+
+INSERT INTO @DataList (TestId, UserId, ExamId, CategoryId, QuestionId, Answer, AttemptedAt)
+VALUES
+       (18,13, 5,1,  35, 1, GETDATE()),
+    (18,13, 5,1,  36, 1, GETDATE()),
+    (18,13, 5,1,  37, 1, GETDATE()),
+    (18,13, 5,1,  38, 1, GETDATE()),
+    (18,13, 5,1,  39, 2, GETDATE()),
+	 (18,13, 5,1,  40, 2, GETDATE()),
+	 (18,13, 5,1,  41, 1, GETDATE()),
+	 (18,13, 5,1,  42, 1, GETDATE()),
+	 (18,13, 5,1,  43, 1, GETDATE()),
+	 (18,13, 5,1,  44, 1, GETDATE()),
+	 	 (18,13, 5,1, 45, 1, GETDATE()),
+		  (18,13, 5,1,  46, 1, GETDATE());
+
+
+
+EXEC InsertExamDataList @ExamDataList = @DataList;
+	
+	
+
+--------------------------------------------------------------------------------------------------------------------
 
 	
-INSERT INTO usersExamData (userId, exam_id,category_id, question_id, answer, attemptedAt)
+
+
+
+			
+DECLARE @DataList ExamDataListType;
+
+INSERT INTO @DataList (TestId, UserId, ExamId, CategoryId, QuestionId, Answer, AttemptedAt)
 VALUES
-    (6, 3,1, 19, 2, GETDATE()),
-    (6, 3,1, 20, 3, GETDATE()),
-    (6, 3,1, 21, 1, GETDATE()),
-    (6, 3,1, 22, 2, GETDATE()),
-    (6, 3,1, 23, 2, GETDATE()),
-	 (6, 3,1, 24, 1, GETDATE());
+        (19,15, 5,1,  35, 1, GETDATE()),
+    (19,15, 5, 1, 36, 2, GETDATE()),
+    (19,15, 5,1,  37, 1, GETDATE()),
+    (19,15, 5,1,  38, 1, GETDATE()),
+    (19,15, 5,1,  39, 2, GETDATE()),
+	 (19,15, 5,1,  40, 2, GETDATE()),
+	 (19,15, 5,1,  41, 1, GETDATE()),
+	 (19,15, 5,1,  42, 1, GETDATE()),
+	 (19,15, 5,1,  43, 1, GETDATE()),
+	 (19,15, 5,1,  44, 1, GETDATE()),
+	 	 (19,15, 5,1,  45, 2, GETDATE()),
+		  (19,15, 5,1,  46, 1, GETDATE());
 
 
+
+EXEC InsertExamDataList @ExamDataList = @DataList;
+
+
+---------------------------------------------------------------------------------------------------------------------
 	
-INSERT INTO usersExamData (userId, exam_id,category_id, question_id, answer, attemptedAt)
-VALUES
-    (7, 3,1, 19, 1, GETDATE()),
-    (7, 3,1, 20, 2, GETDATE()),
-    (7, 3,1, 21, 1, GETDATE()),
-    (7, 3,1, 22, 2, GETDATE()),
-    (7, 3,1, 23, 2, GETDATE()),
-	 (7, 3,1, 24, 1, GETDATE());
-
-select * from exam
-	 	
-INSERT INTO usersExamData (userId, exam_id,category_id, question_id, answer, attemptedAt)
-VALUES
-    (8, 6,3, 47, 1, GETDATE()),
-    (8, 6,3, 48, 1, GETDATE()),
-    (8, 6,3, 49, 1, GETDATE()),
-    (8, 6,3, 50, 1, GETDATE()),
-    (8, 6,3, 51, 2, GETDATE()),
-	 (8, 6,3, 52, 1, GETDATE()),
-	 (8, 6,3, 53, 1, GETDATE()),
-	 (8, 6,3, 54, 1, GETDATE());
-
-	  	
-INSERT INTO usersExamData (userId, exam_id,category_id, question_id, answer, attemptedAt)
-VALUES
-    (9, 6,3, 47, 1, GETDATE()),
-    (9, 6,3, 48, 2, GETDATE()),
-    (9, 6,3, 49, 1, GETDATE()),
-    (9, 6,3, 50, 1, GETDATE()),
-    (9, 6,3, 51, 2, GETDATE()),
-	 (9, 6,3, 52, 2, GETDATE()),
-	 (9, 6,3, 53, 1, GETDATE()),
-	 (9, 6,3, 54, 1, GETDATE());
-
-
-	 	  	
-INSERT INTO usersExamData (userId, exam_id,category_id, question_id, answer, attemptedAt)
-VALUES
-    (10, 6,3, 47, 1, GETDATE()),
-    (10, 6,3, 48, 2, GETDATE()),
-    (10, 6,3, 49, 2, GETDATE()),
-    (10, 6,3, 50, 2, GETDATE()),
-    (10, 6,3, 51, 2, GETDATE()),
-	 (10, 6,3, 52, 2, GETDATE()),
-	 (10, 6,3, 53, 1, GETDATE()),
-	 (10, 6,3, 54, 2, GETDATE());
-	
-
-		 	  	
-INSERT INTO usersExamData (userId, exam_id,category_id, question_id, answer, attemptedAt)
-VALUES
-    (11, 6,3, 47, 1, GETDATE()),
-    (11, 6,3, 48, 1, GETDATE()),
-    (11, 6,3, 49, 1, GETDATE()),
-    (11, 6,3, 50, 1, GETDATE()),
-    (11, 6,3, 51, 2, GETDATE()),
-	 (11, 6,3, 52, 2, GETDATE()),
-	 (11, 6,3, 53, 1, GETDATE()),
-	 (11, 6,3, 54, 2, GETDATE())
-	
-
-INSERT INTO usersExamData (userId, exam_id,category_id, question_id, answer, attemptedAt)
-VALUES
-    (11, 5,1, 35, 1, GETDATE()),
-    (11, 5,1,  36, 1, GETDATE()),
-    (11, 5,1,  37, 1, GETDATE()),
-    (11, 5,1,  38, 1, GETDATE()),
-    (11, 5,1,  39, 2, GETDATE()),
-	 (11, 5,1,  40, 2, GETDATE()),
-	 (11, 5,1,  41, 1, GETDATE()),
-	 (11, 5,1,  42, 1, GETDATE()),
-	 (11, 5,1,  43, 1, GETDATE()),
-	 (11, 5,1,  44, 1, GETDATE()),
-	 	 (11, 5,1,  45, 2, GETDATE()),
-		  (11, 5,1,  46, 1, GETDATE());
-
-
-
-
 
 			 	  	
-INSERT INTO usersExamData (userId, exam_id,category_id, question_id, answer, attemptedAt)
+		
+DECLARE @DataList ExamDataListType;
+
+INSERT INTO @DataList (TestId, UserId, ExamId, CategoryId, QuestionId, Answer, AttemptedAt)
 VALUES
-    (13, 5,1,  35, 1, GETDATE()),
-    (13, 5,1,  36, 1, GETDATE()),
-    (13, 5,1,  37, 1, GETDATE()),
-    (13, 5,1,  38, 1, GETDATE()),
-    (13, 5,1,  39, 2, GETDATE()),
-	 (13, 5,1,  40, 2, GETDATE()),
-	 (13, 5,1,  41, 1, GETDATE()),
-	 (13, 5,1,  42, 1, GETDATE()),
-	 (13, 5,1,  43, 1, GETDATE()),
-	 (13, 5,1,  44, 1, GETDATE()),
-	 	 (13, 5,1, 45, 1, GETDATE()),
-		  (13, 5,1,  46, 1, GETDATE());
+        (20,17, 3,1, 19, 2, GETDATE()),
+    (20,17, 3,1,  20, 4, GETDATE()),
+    (20,17, 3,1,  21, 1, GETDATE()),
+    (20,17, 3,1,  22, 3, GETDATE()),
+    (20,17, 3,1,  23, 2, GETDATE()),
+	 (20,17, 3,1,  24, 1, GETDATE());
 
-	
 
-			 	  	
-INSERT INTO usersExamData (userId, exam_id,category_id, question_id, answer, attemptedAt)
+
+EXEC InsertExamDataList @ExamDataList = @DataList;
+
+   
+---------------------------------------------------------------------------------------------------------------------
+
+   		
+DECLARE @DataList ExamDataListType;
+
+INSERT INTO @DataList (TestId, UserId, ExamId, CategoryId, QuestionId, Answer, AttemptedAt)
 VALUES
-    (15, 5,1,  35, 1, GETDATE()),
-    (15, 5, 1, 36, 2, GETDATE()),
-    (15, 5,1,  37, 1, GETDATE()),
-    (15, 5,1,  38, 1, GETDATE()),
-    (15, 5,1,  39, 2, GETDATE()),
-	 (15, 5,1,  40, 2, GETDATE()),
-	 (15, 5,1,  41, 1, GETDATE()),
-	 (15, 5,1,  42, 1, GETDATE()),
-	 (15, 5,1,  43, 1, GETDATE()),
-	 (15, 5,1,  44, 1, GETDATE()),
-	 	 (15, 5,1,  45, 2, GETDATE()),
-		  (15, 5,1,  46, 1, GETDATE());
+        (21,19, 3,1,  19, 1, GETDATE()),
+    (21,19, 3,1,  20, 2, GETDATE()),
+    (21,19, 3,1,  21, 3, GETDATE()),
+    (21,19, 3,1,  22, 2, GETDATE()),
+    (21,19, 3,1,  23, 2, GETDATE()),
+	 (21,19, 3,1,  24, 1, GETDATE());
 
 
-		  	
-INSERT INTO usersExamData (userId, exam_id,category_id, question_id, answer, attemptedAt)
-VALUES
-    (17, 3,1, 19, 2, GETDATE()),
-    (17, 3,1,  20, 4, GETDATE()),
-    (17, 3,1,  21, 1, GETDATE()),
-    (17, 3,1,  22, 3, GETDATE()),
-    (17, 3,1,  23, 2, GETDATE()),
-	 (17, 3,1,  24, 1, GETDATE());
+--------------------------------------------------------------------------------------------------------
 
 
-	 	
-INSERT INTO usersExamData (userId, exam_id,category_id, question_id, answer, attemptedAt)
-VALUES
-    (19, 3,1,  19, 1, GETDATE()),
-    (19, 3,1,  20, 2, GETDATE()),
-    (19, 3,1,  21, 3, GETDATE()),
-    (19, 3,1,  22, 2, GETDATE()),
-    (19, 3,1,  23, 2, GETDATE()),
-	 (19, 3,1,  24, 1, GETDATE());
-
-		 

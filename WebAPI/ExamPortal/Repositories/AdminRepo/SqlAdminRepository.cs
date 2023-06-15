@@ -1,6 +1,7 @@
 ﻿using ExamPortal.Data;
 using ExamPortal.Models.Domain;
 using ExamPortal.Models.DTO;
+using ExamPortal.Models.DTO.Users;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -169,7 +170,7 @@ namespace ExamPortal.Repositories.AdminRepo
 
         public async Task<List<Questions>> GetExamQuestionsData(int id)
         {
-            var result= await this._dbContext.questions.Where(x => x.exam_id == id).ToListAsync(); ;
+            var result= await this._dbContext.questions.Where(x => x.exam_id == id).ToListAsync(); 
             return result;
         }
 
@@ -256,6 +257,45 @@ namespace ExamPortal.Repositories.AdminRepo
                 return null;
             }
             return data;
+        }
+
+        public async Task<UserDashboardStats> GetDashboardStats(int id)
+        {
+            var result = this._dbContext.userDashboardStats.FromSqlRaw("Execute UserDashBoardStatistics @userId",
+                   new SqlParameter("@userId", id)).AsEnumerable()
+               .FirstOrDefault();
+
+            return result;
+        }
+
+        public async Task<List<UserPassStats>> GetUserPassStats(int id)
+        {
+            var result =await this._dbContext.userPassStats.FromSqlRaw("Execute GetUserPassStats @userId",
+                   new SqlParameter("@userId", id)).ToListAsync();
+
+            return result;
+        }
+
+        public async Task<List<UserResults>> GetUserResultsAll(int id)
+        {
+            var result = await this._dbContext.userResults.Where(x => x.UserId == id).OrderByDescending(x=> x.AttemptedAt).ToListAsync();
+            if (result == null)
+            {
+                return null;
+            }
+            return result;
+           
+        }
+
+        public async Task<List<UserExamSheetDTO>> GetUserExamSheet(int id)
+        {
+            var result = await this._dbContext.userExamSheetDTOs.FromSqlRaw("Exec UserExamSheet @testId",
+                new SqlParameter("@testId", id)).ToListAsync();
+            if (result == null)
+            {
+                return null;
+            }
+            return result;
         }
     }
 }

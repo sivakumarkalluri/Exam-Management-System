@@ -54,6 +54,20 @@ namespace ExamPortal.Controllers
 
 
         [AllowAnonymous]
+        [HttpGet("UserData/{id}")]
+        public async Task<IActionResult> GetUser(int id) 
+        {
+            var data=await this.examPortalDBContext.register.FindAsync(id);
+            if(data == null)
+            {
+                Ok("Data not Found");
+            }
+            return Ok(data);
+            
+        }
+        
+
+        [AllowAnonymous]
         [HttpPost("LoginUser")]
         public IActionResult Login(Login user)
         {

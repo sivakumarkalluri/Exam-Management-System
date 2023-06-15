@@ -24,10 +24,11 @@ export class NavBarComponent implements OnInit {
     this.router.navigate(['/']).then(() => {
       window.location.reload();
     });
+    setTimeout(() => {
+      this.toastr.success("Logged Out Successfully...");
+    }, 3000);
   }
-  setTimeout(() => {
-    this.toastr.success("Logged Out Successfully...");
-  }, 3000);
+  
   
 });
   
@@ -45,7 +46,7 @@ export class NavBarComponent implements OnInit {
       this.router.navigate(['adminHome/adminDashboard']);
     }
     else{
-      this.router.navigate(['/userDashboard']);
+      this.router.navigate(['/userHome/userDashboard']);
     }
   }
 

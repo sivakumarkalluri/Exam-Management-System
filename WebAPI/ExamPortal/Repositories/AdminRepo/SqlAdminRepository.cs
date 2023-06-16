@@ -138,12 +138,14 @@ namespace ExamPortal.Repositories.AdminRepo
         public async Task<List<UsersDataDTO>> GetUsersData()
         {
             var result = await this._dbContext.usersDataDTOs.FromSqlRaw("Execute GetUsersData").ToListAsync();
+            result = result.OrderByDescending(x => x.RegisteredAt).ToList(); ;
             return result;
         }
 
         public async Task<List<AdminUserResultsDTO>> GetAdminUserResults()
         {
             var result = await this._dbContext.adminUserResultsDTOs.FromSqlRaw("Execute GetAdminUserResultsData").ToListAsync();
+            result= result.OrderByDescending(x => x.AttemptedAt).ToList(); ;
             return result;
         }
 
@@ -276,9 +278,10 @@ namespace ExamPortal.Repositories.AdminRepo
             return result;
         }
 
-        public async Task<List<UserResults>> GetUserResultsAll(int id)
+        public async Task<List<UserResultDTO>> GetUserResultsAll(int id)
         {
-            var result = await this._dbContext.userResults.Where(x => x.UserId == id).OrderByDescending(x=> x.AttemptedAt).ToListAsync();
+            var result = this._dbContext.userResultDTOs.FromSqlRaw("Execute GetUserResultDetails @userId",
+                   new SqlParameter("@userId", id)).AsEnumerable().OrderByDescending(x => x.AttemptedAt).ToList();
             if (result == null)
             {
                 return null;

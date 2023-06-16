@@ -1,6 +1,5 @@
 
 --- Stored Procedure for calculating user results -----------------
-
 CREATE PROCEDURE InsertUserResult
 	@testId INT,
     @userId INT,
@@ -19,11 +18,13 @@ BEGIN
     DECLARE @percentage DECIMAL(5, 2)
     DECLARE @examTotal INT
     DECLARE @categoryId INT
+    DECLARE @passPercentageRequired DECIMAL(5, 2) -- Added parameter
 
-    -- Get the total questions, question mark, and category_id for the exam
+    -- Get the total questions, question mark, category_id, and passPercentageRequired for the exam
     SELECT @totalQuestions = exam_totalquestion,
            @questionMark = question_mark,
-           @categoryId = category_id
+           @categoryId = category_id,
+           @passPercentageRequired = exampass_percent -- Added column
     FROM exam
     WHERE exam_id = @examId
 
@@ -75,6 +76,7 @@ BEGIN
         exam_total,
         percentage,
         pass_flag,
+        passPercentageRequired, -- Added column
         attemptedAt
     )
     VALUES (
@@ -90,6 +92,7 @@ BEGIN
         @examTotal,
         @percentage,
         @passFlag,
+        @passPercentageRequired, -- Added column
         GETDATE()
     )
 END
@@ -559,7 +562,41 @@ BEGIN
     WHERE ued.testId = @testId;
 END
 
+----------------------------------------------------------------------------------------
+-------------Stored Procedure for Particular UserResults
 
+CREATE PROCEDURE GetUserResultDetails
+@userId int
+AS
+BEGIN
+    SELECT
+        ur.resultId,
+        ur.testId,
+        ur.userId,
+        ur.exam_id AS exam_Id,
+        ur.category_id AS category_Id,
+        ur.attempted_Questions,
+        ur.notAttempted_Questions,
+        ur.correct_answers AS correct_Answers,
+        ur.wrong_answers AS wrong_Answers,
+        ur.total_marksObtained,
+        ur.exam_total AS exam_Total,
+        ur.percentage,
+        CASE
+            WHEN ur.pass_flag = 1 THEN 'Pass'
+            ELSE 'Fail'
+        END as PassOrFail,
+        ur.attemptedAt,
+        e.exam_name AS exam_Name,
+        c.category_name AS category_Name,
+        ur.passPercentageRequired
+    FROM
+        userResults ur
+        INNER JOIN exam e ON ur.exam_id = e.exam_id
+        INNER JOIN Categories c ON ur.category_id = c.category_id where ur.userId=@userId;
+END
+
+----------------------------------------------------------------------------------
 
 
 
@@ -592,3 +629,5 @@ exec InsertUserResult @testId=21,@userId=19,@examId=3;
 
 
 select * from userResults
+
+select * from userRegisterData

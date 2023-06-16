@@ -1,3 +1,65 @@
-<p>admin-students works!</p>
-<h1>users Data</h1>
-{{usersData | json}}
+<body>
+    <!-- <div class="Searchbox">
+        <label for="name-search">Search by Name:</label>
+        <input type="text" id="name-search" name="firstName" [(ngModel)]="firstName" (ngModelChange)="search()" >
+
+
+        <label for="email-search">Search by Email:</label>
+        <input type="text" id="email-search" name="email" [(ngModel)]="email" (ngModelChange)="search()"  >
+    </div> -->
+
+
+    <div class="main">
+        <div class="form-group has-search">
+          <span class="fa fa-search form-control-feedback"></span>
+          <input type="text" class="form-control" placeholder="Search By Name" [(ngModel)]="firstName" (ngModelChange)="search()" >
+        </div>
+        <div class="form-group has-search">
+          <span class="fa fa-search form-control-feedback"></span>
+          <input type="text" class="form-control" placeholder="Search By Email" [(ngModel)]="email" (ngModelChange)="search()" >
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <br>
+    <table id="example" class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th (click)="sort('userId')">User ID &nbsp;<i class="fa fa-sort" ></i></th>
+                <th (click)="sort('firstName')">First Name &nbsp;<i class="fa fa-sort" ></i></th>
+                <th (click)="sort('lastName')">Last Name&nbsp;<i class="fa fa-sort" ></i></th>
+                <th (click)="sort('email ')">Email &nbsp;<i class="fa fa-sort" ></i></th>
+                <th (click)="sort('mobile')">Mobile &nbsp;<i class="fa fa-sort" ></i></th>
+                <th (click)="sort('gender')">Gender &nbsp;<i class="fa fa-sort" ></i></th>
+                <th (click)="sort('registeredAt')">Registered At &nbsp;<i class="fa fa-sort" ></i></th>
+                <th (click)="sort('numberOfExamsWritten')">Exams Written &nbsp;<i class="fa fa-sort" ></i></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of usersData | paginate:{ itemsPerPage: 8, currentPage: P } | orderBy:'key':reverse">
+                <td >{{ user.userId }}</td>
+                <td>{{ user.firstName }}</td>
+                <td>{{ user.lastName }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.mobile }}</td>
+                <td>{{ user.gender }}</td>
+                <td>{{ user.registeredAt }}</td>
+                <td>{{ user.numberOfExamsWritten }}</td>
+            </tr>
+        </tbody>
+
+    </table>
+    <pagination-controls (pageChange)="P = $event" ></pagination-controls>
+
+

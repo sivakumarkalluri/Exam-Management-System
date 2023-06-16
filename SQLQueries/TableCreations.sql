@@ -112,13 +112,18 @@ wrong_answers int,
 total_marksObtained decimal,
 exam_total decimal,
 percentage decimal(5,2),
+passPercentageRequired(5,2),
 pass_flag BIT,
+
 attemptedAt DateTime,
 Constraint [FK_usersResults_users] foreign key (userId) references userRegisterData(userId),
 Constraint [FK_usersResults_exam] foreign key (exam_Id) references exam(exam_id),
 Constraint [FK_usersResults_categories] foreign key (category_id) references categories(category_id),
 
 )
+
+
+-- Add the new column to the userResults table
 
 
 

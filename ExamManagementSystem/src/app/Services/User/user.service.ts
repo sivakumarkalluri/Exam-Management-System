@@ -41,6 +41,8 @@ export class UserService implements OnInit{
     return this.http.get(this.baseUrl+'/UserAllResults/'+id,{observe:'response'})
   }
 
+  
+
 
 
 

@@ -55,6 +55,8 @@ namespace ExamPortal.Data
         public DbSet<UserResults> userResults { get; set; }
 
         public DbSet<UserExamSheetDTO> userExamSheetDTOs { get; set; }
+
+        public DbSet<UserResultDTO> userResultDTOs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure AdminStatisticsDTO as a keyless entity type
@@ -93,6 +95,8 @@ namespace ExamPortal.Data
             modelBuilder.Entity<UserResults>().HasNoKey();
 
             modelBuilder.Entity<UserExamSheetDTO>().HasNoKey();
+
+            modelBuilder.Entity<UserResultDTO>().HasNoKey();
             // Other configurations
 
             base.OnModelCreating(modelBuilder);

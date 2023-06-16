@@ -1,0 +1,44 @@
+thead th{
+    background: darkblue;
+    color: white;
+}
+thead tr th{
+    font-size: 14px;
+    text-align: center;
+ 
+}
+tbody tr td{
+    font-size: 12px;    
+    text-align: center;
+}
+table{
+    margin: auto;
+    margin-top: -60px;
+}
+.main {
+    width: 100%;
+    margin: 50px auto;
+    display: flex;
+    justify-content: space-between;
+      margin-top: -40px;
+      /* margin-left: 150px; */
+  }
+  .form-group has-search{
+    margin-right: 120px;
+  }
+  .has-search .form-control {
+    padding-left: 2.375rem;
+  }
+  
+  .has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+  }
+  

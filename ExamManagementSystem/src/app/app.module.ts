@@ -10,6 +10,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
+import { Ng2OrderModule } from 'ng2-order-pipe';
 
 import { HomePageComponent } from './home-page/home-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
@@ -42,6 +45,7 @@ import { UserExamsComponent } from './User/user-exams/user-exams.component';
 import { UserResultsComponent } from './User/user-results/user-results.component';
 import { UserTestComponent } from './User/user-test/user-test.component';
 import { UserProfileComponent } from './User/user-profile/user-profile.component';
+
 
 
 
@@ -90,6 +94,10 @@ import { UserProfileComponent } from './User/user-profile/user-profile.component
     TooltipModule,
     MatDialogModule,
     MatIconModule,
+    Ng2SearchPipeModule,
+Ng2OrderModule,
+    NgxPaginationModule,
+
     ToastrModule.forRoot()
   ],
   providers: [],

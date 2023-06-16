@@ -1,6 +1,6 @@
-﻿namespace ExamPortal.Models.Domain
+﻿namespace ExamPortal.Models.DTO.Users
 {
-    public class UserResults
+    public class UserResultDTO
     {
         public int ResultId { get; set; }
         public int TestId { get; set; }
@@ -14,10 +14,10 @@
         public decimal Total_MarksObtained { get; set; }
         public decimal Exam_Total { get; set; }
         public decimal Percentage { get; set; }
-        public bool Pass_Flag { get; set; }
-
+        public string PassOrFail { get; set; }
         public DateTime AttemptedAt { get; set; }
-        public decimal passPercentageRequired { get; set; }
-
+        public string Exam_Name { get; set; }
+        public string Category_Name { get; set; }
+        public decimal PassPercentageRequired { get; set; }
     }
 }

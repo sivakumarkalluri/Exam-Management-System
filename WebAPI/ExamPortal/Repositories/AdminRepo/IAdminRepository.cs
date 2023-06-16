@@ -46,7 +46,7 @@ namespace ExamPortal.Repositories.AdminRepo
 
         Task<List<UserPassStats>> GetUserPassStats(int id);
 
-        Task<List<UserResults>> GetUserResultsAll(int id);
+        Task<List<UserResultDTO>> GetUserResultsAll(int id);
 
         Task<List<UserExamSheetDTO>> GetUserExamSheet(int id);
     }

@@ -52,6 +52,7 @@ export class UserTestComponent implements OnInit{
 
         this.userId=this.authService.userInfo.id;
         this.getQuestionsData();
+        this.attemptedCheck();
         this.preventBackButton();
       
 
@@ -87,6 +88,7 @@ export class UserTestComponent implements OnInit{
         this.starttimer();
       }
       this.totalQuestions=this.examData.examTotalQuestion;
+      this.notAttempted=this.totalQuestions;
     })
 
   }
@@ -230,7 +232,14 @@ export class UserTestComponent implements OnInit{
     );
   }
 
-}
+  attemptedCheck() {
+    this.attempted = this.questions.filter((q:any) => q.selectedAnswer !== '').length;
+    this.notAttempted = this.totalQuestions - this.attempted;
+  }
+  
+  
 
+
+}
 
 

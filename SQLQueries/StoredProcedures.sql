@@ -68,6 +68,8 @@ BEGIN
         userId,
         exam_id,
         category_id,
+		examTotalQuestions,
+
         attempted_Questions,
         notAttempted_Questions,
         correct_answers,
@@ -84,6 +86,7 @@ BEGIN
         @userId,
         @examId,
         @categoryId,
+		@totalQuestions,
         @attemptedQuestions,
         @notAttemptedQuestions,
         @correctAnswers,
@@ -95,6 +98,9 @@ BEGIN
         @passPercentageRequired, -- Added column
         GETDATE()
     )
+
+	select @testId as testId
+
 END
 
 --------------------------------------------------------------------------------------------------
@@ -294,6 +300,7 @@ BEGIN
         urd.email,
         e.exam_name as examName,
         c.category_name as categoryName,
+		ur.examTotalQuestions,
         ur.attempted_Questions as attemptedQuestions,
         ur.notAttempted_Questions as notAttemptedQuestions,
         ur.correct_answers as correctAnswers,
@@ -313,7 +320,6 @@ BEGIN
     INNER JOIN exam e ON ur.exam_id = e.exam_id
     INNER JOIN categories c ON ur.category_id = c.category_id;
 END
-
 
 
 
@@ -575,6 +581,8 @@ BEGIN
         ur.userId,
         ur.exam_id AS exam_Id,
         ur.category_id AS category_Id,
+		ur.examTotalQuestions,
+
         ur.attempted_Questions,
         ur.notAttempted_Questions,
         ur.correct_answers AS correct_Answers,
@@ -595,6 +603,7 @@ BEGIN
         INNER JOIN exam e ON ur.exam_id = e.exam_id
         INNER JOIN Categories c ON ur.category_id = c.category_id where ur.userId=@userId;
 END
+
 
 ----------------------------------------------------------------------------------
 
@@ -631,3 +640,13 @@ exec InsertUserResult @testId=21,@userId=19,@examId=3;
 select * from userResults
 
 select * from userRegisterData
+
+select * from usersExamData
+
+create procedure CreateTestID
+as 
+begin
+select Top 1 (testId+1) as testId from usersExamData order by testId desc;
+end;
+
+exec CreateTestID

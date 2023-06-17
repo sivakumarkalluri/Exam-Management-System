@@ -1,1 +1,113 @@
-<p>user-test works!</p>
+<div class="testPage">
+    <div class="examPage" *ngIf="!isSubmit">
+    <div id="questionCard">
+        <div *ngFor="let question of questions |  paginate: {itemsPerPage:2,currentPage:p}; let i = index ">
+            <p>Q {{ question.qNum }})<span [innerHTML]="question.question_desc"></span></p>
+            
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value=1 [name]="i.toString()" [(ngModel)]="question.selectedAnswer">
+                        <label class="form-check-label" for="option" >
+                        1) {{question.option_1}}
+                        </label>
+                    </div> 
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio"  value=2 [name]="i.toString()" [(ngModel)]="question.selectedAnswer">
+                        <label class="form-check-label" for="option" >
+                        2) {{question.option_2}}
+                        </label>
+                    </div> 
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio"  value=3 [name]="i.toString()" [(ngModel)]="question.selectedAnswer">
+                        <label class="form-check-label" for="option" >
+                        3) {{question.option_3}}
+                        </label>
+                    </div> 
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio"  value=4  [name]="i.toString()" [(ngModel)]="question.selectedAnswer">
+                        <label class="form-check-label" for="option" >
+                        4) {{question.option_4}}
+                        </label>
+                    </div> 
+
+                </div>
+
+            </div>
+<!--             
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="option" id="flexRadioDefault1">
+                    <label class="form-check-label" for="flexRadioDefault1">
+                    1) {{question.option_1}}
+                    </label>
+                </div> -->
+        </div>
+           
+    </div>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+        <div>
+            <button class="btn btn-primary" type="submit" (click)="submitExam()">Submit </button>
+        </div>
+    
+    <div class="timer">
+        <mat-card class="progress-card">
+            <mat-card-header>
+                <mat-card-title>Progress</mat-card-title>
+                <mat-card-subtitle>Exam will be automatically Submitted when Timer Ends</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <h2 class="text-center">{{getformattedtime()}}</h2>
+                
+                <mat-spinner  class="m-auto" mode="determinate"
+                  [value]="(timer/(examDuration*60))*100" ></mat-spinner>
+            </mat-card-content>
+        </mat-card>
+    </div>    
+
+    </div>
+</div>
+
+<!-- marksObtained=0;
+  questionNumber=0;
+  correctAnswers=0;
+  wrongAnswers=0;
+  percentageObtained=0;
+  passOrFail="";
+  attempted=0;
+  notAttempted=0; -->
+<div class="notification-container" *ngIf="isSubmit">
+    <mat-card class="notification-content">
+        <mat-card-header>
+            <mat-card-title class="notification-header">Test Submitted</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="notification-details">
+            <!-- <img mat-card-md-image src="/assets/done.png" alt="Img"> -->
+            <h1>{{passOrFail}}</h1>
+            <h2>Total Questions : {{totalQuestions}}</h2>
+            <h2>Questions Attempted : {{attempted}} </h2>
+            <h2>Questions Not Attempted : {{notAttempted}}</h2>
+            <h2>Correct Answers  {{correctAnswers}}</h2>
+            <h2>Wrong Answers {{wrongAnswers}}</h2>
+            <h2>Marks Obtained {{marksObtained}}</h2>
+            <h2>Percentage Obtained {{percentageObtained}}</h2>
+        </mat-card-content>
+        <mat-card-actions class="notification-footer">
+            <button mat-raised-button color="primary" routerLink="/userHome/userResults">Go to Results</button>
+            <button mat-raised-button color="primary" (click)="printPage()">Print</button>
+        </mat-card-actions>
+    </mat-card>
+</div>

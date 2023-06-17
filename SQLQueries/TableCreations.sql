@@ -24,6 +24,7 @@ CREATE TABLE userLogin(
 	role varchar(10)
 )
 
+
 -----------------------------------------
 INSERT INTO userRegisterData (firstname, lastname, email, mobile, gender, password, role, registeredAt)
 VALUES
@@ -83,6 +84,7 @@ select * from questions where exam_id=1
 ----Table containing users attempted questions data -----------------------------
 
 CREATE TABLE usersExamData (
+    id INT IDENTITY(1,1) PRIMARY KEY
 	testId INT not null,
     userId INT not null,
     exam_id INT not null,
@@ -105,6 +107,7 @@ testId int not null,
 userId int not null,
 exam_id int not null,
 category_id int not null,
+examTotalQuestions int,
 attempted_Questions int,
 notAttempted_Questions int,
 correct_answers int,
@@ -142,3 +145,23 @@ alter table usersExamData drop constraint [FK_usersExamData_questions]
 alter table usersExamData drop constraint [FK_usersExamData_users]
 
 
+CREATE TABLE ExamImages (
+  
+  exam_name VARCHAR(255) NOT NULL,
+  imagePath VARCHAR(500) NOT NULL
+);
+
+insert into ExamImages values ('Python','assets/Exam_Images/Exam1.jpg'),
+('Java','assets/Exam_Images/Exam2.webp'),
+('C#','assets/Exam_Images/Exam3.jpg'),
+('Quantitative Aptitude','assets/Exam_Images/Exam4.png'),
+('DBMS','assets/Exam_Images/Exam5.png'),
+('Operating System','assets/Exam_Images/Exam6.jpg')
+
+
+
+select * from exam
+
+select * from usersExamData
+select * from userResults
+select * from userRegisterData

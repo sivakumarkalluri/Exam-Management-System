@@ -26,5 +26,6 @@ export const navUserData = [
         routeLink:'userResults',
         icon:'fa-solid fa-square-poll-vertical',
         label:'Results'
-    },
+    }
+   
 ];

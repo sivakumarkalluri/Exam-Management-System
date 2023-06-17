@@ -49,5 +49,11 @@ namespace ExamPortal.Repositories.AdminRepo
         Task<List<UserResultDTO>> GetUserResultsAll(int id);
 
         Task<List<UserExamSheetDTO>> GetUserExamSheet(int id);
+
+        Task<List<ExamImages>> GetExamImages();
+
+        Task<int> GetTestID();
+
+        Task<int> AddUserExamData(List<UserExamData> userExamDataList);
     }
 }

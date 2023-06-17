@@ -592,3 +592,6 @@ VALUES
 --------------------------------------------------------------------------------------------------------
 
 
+select * from userResults
+select * from questions
+select * from usersExamData

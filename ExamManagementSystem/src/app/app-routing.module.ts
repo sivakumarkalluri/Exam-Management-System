@@ -21,6 +21,7 @@ import { UserProfileComponent } from './User/user-profile/user-profile.component
 import { UserExamsComponent } from './User/user-exams/user-exams.component';
 import { UserResultsComponent } from './User/user-results/user-results.component';
 import { UserTestComponent } from './User/user-test/user-test.component';
+import { ExamInstructionsComponent } from './User/exam-instructions/exam-instructions.component';
 
 
 const routes: Routes = [
@@ -48,10 +49,12 @@ children:[
   {path:'userProfile',component:UserProfileComponent},
   {path:'userExams',component:UserExamsComponent},
   {path:'userResults',component:UserResultsComponent},
-  {path:'userTest',component:UserTestComponent}
+  {path:'examInstructions',component:ExamInstructionsComponent},
+ 
 ]
 
 },
+{path:'userTest',component:UserTestComponent,canActivate: [AuthGuard], data: { roles: ['User']}}
 
 
  

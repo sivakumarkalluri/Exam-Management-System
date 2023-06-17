@@ -41,6 +41,21 @@ export class UserService implements OnInit{
     return this.http.get(this.baseUrl+'/UserAllResults/'+id,{observe:'response'})
   }
 
+  getExamDataById(id:any){
+    return this.http.get(this.baseUrl+'/ExamData/'+id,{observe:'response'})
+
+  }
+
+  getExamQuestions(id:any){
+    return this.http.get(this.baseUrl+'/GetExamQuestions/'+id,{observe:'response'})
+
+  }
+
+  postUserResults(data:any){
+    return this.http.post(this.baseUrl+'/ExamEvaluation',data)
+
+  }
+
   
 
 

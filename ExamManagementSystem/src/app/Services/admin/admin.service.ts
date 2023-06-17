@@ -93,5 +93,11 @@ export class AdminService implements OnInit{
   getUserData(id:any){
     return this.http.get(this.baseUrl+'/UserData/UserData/'+id,{ observe: 'response' })
   }
+  getExamImages():any{
+    return this.http.get(this.baseUrl+'/Exam/ExamImages',{ observe: 'response' })
+  }
+  getExamListData():any{
+    return this.http.get(this.baseUrl+'/Exam/ExamsList',{ observe: 'response' })
+  }
 
 }

@@ -7,6 +7,9 @@
         public string Email { get; set; }
         public string ExamName { get; set; }
         public string CategoryName { get; set; }
+
+        public int examTotalQuestions { get; set; }
+
         public int AttemptedQuestions { get; set; }
         public int NotAttemptedQuestions { get; set; }
         public int CorrectAnswers { get; set; }

@@ -7,6 +7,9 @@
         public int UserId { get; set; }
         public int Exam_Id { get; set; }
         public int Category_Id { get; set; }
+
+        public int examTotalQuestions { get; set; }
+
         public int Attempted_Questions { get; set; }
         public int NotAttempted_Questions { get; set; }
         public int Correct_Answers { get; set; }

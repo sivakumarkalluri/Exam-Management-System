@@ -2,6 +2,7 @@
 using ExamPortal.Models.Domain;
 using ExamPortal.Models.DTO;
 using ExamPortal.Models.DTO.Users;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -299,6 +300,46 @@ namespace ExamPortal.Repositories.AdminRepo
                 return null;
             }
             return result;
+        }
+
+        public async Task<List<ExamImages>> GetExamImages()
+        {
+            var result = await this._dbContext.examImages.ToListAsync();
+            if (result == null)
+            {
+                return null;
+            }
+            return result;
+        }
+
+        public async Task<int> GetTestID()
+        {
+            var result= this._dbContext.getTestIDs.FromSqlRaw("Exec CreateTestID").AsEnumerable().FirstOrDefault();
+            return result.testId;
+        }
+
+        public async Task<int> AddUserExamData(List<UserExamData> userExamDataList)
+        {
+            await this._dbContext.userExamDatas.AddRangeAsync(userExamDataList);
+            await this._dbContext.SaveChangesAsync();
+            int testId = userExamDataList.FirstOrDefault()?.testId ?? 0;
+            int userId = userExamDataList.FirstOrDefault()?.userId ?? 0;
+            int examId = userExamDataList.FirstOrDefault()?.exam_id ?? 0;
+            var Id=0;
+
+            if (testId != 0 && userId != 0 && examId != 0)
+            {
+                // Call the stored procedure InsertUserResult once
+               Id=  this._dbContext.getTestIDs.FromSqlRaw("EXEC InsertUserResult @testId, @userId, @examId",
+               new SqlParameter("@testId", testId),
+               new SqlParameter("@userId",userId),
+               new SqlParameter("@examId", examId)).AsEnumerable().FirstOrDefault().testId;
+            }
+            if (Id == 0)
+            {
+                return 0;
+            }
+            return Id;
         }
     }
 }

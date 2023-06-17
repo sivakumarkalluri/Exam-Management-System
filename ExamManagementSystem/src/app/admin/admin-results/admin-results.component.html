@@ -43,6 +43,8 @@
                 <th  (click)="sort('email')">Email&nbsp;<i class="fa fa-sort" ></i></th>
                 <th (click)="sort('examName ')">Exam &nbsp;<i class="fa fa-sort" ></i></th>
                 <th (click)="sort('categoryName')">Category &nbsp;<i class="fa fa-sort" ></i></th>
+                <th (click)="sort('examTotalQuestions')">Total Questions &nbsp;<i class="fa fa-sort" ></i></th>
+
                 <th (click)="sort('attemptedQuestions')">Attempted Questions &nbsp;<i class="fa fa-sort" ></i></th>
                 <th (click)="sort('notAttemptedQuestions')">Not Attempted Questions &nbsp;<i class="fa fa-sort" ></i></th>
                 <th (click)="sort('correctAnswers')">Correct Answers &nbsp;<i class="fa fa-sort" ></i></th>
@@ -67,6 +69,7 @@
             <td >{{ result.email }}</td>
             <td>{{ result.examName }}</td>
             <td>{{ result.categoryName }}</td>
+            <td>{{ result.examTotalQuestions}}</td>
             <td>{{ result.attemptedQuestions }}</td>
             <td>{{ result.notAttemptedQuestions }}</td>
             <td>{{ result.correctAnswers }}</td>

@@ -1,5 +1,6 @@
 ﻿using ExamPortal.Data;
 using ExamPortal.Models.DTO;
+using ExamPortal.Repositories.AdminRepo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,10 +13,12 @@ namespace ExamPortal.Controllers
     public class ExamController : ControllerBase
     {
         private readonly ExamPortalDBContext context;
+        private readonly IAdminRepository adminRepository;
 
-        public ExamController(ExamPortalDBContext context)
+        public ExamController(ExamPortalDBContext context,IAdminRepository adminRepository)
         {
             this.context = context;
+            this.adminRepository = adminRepository;
         }
 
         // GET: api/<ExamController>
@@ -64,6 +67,18 @@ namespace ExamPortal.Controllers
             return Ok(data);
 
 
+        }
+
+        [HttpGet("ExamImages")]
+
+        public async Task<IActionResult> GetExamImages()
+        {
+            var result = await this.adminRepository.GetExamImages();
+            if(result == null)
+            {
+                return Ok("Data not Found");
+            }
+            return Ok(result);
         }
 
 

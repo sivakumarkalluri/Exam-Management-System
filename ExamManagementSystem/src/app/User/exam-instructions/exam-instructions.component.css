@@ -1,0 +1,57 @@
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+.testDesc{
+    font-weight: bold;
+    font-size: 20px;
+    color: rgb(154, 15, 47);
+    font-family:'Montserrat', sans-serif;
+}
+  .testDetails{
+    margin: auto;
+    font-family:'Montserrat', sans-serif;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px gray;
+    background-color: rgb(77, 77, 237);
+    color: white;
+    width: 700px;
+    padding: 20px;
+    height: 100px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family:'Montserrat', sans-serif;
+
+    text-align: center;
+  }
+
+  .instruction-list {
+    list-style-type: decimal;
+    padding-left: 20px;
+  }
+
+  .btn-start {
+    display: block;
+    margin: 0 auto;
+    width: 200px;
+    margin-top: 30px;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 10px;
+    }
+
+    .btn-start {
+      width: 100%;
+    }
+  }

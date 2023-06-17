@@ -13,6 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
 import { Ng2OrderModule } from 'ng2-order-pipe';
+import {MatCardModule} from '@angular/material/card';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import { HomePageComponent } from './home-page/home-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
@@ -45,6 +47,7 @@ import { UserExamsComponent } from './User/user-exams/user-exams.component';
 import { UserResultsComponent } from './User/user-results/user-results.component';
 import { UserTestComponent } from './User/user-test/user-test.component';
 import { UserProfileComponent } from './User/user-profile/user-profile.component';
+import { ExamInstructionsComponent } from './User/exam-instructions/exam-instructions.component';
 
 
 
@@ -79,7 +82,8 @@ import { UserProfileComponent } from './User/user-profile/user-profile.component
     UserExamsComponent,
     UserResultsComponent,
     UserTestComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    ExamInstructionsComponent
     
   ],
   imports: [
@@ -94,7 +98,11 @@ import { UserProfileComponent } from './User/user-profile/user-profile.component
     TooltipModule,
     MatDialogModule,
     MatIconModule,
+    MatCardModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
     Ng2SearchPipeModule,
+
 Ng2OrderModule,
     NgxPaginationModule,
 

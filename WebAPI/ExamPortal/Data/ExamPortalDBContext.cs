@@ -67,6 +67,8 @@ namespace ExamPortal.Data
         public DbSet<UserExamData> userExamDatas { get; set; }
 
         public DbSet<ExamEvaluationRequest> examEvaluationRequests { get; set; }
+
+        public DbSet<AnswerSheetDTO> answerSheetDTOs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure AdminStatisticsDTO as a keyless entity type
@@ -116,6 +118,8 @@ namespace ExamPortal.Data
 
 
             modelBuilder.Entity<ExamEvaluationRequest>().HasNoKey();
+
+            modelBuilder.Entity<AnswerSheetDTO>().HasNoKey();
 
             // Other configurations
 

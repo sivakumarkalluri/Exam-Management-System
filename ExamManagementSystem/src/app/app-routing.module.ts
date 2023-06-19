@@ -22,6 +22,8 @@ import { UserExamsComponent } from './User/user-exams/user-exams.component';
 import { UserResultsComponent } from './User/user-results/user-results.component';
 import { UserTestComponent } from './User/user-test/user-test.component';
 import { ExamInstructionsComponent } from './User/exam-instructions/exam-instructions.component';
+import { AnswerSheetComponent } from './User/answer-sheet/answer-sheet.component';
+import { UserAnswerSheetComponent } from './admin/user-answer-sheet/user-answer-sheet.component';
 
 
 const routes: Routes = [
@@ -40,7 +42,8 @@ const routes: Routes = [
   {path:'adminEditExams',component:AdminEditExamsComponent},
   {path:'adminCategories',component:AdminCategoryComponent},
   {path:'addCategory',component:AddCategoryComponent},
-  {path:'ViewQuestions',component:CRUDExamsComponent}
+  {path:'ViewQuestions',component:CRUDExamsComponent},
+  {path:'UsersAnswerSheet',component:UserAnswerSheetComponent}
 ]},
 
 {path:'userHome',component:UserHomeComponent,canActivate: [AuthGuard], data: { roles: ['User'] },
@@ -50,6 +53,7 @@ children:[
   {path:'userExams',component:UserExamsComponent},
   {path:'userResults',component:UserResultsComponent},
   {path:'examInstructions',component:ExamInstructionsComponent},
+  {path:'AnswerSheet',component:AnswerSheetComponent}
  
 ]
 

@@ -296,6 +296,7 @@ AS
 BEGIN
     SELECT
         ur.userId,
+		ur.testId,
         CONCAT(urd.firstname, ' ', urd.lastname) AS fullName,
         urd.email,
         e.exam_name as examName,
@@ -320,7 +321,6 @@ BEGIN
     INNER JOIN exam e ON ur.exam_id = e.exam_id
     INNER JOIN categories c ON ur.category_id = c.category_id;
 END
-
 
 
 ----------------------------------------------------------------------------------------------------------------
@@ -606,8 +606,56 @@ END
 
 
 ----------------------------------------------------------------------------------
+select * from exam
+select * from questions
+select * from categories
+select * from userResults
+select * from usersExamData
+select * from userRegisterData
 
 
+CREATE PROCEDURE answersheet
+    @testId INT
+AS
+BEGIN
+    SELECT
+        ued.testId,
+        concat(urd.firstname,' ',urd.lastname) as fullName,
+        urd.userId,
+        e.exam_name,
+        c.category_name,
+        questions.question_id,
+        questions.question_desc,
+        e.question_mark,
+        questions.option_1,
+        questions.option_2,
+        questions.option_3,
+        questions.option_4,
+        questions.correctAnswer,
+        ued.answer,
+        ur.total_marksObtained,
+        ur.exam_total,
+         CASE
+            WHEN ur.pass_flag = 1 THEN 'Pass'
+            ELSE 'Fail'
+        END as PassOrFail,
+		ur.attemptedAt
+    FROM
+        usersExamData AS ued
+        JOIN userRegisterData AS urd ON ued.userId = urd.userId
+        JOIN exam AS e ON ued.exam_id = e.exam_id
+        JOIN Categories AS c ON e.category_id = c.category_id
+        JOIN questions  ON ued.question_id = questions.question_id
+        JOIN userResults AS ur ON ued.testId = ur.testId
+                                AND ued.userId = ur.userId
+                                AND ued.exam_id = ur.exam_id
+                                AND ued.category_id = ur.category_id
+    WHERE
+        ued.testId = @testId;
+END
+
+
+exec answersheet @testId=1;
 
 
 

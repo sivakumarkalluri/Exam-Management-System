@@ -2,6 +2,7 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatDialogModule} from '@angular/material/dialog';
 import { ToastrModule } from 'ngx-toastr';
 
+import { MatInputModule } from '@angular/material/input';
 
 import { AddCategoryComponent } from './admin/add-category/add-category.component';
 import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -48,6 +49,9 @@ import { UserResultsComponent } from './User/user-results/user-results.component
 import { UserTestComponent } from './User/user-test/user-test.component';
 import { UserProfileComponent } from './User/user-profile/user-profile.component';
 import { ExamInstructionsComponent } from './User/exam-instructions/exam-instructions.component';
+import { AnswerSheetComponent } from './User/answer-sheet/answer-sheet.component';
+import { UserAnswerSheetComponent } from './admin/user-answer-sheet/user-answer-sheet.component';
+import { AddAdminComponent } from './admin/Dialogs/add-admin/add-admin.component';
 
 
 
@@ -83,7 +87,10 @@ import { ExamInstructionsComponent } from './User/exam-instructions/exam-instruc
     UserResultsComponent,
     UserTestComponent,
     UserProfileComponent,
-    ExamInstructionsComponent
+    ExamInstructionsComponent,
+    AnswerSheetComponent,
+    UserAnswerSheetComponent,
+    AddAdminComponent
     
   ],
   imports: [
@@ -102,6 +109,8 @@ import { ExamInstructionsComponent } from './User/exam-instructions/exam-instruc
     MatIconModule,
     MatProgressSpinnerModule,
     Ng2SearchPipeModule,
+    MatInputModule,
+
 
 Ng2OrderModule,
     NgxPaginationModule,

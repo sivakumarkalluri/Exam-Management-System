@@ -1,3 +1,5 @@
+<div id="userResults">
+  <h1 class="heading">User Results</h1>
 <div class="dropdown-container">
     <div class="myDiv1">
         <select class="form-select" (change)="searchExam()">
@@ -28,12 +30,8 @@
     </div>
 </div>
 
-
-       <!-- <table id="example" class="table table-striped table-bordered"> 
-      
-      </table> -->
 <div class="table-container">
-    <table id="example" class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered">
         
         <thead>
           <tr>
@@ -55,14 +53,14 @@
                 <th (click)="sort('passPercentage')">Pass Percentage &nbsp;<i class="fa fa-sort" ></i></th>
                 <th style="width: 10px;" (click)="sort('passorFail')">Pass/Fail &nbsp;<i class="fa fa-sort" ></i></th>
                 <th (click)="sort('attemptedAt')">AttemptedAt &nbsp;<i class="fa fa-sort" ></i></th>
-
+                <th>Answer Sheet</th>
             </tr>
 
         </thead>
        
         <tbody>
           
-          <tr *ngFor="let result of userResults | paginate:{ itemsPerPage: 6, currentPage: P } | orderBy:'key':reverse">
+          <tr *ngFor="let result of userResults | paginate:{ itemsPerPage: 5, currentPage: P } | orderBy:key:reverse">
 
             <td>{{ result.userId }}</td>
             <td>{{ result.fullName }}</td>
@@ -78,10 +76,14 @@
             <td>{{ result.examTotal }}</td>
             <td>{{ result.percentageObtained }} %</td>
             <td>{{ result.passPercentage }} %</td>
-            <td>{{ result.passorFail }}</td>
+            <td [ngClass]="result.passorFail" class="fw-bold fs-6">{{ result.passorFail }}</td>
             <td>{{ result.attemptedAt }}</td>
+            <td><button class="btn review" (click)="AnswerSheet(result.testId)">Review</button></td>
+
           </tr>
       </table>  
     </div>
-
+    <div class="mt-4">
       <pagination-controls  (pageChange)="P = $event"></pagination-controls>
+    </div>
+  </div>

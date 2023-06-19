@@ -4,7 +4,7 @@
   }
   
 thead th{
-    background: darkblue;
+    background-color: #3C1975;
     color: white;
 }
 thead tr th{
@@ -38,7 +38,17 @@ thead {
     pointer-events: none;
     color: #aaa;
 }
-#example {
+table {
     width: 100%; /* Adjust as needed */
   }
+  .heading{
+    font-family: 'Montserrat', sans-serif;
   
+  }
+  .Pass{
+    
+    color: green;
+  }
+  .Fail{
+    color: red;
+  }

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from 'src/app/Services/admin/admin.service';
 
@@ -19,7 +20,7 @@ export class AdminResultsComponent implements OnInit {
   usersData: any;
   filteredUsersData: any;
 
-  constructor(private adminService: AdminService) { }
+  constructor(private adminService: AdminService,private router:Router) { }
 
   ngOnInit(): void {
     this.getUserResults();
@@ -128,5 +129,12 @@ export class AdminResultsComponent implements OnInit {
       return 0;
     });
   }
+
+  AnswerSheet(id:any){
+    this.router.navigate(['/adminHome/UsersAnswerSheet'],{ queryParams: { testId:id } })
+
+    console.log("testId : "+id);
+  }
+
   
 }

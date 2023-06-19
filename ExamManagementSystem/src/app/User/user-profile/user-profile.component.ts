@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AdminService } from 'src/app/Services/admin/admin.service';
 import { AuthenticationService } from 'src/app/Services/authentication/authentication.service';
 
@@ -16,7 +18,8 @@ export class UserProfileComponent implements OnInit{
   samePassword='none';
   
 
-  constructor(private authService: AuthenticationService,private adminService:AdminService) {
+  constructor(private authService: AuthenticationService,private adminService:AdminService,
+    private toastr:ToastrService,private router:Router) {
     
   }
 
@@ -28,6 +31,7 @@ export class UserProfileComponent implements OnInit{
   userId:any;
   edit=false;
   userData:any;
+  imagePath:any;
   isEditMode: boolean = true;
 
   
@@ -43,15 +47,18 @@ export class UserProfileComponent implements OnInit{
   cancel() {
     this.isEditMode = true;
     this.showPasswordFields = false;
+    
   }
   
   showChangePasswordFields() {
     this.isEditMode = false;
     this.showPasswordFields = true;
+    this.edit = false;
   }
   editButton(){
-    // this.isEditMode=false;
-    // this.edit=!this.edit;
+     this.isEditMode=false;
+     this.edit=!this.edit;
+     
     if(this.edit){
     this.editForm.get('firstName')?.enable();
     this.editForm.get('lastName')?.enable();
@@ -80,6 +87,7 @@ export class UserProfileComponent implements OnInit{
     email:new FormControl("",[Validators.required,Validators.email]),
     mobile:new FormControl("",[Validators.required,Validators.pattern("[0-9]*"),Validators.minLength(10),Validators.maxLength(10)]),
     gender:new FormControl(""),
+    imagePath:new FormControl(""),
     password:new FormControl("",[Validators.required,Validators.minLength(4),Validators.maxLength(15)]),
     newPassword:new FormControl("",[Validators.required,Validators.minLength(4),Validators.maxLength(15)]),
     CPwd:new FormControl("")
@@ -141,6 +149,7 @@ export class UserProfileComponent implements OnInit{
           lastName:this.userData.lastName,
           mobile:this.userData.mobile,
           gender:this.userData.gender,
+          imagePath:this.userData.imagePath,
           password:this.userData.password,
           newPassword:this.userData.password,
           CPwd:this.userData.password,
@@ -171,6 +180,22 @@ saveData(){
  this.samePassword='none';
   if (this.NPwd.value === this.CPwd.value && this.NPwd.value !== oldPassword && this.password==oldPassword) {
     console.log("submitted");
+    const data={
+      userId:parseInt(this.userId),
+      firstName:this.userData.firstName,
+      lastName:this.userData.lastName,
+      gender:this.userData.gender,
+      email:this.userData.email,
+      role:"",
+      imagePath:this.userData.imagePath,
+      registeredAt:this.userData.registeredAt,
+      password:this.editForm.value.newPassword?.toString(),
+      mobile:this.userData.mobile
+    }
+    console.log("changePassword"+data.firstName);
+
+    this.updateProfile(data);
+
     
   } 
   else if(this.password!=oldPassword){
@@ -184,8 +209,71 @@ saveData(){
     this.repeatPass = 'inline';
   }
 }
-}
+else{
+  const data={
+    userId:parseInt(this.userId),
+    firstName:this.editForm.value.firstName,
+    lastName:this.editForm.value.lastName,
+    gender:this.editForm.value.gender,
+    email:this.editForm.value.email,
+    role:"",
+    imagePath:this.userData.imagePath,
+    registeredAt:this.userData.registeredAt,
+    password:this.userData.password,
+    mobile:this.editForm.value.mobile
+  }
+  this.updateProfile(data);
+
  
+
+}
+}
+
+updateProfile(data:any){
+
+  this.adminService.updateProfile(data,this.userId).subscribe((data:any)=>{
+    if(data.body.userId==this.userId){
+      if(this.showPasswordFields){
+        this.showPasswordFields=false;
+        this.toastr.success('Password Changed Successfully !');
+
+      }
+      else{
+        this.toastr.success('Profile Updated Successfully !');
+
+      }
+      this.isEditMode=true;
+     this.edit=false;
+     this.editForm.get('firstName')?.disable();
+     this.editForm.get('lastName')?.disable();
+     this.editForm.get('email')?.disable();
+ 
+     this.editForm.get('gender')?.disable();
+ 
+     this.editForm.get('mobile')?.disable();
+
+
+
+    }
+    else{
+      this.toastr.error('Unable to Update the Profile !');
+
+    }
+  })
+
+}
+
+uploadImage(event:any):void{
+  if(this.userId){
+    const file:File=event.target.files[0];
+    this.adminService.uploadImage(this.userId,file).subscribe((successResponse)=>{
+      this.userData.imagePath=successResponse;
+      this.toastr.success('Profile Image Updated Successfully !');
+
+      console.log(successResponse);
+    });
+  }
+}
 
 
 }

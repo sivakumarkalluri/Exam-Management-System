@@ -4,7 +4,7 @@
   }
   
 thead th{
-    background: darkblue;
+    background-color: #3C1975;
     color: white;
 }
 thead tr th{
@@ -17,10 +17,7 @@ tbody tr td{
 table{
     margin: auto;
 }
-thead {
-    background: rgb(1, 1, 42);
-    color: white;
-}
+
 .dropdown-container {
     display: flex;
     /* justify-content: space-between; */
@@ -31,4 +28,26 @@ thead {
 #example {
     width: 100%; /* Adjust as needed */
   }
-  
+  .Pass{
+    
+    color: green;
+  }
+  .Fail{
+    color: red;
+  }
+  .review{
+    color: white;
+    background-color: #3C1975;
+    transform: scale(1);
+    box-shadow: 3px 3px 3px gray;
+    font-size: 12px;
+
+    transition: all 0.3s ease-in-out;
+
+}
+.review:hover{
+    transform: scale(0.95);
+    box-shadow: 2px 2px 2px gray;
+    transition: all 0.3s ease-in-out;
+
+}

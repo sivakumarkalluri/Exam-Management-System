@@ -6,7 +6,7 @@
       <div class="heroContent">
         <h1>Crack Interview with a formulated Smart practice!<br></h1>
             <h4>Aiming for cracking a Interview? Then you should begin here!</h4>
-            <button type="submit" class="btn-pink submit-btn justify-content-center" >Sign Up Now<i class="fas fa-sign-in" style="margin-left: 10px;"></i></button>
+            <button type="submit" class="btn-pink submit-btn justify-content-center fw-bold" routerLink="/signUpPage">Sign Up Now<i class="fas fa-sign-in" style="margin-left: 10px;"></i></button>
         
       </div>
       
@@ -17,66 +17,15 @@
     
     <h2 style=" text-align: center; margin-top: 30px; margin-bottom: 30px;" >Your Practice and Accuracy Influences Your Results ..!!
     </h2>
-    <div id="examsSection">
-      <div class="row g-3 examRow justify-content-center">
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+    <div id="examsSection" >
+      <div class="row g-3 examRow justify-content-center" >
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12" *ngFor="let exam of examsData">
           <div class="card exam">
-            <img src="assets/Exam_Images/Exam1.jpg" class="card-img-top displayImg" alt="..." style="height: 195px;">
-            <h4 class="examHeading">Python</h4>
+            <img [src]="getImagePath(exam.examName)" class="card-img-top displayImg" alt="..." style="height: 195px;" />
+            <h4 class="examHeading">{{exam.examName}}</h4>
             <div class="examContent">
-              <p>Prepare for Python Interview with Questions from Top MNC's</p>
-              <button type="submit" class="btn-pink submit-btn test-btn">Take Test<i class="fa-solid fa-arrow-right"></i></button>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-          <div class="card exam">
-            <img src="assets/Exam_Images/Exam2.webp" class="card-img-top displayImg" alt="..." style="height: 195px;">
-            <h4 class="examHeading">Java</h4>
-            <div class="examContent">
-              <p>Prepare for Java Interview with Questions focused on OOP's</p>
-              <button type="submit" class="btn-pink submit-btn test-btn">Take Test<i class="fa-solid fa-arrow-right"></i></button>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-          <div class="card exam">
-            <img src="assets/Exam_Images/Exam3.jpg" class="card-img-top displayImg" alt="..." style="height: 195px;">
-            <h4 class="examHeading">C#</h4>
-            <div class="examContent">
-              <p>Prepare for C# Interview with Questions from LeetCode</p>
-              <button type="submit" class="btn-pink submit-btn test-btn">Take Test<i class="fa-solid fa-arrow-right"></i></button>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-          <div class="card exam">
-            <img src="assets/Exam_Images/Exam4.png" class="card-img-top displayImg" alt="..." style="height: 195px;">
-            <h4 class="examHeading">Aptitude</h4>
-            <div class="examContent">
-              <p>Prepare for Aptitude Exam from Curated Topics</p>
-              <button type="submit" class="btn-pink submit-btn test-btn">Take Test<i class="fa-solid fa-arrow-right"></i></button>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-          <div class="card exam">
-            <img src="assets/Exam_Images/Exam5.png" class="card-img-top displayImg" alt="..." style="height: 195px;">
-            <h4 class="examHeading">DBMS</h4>
-            <div class="examContent">
-              <p>Prepare for DBMS Interview with Questions from Top MNC's </p>
-              <button type="submit" class="btn-pink submit-btn test-btn">Take Test<i class="fa-solid fa-arrow-right"></i></button>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-          <div class="card exam">
-            <img src="assets/Exam_Images/Exam6.jpg" class="card-img-top displayImg" alt="..." style="height: 195px;">
-            <h4 class="examHeading">Operating Systems</h4>
-            <div class="examContent">
-              <p>Prepare for OS Interview with Questions from Top MNC's </p>
-              <button type="submit" class="btn-pink submit-btn test-btn">Take Test<i class="fa-solid fa-arrow-right"></i></button>
+              <p>{{exam.examDescription}}</p>
+              <button type="submit" class="btn-pink submit-btn test-btn" (click)="TakeTest(exam.examID)">Take Test<i class="fa-solid fa-arrow-right"></i></button>
             </div>
           </div>
         </div>

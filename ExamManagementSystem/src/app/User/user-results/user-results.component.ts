@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/Services/User/user.service';
 import { AdminService } from 'src/app/Services/admin/admin.service';
 
@@ -9,7 +10,7 @@ import { AdminService } from 'src/app/Services/admin/admin.service';
 })
 export class UserResultsComponent implements OnInit{
 
-  constructor(private userService:UserService,private adminService:AdminService){}
+  constructor(private userService:UserService,private adminService:AdminService,private router:Router){}
   
   originalUserResults: any[] = [];
   P: number = 1;
@@ -120,4 +121,12 @@ export class UserResultsComponent implements OnInit{
       return 0;
     });
   }
+
+
+  AnswerSheet(id:any){
+    this.router.navigate(['/userHome/AnswerSheet'],{ queryParams: { testId:id } })
+
+    console.log("testId : "+id);
+  }
+
 }

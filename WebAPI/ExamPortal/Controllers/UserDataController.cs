@@ -20,26 +20,9 @@ namespace ExamPortal.Controllers
             this.configuration = configuration;
         }
 
-        // GET: api/<UserDataController>
-
-
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        //// GET api/<UserDataController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        // POST api/<UserDataController>
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Post(Registration registerData)
+        public async Task<IActionResult> Post(Registration registerData)
         {
             if (this.examPortalDBContext.register.Where(u => u.Email == registerData.Email).FirstOrDefault() != null)
             {
@@ -47,10 +30,56 @@ namespace ExamPortal.Controllers
             }
             registerData.registeredAt = DateTime.Now;
             registerData.Role = "User";
-            this.examPortalDBContext.register.Add(registerData);
-            this.examPortalDBContext.SaveChanges();
+            await this.examPortalDBContext.register.AddAsync(registerData);
+            await this.examPortalDBContext.SaveChangesAsync();
             return Ok("Success");
         }
+
+        [HttpPost("AddAdmin")]
+        public async Task<IActionResult> AddAdmin(Registration registerData)
+        {
+            if (this.examPortalDBContext.register.Where(u => u.Email == registerData.Email).FirstOrDefault() != null)
+            {
+                return Ok("Already Exist");
+            }
+            registerData.registeredAt = DateTime.Now;
+            registerData.Role = "Admin";
+            registerData.Password = "admin";
+            await this.examPortalDBContext.register.AddAsync(registerData);
+            await this.examPortalDBContext.SaveChangesAsync();
+            return Ok("Success");
+        }
+
+        [HttpDelete("DeleteAdmin/{id}")]
+        public async Task<IActionResult> DeleteAdmin(int id)
+        {
+            var data = await this.examPortalDBContext.register.FindAsync(id);
+            if (data == null)
+            {
+                Ok("Data not Found");
+            }
+
+            this.examPortalDBContext.register.Remove(data);
+            await this.examPortalDBContext.SaveChangesAsync();
+
+            return Ok(id);
+        }
+
+        [HttpGet("GetAdminsData")]
+
+        public async Task<IActionResult> GetAdminsData()
+        {
+            var data = this.examPortalDBContext.register.Where(u => u.Role == "Admin").OrderByDescending(u=>u.registeredAt).ToList();
+            if (data == null)
+            {
+                Ok("Data not Found");
+            }
+            return Ok(data);
+
+        }
+
+
+
 
 
         [AllowAnonymous]
@@ -85,18 +114,25 @@ namespace ExamPortal.Controllers
                 userAvailable.Role
                 ));
         }
-    
 
-        // PUT api/<UserDataController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        [HttpPut("EditUserData/{id}")]
+        public async Task<IActionResult> EditUserData(Registration inputData,int id)
+        {
+            var data = await this.examPortalDBContext.register.FindAsync(id);
+            if(data== null)
+            {
+                Ok("Data not Found");
+            }
+            
+            data.FirstName= inputData.FirstName;
+            data.LastName= inputData.LastName;
+            data.Gender= inputData.Gender;
+            data.Mobile= inputData.Mobile;
+            data.Email=inputData.Email;
+            data.Password=inputData.Password;
+            await this.examPortalDBContext.SaveChangesAsync();
+            return Ok(data);
 
-        // DELETE api/<UserDataController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        }
     }
 }

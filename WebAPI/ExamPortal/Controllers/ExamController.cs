@@ -40,7 +40,7 @@ namespace ExamPortal.Controllers
                 {
                     ExamID = exam.ExamId,
                     ExamName = exam.ExamName,
-                    ExamDescription = exam.ExamDescription,
+                    ExamDescription = exam.ExamDescription
 
                 };
                 examsDto.Add(examDto);

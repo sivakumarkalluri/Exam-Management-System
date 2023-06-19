@@ -116,25 +116,21 @@
         <div class="row reportData ml-2 d-flex justify-content-between align-content-center">
             <div class="col-md-4 reportDetails">
                 <p class="fw-bold">Total Questions : {{totalQuestions}}</p>
-                <p  class="fw-bold">Question Mark : {{examData.questionMark}} </p>
-                <p  class="fw-bold">Questions Not Attempted : {{notAttempted}}</p>
-
+                <p class="fw-bold">Pass Percentage : {{examData.examPassPercent}} %</p>
+                <p class="fw-bold">Correct Answers : {{correctAnswers}}</p>
             </div>
             <div class="col-md-4 reportDetails">
+                <p class="fw-bold">Total Marks :  {{examData.questionMark*totalQuestions}}</p>
                 <p class="fw-bold">Questions Attempted : {{attempted}}</p>
-                <p class="fw-bold">Correct Answers : {{correctAnswers}}</p>
                 <p class="fw-bold">Wrong Answers : {{wrongAnswers}}</p>
-
-
-
             </div>  
             <div class="col-md-4 reportDetails">
-                <p class="fw-bold">Marks Obtained : {{marksObtained}}</p>
-                <p class="fw-bold">Total Marks :  {{examData.questionMark*totalQuestions}}</p>
-                <p class="fw-bold">Pass Percentage {{examData.examPassPercent}} %</p>
+                <p  class="fw-bold">Question Mark : {{examData.questionMark}} </p>
+                <p  class="fw-bold">Questions Not Attempted : {{notAttempted}}</p>
+                <p class="fw-bold text-primary">Marks Obtained : {{marksObtained}}</p>
             </div>
             <div class="col-md-4 reportDetails">
-                <p class="fw-bold">Percentage Obtained : {{percentageObtained}}</p>
+                <p class="fw-bold text-primary">Percentage Obtained : {{percentageObtained}} %</p>
 
             </div>
            

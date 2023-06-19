@@ -1,5 +1,6 @@
 using ExamPortal.Data;
 using ExamPortal.Repositories.AdminRepo;
+using ExamPortal.Repositories.ImageRepo;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
@@ -13,6 +14,8 @@ builder.Services.AddDbContext<ExamPortalDBContext>(options => options.UseSqlServ
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddHttpContextAccessor();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -40,6 +43,9 @@ builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
 }
 ));
 builder.Services.AddScoped<IAdminRepository, SqlAdminRepository>();
+builder.Services.AddScoped<IImageRepository, SqlImageRepository>();
+
+
 
 var app = builder.Build();
 
@@ -52,6 +58,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors("corspolicy");
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "ProfileImages")),
+    RequestPath = "/ProfileImages"
+});
+
 app.UseAuthentication();
 
 app.UseAuthorization();

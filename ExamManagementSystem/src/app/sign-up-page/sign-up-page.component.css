@@ -98,14 +98,24 @@ a {
 }
 
 .btn-blue {
-    background-color: #1A237E;
+    background-color: #3C1975;
     width: 150px;
+    box-shadow: 4px 4px 4px #808080;
+    transform: scale(1);
+
+    transition: all 0.3s ease-in-out;
     color: #fff;
     border-radius: 2px;
 }
 
 .btn-blue:hover {
     background-color: #000;
+    box-shadow: 2px 2px 2px gray;
+    transform: scale(0.95);
+
+
+
+    transition: all 0.3s ease-in-out;
     cursor: pointer;
 }
 

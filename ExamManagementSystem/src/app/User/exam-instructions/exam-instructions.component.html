@@ -1,9 +1,14 @@
 <div class="container">
+  <div class="backButtonDiv mb-4" >
+    <div>
+      <button class="btn text-center backButton" routerLink="/userHome/userExams"><span><i class="fa fa-arrow-left"></i></span></button>
+    </div>
+  </div>
     <h1 style="text-align: center;">Test Details</h1>
     <div class="testDetails d-flex flex-column justify-content-between mt-4 mb-4 ">
     <div class="d-flex justify-content-between align-items-center" >
         <div >
-          <div>Exam Name: <span class="testDesc">{{examData.examName}}</span></div>
+          <div >Exam Name: <span class="testDesc ">{{examData.examName}}</span></div>
         </div>
         <div >
           <div>Exam Duration: <span class="testDesc">{{examData.examDuration}} Mins </span></div>
@@ -26,23 +31,23 @@
     <p class="lead fw-bold">Please read the following instructions carefully before starting the test:</p>
   
   <ol class="instruction-list">
-    <li>You need to have a stable internet connection throughout the quiz.</li>
+    <li>You need to have a stable internet connection throughout the Exam.</li>
     <li>Do not refresh the page as it may result in the loss of your progress.</li>
-    <li>This quiz is only for practice purposes.</li>
+    <li>This Exam is only for practice purposes.</li>
     <li>Duration of the Exam is <span class="fw-bold text-danger">{{examData.examDuration}} Minutes</span> </li>
-    <li>You have to submit the quiz within the given time limit. </li>
-    <li>There are <span class="fw-bold text-danger">{{examData.examTotalQuestion}}</span> questions in this quiz.</li>
+    <li>You have to submit the Exam within the given time limit. </li>
+    <li>There are <span class="fw-bold text-danger">{{examData.examTotalQuestion}}</span> questions in this Exam.</li>
     <li>Each question carries <span class="fw-bold text-danger">{{examData.questionMark}}</span> mark for the correct answer. There is no negative marking.</li>
     <li>All questions are of multiple-choice type.</li>
   </ol>
 
-  <h2 class="mt-4">Attempting Quiz</h2>
-  <li>Click the "Start Quiz" button to start the quiz. The timer will start as soon as you click the button.</li>
-  <li>You cannot resume the quiz if interrupted due to any reason.</li>
+  <h2 class="mt-4">Attempting Exam</h2>
+  <li>Click the "Start Exam" button to start the Exam. The timer will start as soon as you click the button.</li>
+  <li>You cannot resume the Exam if interrupted due to any reason.</li>
   <li>Scroll down to move to the next question.</li>
-  <li>Click on the "Submit" button upon completion of the quiz.</li>
+  <li>Click on the "Submit" button upon completion of the Exam.</li>
   <li>You can see your marks once you complete the test.</li>
 
-  <button (click)="startQuiz()"  class="btn btn-primary btn-start" >Start Quiz</button>
+  <button (click)="startExam()"  class="btn btn-start" >Start Exam</button>
 </div>
 

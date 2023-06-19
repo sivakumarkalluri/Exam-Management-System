@@ -127,12 +127,6 @@ export class UserTestComponent implements OnInit{
       if(q.selectedAnswer!=q.correctAnswer && q.selectedAnswer!=""){
         this.wrongAnswers++;
       }
-      if(q.selectedAnswer!=""){
-        this.attempted++;
-      }
-      if(q.selectedAnswer==""){
-        this.notAttempted++;
-      }
      })
      this.percentageObtained=((this.marksObtained)/(this.examData.examTotalQuestion*this.examData.questionMark))*100
      if(this.percentageObtained>=this.examData.examPassPercent){

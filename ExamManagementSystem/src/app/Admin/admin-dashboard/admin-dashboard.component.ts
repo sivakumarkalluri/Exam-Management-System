@@ -5,7 +5,6 @@ Chart.register(...registerables);
 
 
 
-
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
@@ -18,6 +17,7 @@ export class AdminDashboardComponent implements OnInit{
   passStatistics:any;
   examAttemptStatistics:any;
   categoryAttemptStatistics:any;
+  formModal:any;
 
 
   
@@ -30,11 +30,13 @@ export class AdminDashboardComponent implements OnInit{
   categoryattemptdata:any[] = [];
   colordata=["#fd7f6f", "#7eb0d5", "#b2e061", "#bd7ebe", "#ffb55a", "#ffee65", "#beb9db", "#fdcce5", "#8bd3c7"];
   ngOnInit(): void {
+   
    this.getAdminStatistics();
    this.getExamPassStatistics();
    this.getCategoryAttemptStatistics();
    this.getExamAttemptsStatistics();
   }
+  
   getAdminStatistics() {
     this.adminService.getAdminStats().subscribe(
       (response: any) => {

@@ -95,7 +95,7 @@ isUserValid=false;
         this.isUserValid=true;
         this.authService.setToken(res);
         if(this.authService.roleCheck=="User"){
-          this.router.navigate(['/userDashboard']);
+          this.router.navigate(['userHome/userExams']);
         }
         else{
           this.router.navigate(['adminHome/adminDashboard']);

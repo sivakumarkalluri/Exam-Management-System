@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -98,6 +99,46 @@ export class AdminService implements OnInit{
   }
   getExamListData():any{
     return this.http.get(this.baseUrl+'/Exam/ExamsList',{ observe: 'response' })
+  }
+
+  uploadImage(id:Int16Array,file:File):Observable<any>{
+    const formData=new FormData();
+    formData.append("ProfileImage",file);
+   return this.http.post(`${this.baseUrl}/ProfileImage/${id}/upload-image`,formData,{
+      responseType:'text'
+    });
+  }
+
+  updateProfile(data:any,id:any){
+    return this.http.put(this.baseUrl+"/UserData/EditUserData/"+id,data,{ observe: 'response' })
+  }
+
+
+  getAnswerSheet(id:any){
+    return this.http.get(this.baseUrl+'/AnswerSheet/'+id,{ observe: 'response' });
+    
+  }
+
+  AddAdmin(data:any){
+    return this.http.post(this.baseUrl+'/UserData/AddAdmin',{
+    FirstName:data[0],
+    LastName:data[1],
+    Email:data[2],
+    Mobile:data[3],
+    Password:data[4],
+    Gender:data[5],
+    Role:data[6],
+    ImagePath:data[7]}, { observe: 'response' })
+
+  }
+
+  getAdminsData(){
+    return this.http.get(this.baseUrl+'/UserData/GetAdminsData',{ observe: 'response' });
+  }
+
+  deleteAdmin(id:any){
+    return this.http.delete(this.baseUrl+'/UserData/DeleteAdmin/'+id,{ observe: 'response' });
+
   }
 
 }

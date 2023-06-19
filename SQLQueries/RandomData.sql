@@ -595,3 +595,5 @@ VALUES
 select * from userResults
 select * from questions
 select * from usersExamData
+delete from usersExamData where exam_id=1004
+delete from userResults where exam_id=1004

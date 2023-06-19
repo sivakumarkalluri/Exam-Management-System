@@ -1,5 +1,6 @@
 ﻿using ExamPortal.Data;
 using ExamPortal.Models.Domain;
+using ExamPortal.Models.Domain.Auth;
 using ExamPortal.Models.DTO;
 using ExamPortal.Models.DTO.Users;
 using Microsoft.AspNetCore.Components.Forms;
@@ -340,6 +341,31 @@ namespace ExamPortal.Repositories.AdminRepo
                 return 0;
             }
             return Id;
+        }
+
+        public async Task<Registration> GetUserData(int id)
+        {
+            var result = await this._dbContext.register.FindAsync(id);
+            return result;
+        }
+
+        public async Task<bool> UpdateImage(int id, string profileImageUrl)
+        {
+            var result = await GetUserData(id);
+            if (result != null)
+            {
+                result.ImagePath = profileImageUrl;
+                await _dbContext.SaveChangesAsync();
+                return true;
+
+            }
+            return false;
+        }
+
+        public async Task<List<AnswerSheetDTO>> GetAnswerSheet(int id)
+        {
+            var result = _dbContext.answerSheetDTOs.FromSqlRaw("Exec answersheet @testId", new SqlParameter("@testId", id)).AsEnumerable().ToList();
+            return result;  
         }
     }
 }

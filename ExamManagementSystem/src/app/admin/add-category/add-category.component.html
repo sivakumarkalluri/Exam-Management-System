@@ -1,5 +1,9 @@
-
-<mat-horizontal-stepper [linear]="true" #stepper [selectedIndex]="currentIndex" [hidden]="editCategory || editFlag">
+<div class="backButtonDiv mb-4" [hidden]="editCategory || editFlag" >
+  <div>
+    <button class="btn text-center backButton" routerLink="/adminHome/adminCategories"><span><i class="fa fa-arrow-left"></i></span></button>
+  </div>
+</div>
+<mat-horizontal-stepper [linear]="true" #stepper [selectedIndex]="currentIndex" [hidden]="editCategory || editFlag" class="mt-4">
     <mat-step [stepControl]="addCategoryForm" [completed]="currentIndex == 1">
         <ng-template matStepLabel>Add Category</ng-template>
         <form [formGroup]="addCategoryForm" >
@@ -210,12 +214,19 @@
              <h4>Category Name : {{addCategoryForm.value.categoryName}}</h4>
              <h4>Exam Name : {{addExamForm.value.examName}}</h4>
              <h4 class="mb-3">Number of Questions : {{questions.length}}</h4>
+             <button type="button" class="btn actionBtn mr-2" style="background-color: rgb(58, 58, 169); color: white;"  matStepperPrevious><i class='fas fa-less-than mr-1'></i>
+              Back</button>
             <button type="submit" class="btn btnAction"  style="background-color: rgb(58, 58, 169); color: white; margin: auto;"  (click)="finalSubmit()">Save Changes</button>
         </form>
       </mat-step>
     
 </mat-horizontal-stepper>
 <div [hidden]="!editCategory">
+  <div class="backButtonDiv mb-4" >
+    <div>
+      <button class="btn text-center backButton" routerLink="/adminHome/adminCategories"><span><i class="fa fa-arrow-left"></i></span></button>
+    </div>
+  </div>
   <form [formGroup]="addCategoryForm" >
     <div class="row px-3">
         <div class="form-floating mb-3">
@@ -243,7 +254,11 @@
 </div>
 
 <div [hidden]="!editExam">
-
+  <div class="backButtonDiv mb-4" >
+    <div>
+      <button class="btn text-center backButton" routerLink="/adminHome/adminEditExams"><span><i class="fa fa-arrow-left"></i></span></button>
+    </div>
+  </div>
   <form [formGroup]="addExamForm">
     <div class="row px-3">
         
@@ -317,6 +332,11 @@
 </div>
 
 <div [hidden]="!addQuestionFlag">
+  <div class="backButtonDiv mb-4" >
+    <div>
+      <button class="btn text-center backButton" routerLink="/adminHome/adminEditExams"><span><i class="fa fa-arrow-left"></i></span></button>
+    </div>
+  </div>
   <form [formGroup]="currentQuestionForm" *ngIf="currentQuestionForm">
               
     <div class="row px-3">

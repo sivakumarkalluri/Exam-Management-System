@@ -14,7 +14,7 @@ export const navUserData = [
     {
         routeLink:'userProfile',
         icon:'fa-solid fa-address-card',
-        label:'Admin'
+        label:'Profile'
     },
     {
         routeLink:'userExams',

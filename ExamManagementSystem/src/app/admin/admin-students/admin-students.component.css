@@ -1,6 +1,6 @@
 thead th{
-    background: darkblue;
-    color: white;
+  background-color: #3C1975;
+  color: white;
 }
 thead tr th{
     font-size: 14px;
@@ -13,14 +13,12 @@ tbody tr td{
 }
 table{
     margin: auto;
-    margin-top: -60px;
 }
 .main {
     width: 100%;
-    margin: 50px auto;
     display: flex;
     justify-content: space-between;
-      margin-top: -40px;
+      
       /* margin-left: 150px; */
   }
   .form-group has-search{
@@ -41,4 +39,7 @@ table{
     pointer-events: none;
     color: #aaa;
   }
-  
+.heading{
+  font-family: 'Montserrat', sans-serif;
+
+}

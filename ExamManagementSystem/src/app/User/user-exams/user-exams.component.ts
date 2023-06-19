@@ -34,7 +34,7 @@ getImagePath(examName: string): string {
     const examImage = this.examImages.find((item:any) => item.exam_Name === examName);
   return examImage ? examImage.imagePath : 'assets/default_exam.webp';
   }
-  return "";
+  return "assets/default_exam.webp";
   
 }
 

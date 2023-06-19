@@ -34,7 +34,7 @@ export class LoginPageComponent implements OnInit{
         this.isUserValid=true;
         this.authService.setToken(res);
         if(this.authService.roleCheck=="User"){
-          this.router.navigate(['userHome/userDashboard']);
+          this.router.navigate(['userHome/userExams']);
           this.toastr.success("Logged in Successfully");
         }
         else{

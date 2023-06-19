@@ -1,4 +1,5 @@
 ﻿using ExamPortal.Models.Domain;
+using ExamPortal.Models.Domain.Auth;
 using ExamPortal.Models.DTO;
 using ExamPortal.Models.DTO.Users;
 
@@ -55,5 +56,12 @@ namespace ExamPortal.Repositories.AdminRepo
         Task<int> GetTestID();
 
         Task<int> AddUserExamData(List<UserExamData> userExamDataList);
+
+        Task<Registration> GetUserData(int id);
+
+        Task<bool> UpdateImage(int id, string profileImageUrl);
+
+        Task<List<AnswerSheetDTO>> GetAnswerSheet(int id);
+
     }
 }

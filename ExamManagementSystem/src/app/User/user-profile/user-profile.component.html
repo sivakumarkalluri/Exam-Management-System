@@ -1,17 +1,26 @@
 
 <div class="container">
-    <h1 class="text-primary">Edit Profile</h1>
+    <h1 class="profile">User Profile</h1>
     <hr>
-    <div class="row">
+    <div class="row profileCard">
         <!-- left column -->
         <div class="col-md-3">
             <div class="text-center">
-                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" class="avatar img-circle img-thumbnail"
+                <div *ngIf="userData.imagePath==''">
+                    <img src="assets/default_profile.png" class="avatar rounded-circle img-thumbnail"
+                    alt="avatar" style="color:  white;">
+                </div>
+                <div *ngIf="userData.imagePath">
+                    <img [src]="userData.imagePath" class="avatar rounded-circle img-thumbnail"
                     alt="avatar">
                 
+                </div>
+               
 
-                <input type="file" class="form-control">
-            </div>
+                    <input hidden type="file"  #imageUpload (change)="uploadImage($event)">
+                    <button class="btn btnAction"(click)="imageUpload.click()">Change Image</button>
+
+                </div>
         </div>
 
         <!-- edit form column -->
@@ -23,7 +32,7 @@
                         <div class="form-group">
                             <label class="col-md-14 form-label" for="firstName">First name:</label>
                             <div class="col-md-10">
-                                <input class="form-control" type="text" value="John" id="firstName" formControlName="firstName" [disabled]="isEditMode">
+                                <input class="form-control" type="text" id="firstName" formControlName="firstName" [disabled]="isEditMode">
                                 <div class="form text text-danger" *ngIf="FirstName.errors?.['required'] && (FirstName.touched || FirstName.dirty)">
                                     <small>First Name is Required</small>
                                 </div>
@@ -37,7 +46,7 @@
                         <div class="form-group">
                             <label class="col-md-14 form-label" for="lastName">Last name:</label>
                             <div class="col-md-10">
-                                <input class="form-control" type="text" value="Doe" id="lastName" formControlName="lastName" [disabled]="isEditMode">
+                                <input class="form-control" type="text" id="lastName" formControlName="lastName" [disabled]="isEditMode">
                                 <div class="form text text-danger" *ngIf="LastName.errors?.['required'] && (LastName.touched || LastName.dirty)">
                                     <small>Last Name is Required</small>
                                 </div>
@@ -54,7 +63,7 @@
                         <div class="form-group">
                             <label class="col-md-14 form-label" for="email" >Email</label>
                             <div class="col-md-10">
-                                <input class="form-control" type="email" value="john@gmail.com" id="email" formControlName="email" [disabled]="true">
+                                <input class="form-control" type="email" id="email" formControlName="email" [disabled]="true">
                                 <div class="form text text-danger" *ngIf="Email.errors?.['required'] && (Email.touched || Email.dirty)">
                                     <small>Email is Required</small>
                                 </div>
@@ -116,12 +125,15 @@
                         <div class="form-group">
                             <label class="col-md-14 form-label" for="password">Old Password:</label>
                             <div class="col-md-10">
-                                <input class="form-control" type="password" value="abc@123" id="password" formControlName="password" [(ngModel)]="password" (click)="removeErrorMessage()">
+                                <input class="form-control" type="password"  id="password" formControlName="password" [(ngModel)]="password" (click)="removeErrorMessage()">
                                 <div class="form text text-danger" *ngIf="Pwd.errors?.['required'] && (Pwd.touched || Pwd.dirty)">
                                     <small>Password is Required</small>
                                 </div>
                                 <div class="form text text-danger" *ngIf="Pwd.errors?.['minlength'] || Pwd.errors?.['maxlength'] && (Pwd.touched || Pwd.dirty)">
                                     <small>Password should be atleast 6 and at the max 15 characters long.</small>
+                                </div>
+                                <div class="form text text-danger" [ngStyle]="{'display':wrongPassword}" >
+                                    <small>Old Password is Wrong</small>
                                 </div>
                             </div>
                         </div>
@@ -142,6 +154,9 @@
                         <div class="form text text-danger" *ngIf="NPwd.errors?.['minlength'] || NPwd.errors?.['maxlength'] && (NPwd.touched || NPwd.dirty)">
                             <small>Password should be atleast 6 and at the max 15 characters long.</small>
                         </div>
+                        <div class="form text text-danger" [ngStyle]="{'display':samePassword}" >
+                            <small>Old and New Password are Same</small>
+                        </div>
                         </div>
                       </div>
                     </div>
@@ -150,33 +165,29 @@
                         <label class="col-md-14 form-label" for="confirmPassword">Confirm Password:</label>
                         <div class="col-md-10">
                           <input class="form-control" type="password" id="confirmPassword" formControlName="CPwd" [(ngModel)]="confirmPassword" (click)="removeErrorMessage()">
-                          <div class="form text text-danger" [ngStyle]="{'display':wrongPassword}" >
-                            <small>Wrong Password</small>
-                        </div>
+                          
                           <div class="form text text-danger" [ngStyle]="{'display':repeatPass}" >
                             <small>Password is not Matching</small>
                         </div>
-                        <div class="form text text-danger" [ngStyle]="{'display':samePassword}" >
-                            <small>Old and New Password are Same</small>
-                        </div>
+                        
                         </div>
                       </div>
                     </div>
                   </div>
 
-                
                 <div class="row">
                     <div class="d-flex gap-3">
-                        <button class="btn btn-primary" [hidden]="!isEditMode" (click)="editButton()">Edit</button>
-                        <button class="btn btn-danger" [hidden]="isEditMode || showPasswordFields" (click)="cancel()">Cancel</button>
-                        <button class="btn btn-success" [disabled]="editForm.invalid" [hidden]="isEditMode" (click)="saveData()">Save Changes</button>
+                        <button class="btn btnAction" [hidden]="!isEditMode" (click)="editButton()">Edit</button>
+                        <button class="btn btn-danger" [hidden]="isEditMode || !showPasswordFields" (click)="cancel()">Cancel</button>
+                        <button class="btn btn-success" [disabled]="editForm.invalid" [hidden]="isEditMode " (click)="saveData()">Save Changes</button>
                         
-                        <button class="btn btn-primary" [hidden]="showPasswordFields" (click)="showChangePasswordFields()">Change Password</button>
+                        <button class="btn btnAction" [hidden]="showPasswordFields" (click)="showChangePasswordFields()">Change Password</button>
                         
                     </div>
-                  </div>
+                </div>  
             </form>
         </div>
     </div>
 </div>
 <hr>
+

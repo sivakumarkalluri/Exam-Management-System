@@ -25,9 +25,9 @@ export class ExamInstructionsComponent implements OnInit{
     })
   }
 
-  startQuiz(){
+  startExam(){
     Swal.fire({
-      title: 'Do you want to start the Quiz?',
+      title: 'Do you want to start the Exam?',
       
       showCancelButton: true,
       confirmButtonText: 'Start',
@@ -51,11 +51,6 @@ export class ExamInstructionsComponent implements OnInit{
     }
   }
   
-  Test(examId:any){
-    
-
-  }
-
 
   
 

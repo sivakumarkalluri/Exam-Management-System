@@ -121,5 +121,22 @@ namespace ExamPortal.Controllers.AdminControllers
 
 
         }
+
+        [HttpGet("AnswerSheet/{id}")]
+
+        public async Task<IActionResult> GetAnswerSheet(int id)
+        {
+            var result = await this.adminRepository.GetAnswerSheet(id);
+            if (result == null)
+            {
+                return Ok("Data not Found");
+            }
+            return Ok(result);
+
+        }
+
+
+
+
     }
 }

@@ -6,11 +6,11 @@
         <!-- left column -->
         <div class="col-md-3">
             <div class="text-center">
-                <div *ngIf="userData.imagePath==null">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" class="avatar rounded-circle img-thumbnail"
+                <div *ngIf="userData.imagePath=='null'">
+                    <img src="assets/default_profile.png" class="avatar rounded-circle img-thumbnail"
                     alt="avatar">
                 </div>
-                <div *ngIf="userData.imagePath">
+                <div *ngIf="userData.imagePath!='null'">
                     <img [src]="userData.imagePath" class="avatar rounded-circle img-thumbnail"
                     alt="avatar">
                 
@@ -191,11 +191,11 @@
 </div>
 <hr>
 <!-- Button to trigger the modal -->
+<h4 class="adminsList text-center mt-4">List of Admins </h4>
+<button class="btn btnAction mt-4" (click)="openAddAdminModal()"><i class="fa-solid fa-square-plus mr-2"></i>Add Admin</button>
 
-<button class="btn btnAction" (click)="openAddAdminModal()">Add Admin</button>
 
-
-<div class="main">
+<div class="main mt-4 mb-4">
     <div class="form-group has-search">
       <span class="fa fa-search form-control-feedback"></span>
       <input type="text" class="form-control" placeholder="Search By Name" [(ngModel)]="firstName" (ngModelChange)="search()" >
@@ -213,7 +213,7 @@
         <thead>
           <tr>
             <tr>
-                <th>S. No</th>
+                <th>User Id</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
@@ -230,7 +230,7 @@
           
           <tr *ngFor="let result of adminsData | paginate:{ itemsPerPage: 5, currentPage: P }; let i=index " >
             <ng-container *ngIf="result.userId != this.userId">
-                <td>{{i+1}}</td>
+                <td>{{result.userId}}</td>
 
                 <td>{{result.firstName}}</td>
                 <td>{{result.lastName}}</td>

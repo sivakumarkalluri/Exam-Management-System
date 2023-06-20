@@ -44,10 +44,10 @@ export class AddAdminComponent implements OnInit{
       this.adminForm.value.lastName as String,
       this.adminForm.value.email as String,
       this.adminForm.value.mobile as String,
-      "",
+      "dup",
       this.adminForm.value.gender as String,
-      "",
-      ""
+      "dup",
+      "null"
     ]).subscribe((res:any)=>{
 
       if(res=="Success"){
@@ -68,7 +68,7 @@ export class AddAdminComponent implements OnInit{
       
       }
       else if(res=="Already Exist"){
-        this.displayMsg="Account Already Exist. Try another Email or Please Login";
+        this.displayMsg="Account Already Exist. Try another Email";
         this.isAccountCreated=false;
       }
       else{

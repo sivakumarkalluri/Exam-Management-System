@@ -119,7 +119,7 @@ export class AdminService implements OnInit{
     
   }
 
-  AddAdmin(data:any){
+  AddAdmin(data:Array<String>){
     return this.http.post(this.baseUrl+'/UserData/AddAdmin',{
     FirstName:data[0],
     LastName:data[1],
@@ -128,8 +128,9 @@ export class AdminService implements OnInit{
     Password:data[4],
     Gender:data[5],
     Role:data[6],
-    ImagePath:data[7]}, { observe: 'response' })
-
+    ImagePath:data[7]}, {
+      responseType:'text'
+    });
   }
 
   getAdminsData(){

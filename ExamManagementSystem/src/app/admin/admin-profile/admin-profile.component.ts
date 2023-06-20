@@ -171,7 +171,6 @@ export class AdminProfileComponent {
     this.editForm.get('gender')?.disable();
 
     this.editForm.get('mobile')?.disable();
-    return this.userId;
 
     
   }
@@ -289,6 +288,7 @@ openAddAdminModal(): void {
   });
 
   dialogRef.afterClosed().subscribe(result => {
+    this.getAdminsData();
     // Handle any actions after the modal is closed
   });
 }
@@ -308,8 +308,14 @@ DeleteAdmin(id:any,name:any){
     if (res === true) {
       this.adminService.deleteAdmin(id).subscribe((response: any) => {
         console.log(response.body);
-        if (response.body.question_Id === id) {
-          this.getAdminsData();
+        if (response.body === id) {
+          this.adminService.getAdminsData().subscribe((Data:any)=>{
+            console.log("no")
+            this.adminsData=Data.body;
+            console.log("name"+this.adminsData[0].firstName);
+            console.log("adminsData"+this.adminsData);
+          })
+         
           this.toastr.success(name+" Deleted Successfully from Admins");
           
         } else {

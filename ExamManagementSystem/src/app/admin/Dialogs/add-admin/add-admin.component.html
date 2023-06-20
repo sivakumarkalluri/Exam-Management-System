@@ -50,12 +50,26 @@
       <div class="col-md-6">
         <label for="gender" class="form-label">Gender</label>
         <div class="col-md-12"  style="display: flex; gap: 5px;">
-            <input type="radio" formControlName="gender" name="gender" value="Male">
+          <select class="form-select" formControlName="gender">
+            <option value="" selected name="gender">
+              Gender
+            </option>
+            <option value="Male"  name="gender">
+              Male
+            </option>
+            <option value="Female"  name="gender">
+              Female
+            </option>
+            <option value="Others"  name="gender">
+              Others
+            </option>
+          </select>
+            <!-- <input type="radio" formControlName="gender" name="gender" value="Male">
             <label>Male</label>
             <input type="radio" formControlName="gender" name="gender" value="Female">
             <label>Female</label>
             <input type="radio" formControlName="gender" name="gender" value="Others">
-            <label>Others</label>
+            <label>Others</label> -->
          </div>
                 
         <div class="form text text-danger" *ngIf="Gender.errors?.['required'] && (Gender.touched || Gender.dirty)">

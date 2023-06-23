@@ -2,6 +2,12 @@
 .card {
     height: 170px;
   }
+  #adminDashboard{
+    margin: auto;
+    padding: 2rem;
+    background-color: #eceff1;
+    width: 100%;
+  }
   
   .card-header {
     height: 100%;

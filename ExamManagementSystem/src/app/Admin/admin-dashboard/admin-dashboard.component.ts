@@ -28,7 +28,7 @@ export class AdminDashboardComponent implements OnInit{
   faildata: any[] = [];
   studentattemptdata: any[] = [];
   categoryattemptdata:any[] = [];
-  colordata=["#fd7f6f", "#7eb0d5", "#b2e061", "#bd7ebe", "#ffb55a", "#ffee65", "#beb9db", "#fdcce5", "#8bd3c7"];
+  colordata=["#64C2A6", "#FF2E7E", "#00529B", "#7031AC", "#ffb55a", "#ffee65", "#beb9db", "#fdcce5", "#8bd3c7"];
   ngOnInit(): void {
    
    this.getAdminStatistics();
@@ -76,7 +76,7 @@ export class AdminDashboardComponent implements OnInit{
           datasets: [{
             label: 'Pass',
             data: passdata,
-            backgroundColor: '#22a7f0',
+            backgroundColor: '#00529B',
             borderColor: [
   
               'rgba(75, 192, 192, 1)',
@@ -88,7 +88,7 @@ export class AdminDashboardComponent implements OnInit{
           {
             label: 'Fail',
             data: faildata,
-            backgroundColor: '#c86558',
+            backgroundColor: '#F13C59',
             borderColor: [
   
               'rgba(75, 192, 192, 1)',

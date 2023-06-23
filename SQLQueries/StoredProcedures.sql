@@ -6,6 +6,7 @@ CREATE PROCEDURE InsertUserResult
     @examId INT
 AS
 BEGIN
+
     DECLARE @totalMarks INT
     DECLARE @passPercent INT
     DECLARE @passFlag BIT
@@ -103,6 +104,9 @@ BEGIN
 
 END
 
+select * from questions
+select * from usersExamData
+select * from userResults
 --------------------------------------------------------------------------------------------------
 --- Stored Procedure for getting AdminDashboard Card Statistics
 
@@ -155,6 +159,7 @@ exec GetAdminStatistics
 CREATE PROCEDURE GetExamPassStatistics
 AS
 BEGIN
+---virtual table for recent attempted
     WITH LatestUserResults AS (
         SELECT userId, exam_id, MAX(attemptedAt) AS latestAttemptedAt
         FROM userResults
@@ -503,7 +508,6 @@ END
 ------------------------------------------------------------------------------
 
 
-
 CREATE PROCEDURE UserDashBoardStatistics
 	@userId INT
 AS
@@ -516,8 +520,14 @@ BEGIN
         (SELECT COUNT(DISTINCT exam_id) FROM userResults WHERE userId = @userId) AS totalExamsWritten,
         
         -- Calculate total tests attempted by the user
-        (SELECT COUNT(*) FROM userResults WHERE userId = @userId) AS totalTestsAttempted;
+        (SELECT COUNT(*) FROM userResults WHERE userId = @userId) AS totalTestsAttempted,
+        
+        -- Calculate total exams not written by the user
+        (SELECT COUNT(DISTINCT exam_id) FROM exam WHERE exam_id NOT IN (SELECT DISTINCT exam_id FROM userResults WHERE userId = @userId)) AS totalExamsNotWritten;
 END;
+
+exec UserDashBoardStatistics @userId=2
+
 
 
 ---------------------------------------------------------------------------------------------
@@ -698,3 +708,6 @@ select Top 1 (testId+1) as testId from usersExamData order by testId desc;
 end;
 
 exec CreateTestID
+
+
+select * from ExamImages

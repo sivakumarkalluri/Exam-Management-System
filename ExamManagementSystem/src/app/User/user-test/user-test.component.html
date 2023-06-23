@@ -3,9 +3,13 @@
         {{examData.examName}}
     </div>
     <div class="examPage" *ngIf="!isSubmit">
+        <div class="smallTimer">
+            <h2 class="text-center formatTime">{{getformattedtime()}}</h2>
+            
+        </div>
 
-        <div class="attemptedCardsSection">
-            <div class="row gap-2 cards fw-bold">
+        <div class="attemptedCardsSection ">
+            <div class="row gap-2 cards fw-bold ">
                 <div class="col-md-4 attemptedCard" style="background-image: linear-gradient(to right top, #6578f4, #5871e5, #4b69d5, #3f62c6, #335ab7, #2d51ab, #2748a0, #214094, #1f3588, #1d297c, #1b1d70, #191164);">
                     <p>Total Questions</p>
                     <p class="fs-4">{{totalQuestions}}</p>
@@ -77,6 +81,9 @@
            
     </div>
         <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        <div class="mt-4 mb-2 d-flex justify-content-center smallSubmit">
+            <button class="btn submit lg-fs-5 submitBtn"  type="submit" (click)="submitExam()">Submit </button>
+        </div>
 
         
     
@@ -86,16 +93,20 @@
 
            <p class="fs-4 fw-bold text-center">Time Left : </p>
             <mat-card-content>
-                <h2 class="text-center">{{getformattedtime()}}</h2>
+                <h2 class="text-center formatTime">{{getformattedtime()}}</h2>
                 
-                <mat-spinner  class="m-auto" mode="determinate"
+                <mat-spinner  class="m-auto progressBar" mode="determinate"
                   [value]="(timer/(examDuration*60))*100" ></mat-spinner>
             </mat-card-content>
             <div class="mt-4 mb-2 d-flex justify-content-center">
-                <button class="btn submit fs-5"  type="submit" (click)="submitExam()">Submit </button>
+                <button class="btn submit lg-fs-5 submitBtn"  type="submit" (click)="submitExam()">Submit </button>
             </div>
         </mat-card>
-    </div>    
+    </div>  
+    
+    <div>
+
+    </div>
 
     </div>
 

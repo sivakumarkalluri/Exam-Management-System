@@ -27,6 +27,8 @@
     height: 100px;
   }
 
+
+
   h1,
   h2,
   h3 {
@@ -59,4 +61,17 @@
     .btn-start {
       width: 100%;
     }
+    .testDetails{
+      margin: auto;
+   
+      font-family:'Montserrat', sans-serif;
+      border-radius: 5px;
+      font-size: 12px;
+      box-shadow: 5px 5px 5px gray;
+      background-image: linear-gradient(to right top, #6b78d1, #6072c7, #556bbd, #4b65b4, #405faa, #3a58a3, #33509c, #2d4995, #2d3e8f, #2e3287, #31267f, #341776);    color: white;
+      width: 100%;
+      padding: 10px;
+      height: 150px;
+    }
+  
   }

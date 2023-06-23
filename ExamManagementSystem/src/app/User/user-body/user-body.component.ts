@@ -12,10 +12,4 @@ export class UserBodyComponent {
   constructor(){}
  
   
-  getBodyClass():string{
-    let styleClass ='body';
-
-   
-    return styleClass;
-  }
 }

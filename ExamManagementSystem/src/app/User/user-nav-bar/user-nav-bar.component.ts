@@ -1,6 +1,10 @@
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { AdminService } from 'src/app/Services/admin/admin.service';
 import { navUserData } from './NavData';
+import { AuthenticationService } from 'src/app/Services/authentication/authentication.service';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { DialogsService } from 'src/app/Services/Dialogs/dialogs.service';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -13,37 +17,35 @@ interface SideNavToggle {
 })
 export class UserNavBarComponent implements OnInit{
 
-  constructor(private adminService:AdminService){}
+  constructor(private adminService:AdminService,private authService:AuthenticationService,private router:Router,private toastr: ToastrService,private dialogService:DialogsService){}
   ngOnInit(): void {
-    this.screenWidth = window.innerWidth;
 
   }
   @Output() onToggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter();
   collapsed = false;
-  screenWidth = 0;
   navData = navUserData;
-
-  
-  @HostListener('window:resize', ['$event'])
-  onResize(event:any) {
-    this.screenWidth= window.innerWidth;
-    if(this.screenWidth <= 768) {
-      this.collapsed=false;
-      this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth:this.screenWidth});
-    }
-  }
 
 
   toggleCollapse(): void {
-    this.adminService.toggleClicked=!this.adminService.toggleClicked;
     this.collapsed = !this.collapsed;
-     this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth:this.screenWidth});
   }
 
   closeSidenav(): void{
-    this.adminService.toggleClicked=!this.adminService.toggleClicked;
     this.collapsed = false;
-    this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth:this.screenWidth});
   }
 
+  Logout() {
+    this.dialogService.openLogOutDialog("Are you sure want to Log Out ?").afterClosed().subscribe((res: any) => {
+      if (res === true) {
+    this.authService.removeToken();
+    this.router.navigate(['/']).then(() => {
+      window.location.reload();
+    });
+    // 
+  }
+  
+  
+});
+}
+  
 }

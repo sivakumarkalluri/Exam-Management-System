@@ -20,7 +20,6 @@ namespace ExamPortal.Controllers
             this.configuration = configuration;
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Post(Registration registerData)
         {
@@ -82,7 +81,6 @@ namespace ExamPortal.Controllers
 
 
 
-        [AllowAnonymous]
         [HttpGet("UserData/{id}")]
         public async Task<IActionResult> GetUser(int id) 
         {
@@ -96,7 +94,6 @@ namespace ExamPortal.Controllers
         }
         
 
-        [AllowAnonymous]
         [HttpPost("LoginUser")]
         public IActionResult Login(Login user)
         {

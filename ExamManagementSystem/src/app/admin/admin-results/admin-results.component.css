@@ -52,3 +52,12 @@ table {
   .Fail{
     color: red;
   }
+  #userResults{
+    padding: 2rem;
+  }
+  @media (max-width: 600px) {
+    .dropdown-container{
+      display: flex;
+      flex-direction: column;
+    }
+  }

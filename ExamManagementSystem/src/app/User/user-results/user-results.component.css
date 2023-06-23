@@ -17,6 +17,9 @@ tbody tr td{
 table{
     margin: auto;
 }
+#resultHead{
+  font-family: 'Montserrat', sans-serif;
+}
 
 .dropdown-container {
     display: flex;
@@ -35,19 +38,8 @@ table{
   .Fail{
     color: red;
   }
-  .review{
-    color: white;
-    background-color: #3C1975;
-    transform: scale(1);
-    box-shadow: 3px 3px 3px gray;
-    font-size: 12px;
-
-    transition: all 0.3s ease-in-out;
-
-}
-.review:hover{
-    transform: scale(0.95);
-    box-shadow: 2px 2px 2px gray;
-    transition: all 0.3s ease-in-out;
-
-}
+  @media (max-width: 600px) {
+    #userResult{
+      padding: 20px;
+    }
+  }

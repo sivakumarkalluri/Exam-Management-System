@@ -7,12 +7,18 @@ thead tr th{
     text-align: center;
  
 }
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
 tbody tr td{
     font-size: 12px;    
     text-align: center;
 }
 table{
-    margin: auto;
+ margin: auto;
+ width: 100%;
 }
 .main {
     width: 100%;
@@ -42,4 +48,7 @@ table{
 .heading{
   font-family: 'Montserrat', sans-serif;
 
+}
+#studentsTable{
+  padding: 2rem;
 }

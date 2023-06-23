@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class AdminService implements OnInit{
 
   constructor(private http:HttpClient) { }
-  toggleClicked=false;
+  // toggleClicked=false;
   ngOnInit(): void {
    
   }

@@ -15,7 +15,6 @@ export class UserHomeComponent {
   screenWidth = 0;
 
   onToggleSideNav(data: SideNavToggle): void{
-    this.screenWidth = data.screenWidth;
     this.isSideNavCollapsaed = data.collapsed;
   }
   

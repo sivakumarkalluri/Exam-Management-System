@@ -12,10 +12,8 @@ export class AdminHomeComponent {
 
    
   isSideNavCollapsaed = false;
-  screenWidth = 0;
 
   onToggleSideNav(data: SideNavToggle): void{
-    this.screenWidth = data.screenWidth;
     this.isSideNavCollapsaed = data.collapsed;
   }
   

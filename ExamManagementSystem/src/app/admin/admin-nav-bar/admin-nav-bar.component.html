@@ -10,12 +10,23 @@
     </div>
     <ul class="sidenav-nav">
       <li class="sidenav-nav-item" *ngFor="let data of navData">
-        <a class="sidenav-nav-link" [routerLink]="[data.routeLink]"
-           routerLinkActive="active"
-           [routerLinkActiveOptions]="{exact:true}" [tooltip]="data.label" tooltipPlacement="right">
+        <div *ngIf="data.label!='LogOut'">
+          <a class="sidenav-nav-link" [routerLink]="[data.routeLink]"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact:true}" [tooltip]="data.label" tooltipPlacement="right">
+            <i class="sidenav-link-icon" [class]="data.icon"></i>
+            <span class="sidenav-link-text" *ngIf="collapsed">{{data.label}}</span>
+          </a>
+      </div>
+      <div *ngIf="data.label=='LogOut'">
+        <a class="sidenav-nav-link" (click)="LogOut()"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact:true}" [tooltip]="data.label" tooltipPlacement="right">
           <i class="sidenav-link-icon" [class]="data.icon"></i>
           <span class="sidenav-link-text" *ngIf="collapsed">{{data.label}}</span>
         </a>
+    </div>
+      
       </li>
     </ul>
   </div>

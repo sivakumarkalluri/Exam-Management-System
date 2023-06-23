@@ -26,6 +26,11 @@ export const navUserData = [
         routeLink:'userResults',
         icon:'fa-solid fa-square-poll-vertical',
         label:'Results'
-    }
+    },
+    {
+        routeLink:'Logout()',
+        icon:'fa-solid fa-right-from-bracket',
+        label:'LogOut'
+    },
    
 ];

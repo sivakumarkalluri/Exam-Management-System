@@ -27,9 +27,9 @@ namespace ExamPortal.Repositories.ImageRepo
             return urlFilePath;
 
         }
-        private string GetServerRelativePath(string fileName)
-        {
-            return Path.Combine(@"ProfileImages", fileName);
-        }
+        //private string GetServerRelativePath(string fileName)
+        //{
+        //    return Path.Combine(@"ProfileImages", fileName);
+        //}
     }
 }

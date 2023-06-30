@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAuKYXzGh7dkG6a/iGGUW/kQAAAAACAAAAAAAQZgAAAAEAACAAAACwxCwN/cLxwwIV7/IA/TTMGZLmzUn+nhxs0oLx7kEiVQAAAAAOgAAAAAIAACAAAAB0TQaIM1Jd0wMEZ6cHZOSVGEjrxF7ffZeyE9Y+KkatXIAAAABGwZE5ig35eGhpFkzzXsyvE3Dw+KO2hfkSiXpJu6PgJs7O1ToionJCTcv82xEMKwLLnVQrhumCm/qfhq/cJ5YzReHM85bIj5KORxHpUO78919lHYD+ebj1lUjwOz+SmDJn3DdZqMxH9pHP3SKqG9zQ3oKomzOR2/PH0XMXRotUtUAAAAC65Ybc2hya/9uyJaVMUpVn4uHLdIFGVc++eoCny2EzFrMANXkbULEDGNvQF+iKSZjzR2mws0nZC/TzkBBoqsJq</EncryptedPassword>
+    <History>True|2023-06-29T10:48:47.3380038Z;False|2023-06-29T16:04:33.9751067+05:30;True|2023-06-29T15:50:22.2080178+05:30;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <EFMigrations Include="ExamPortal.Data.ExamPortalDBContext">
+      <Value>Data Source=sqlserver-examportal.database.windows.net,1433%3bInitial Catalog=ExamPortal%3bUser ID=sivakumarkalluri%3bPassword=Kumar%40144</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>

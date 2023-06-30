@@ -20,7 +20,7 @@ export class AuthenticationService {
   userInfo:any;
   loggedIn=false;
   accessToken!:string;
-  baseUrl="https://localhost:7058/api/UserData";
+  baseUrl="https://app-examportal.azurewebsites.net/api/UserData";
   registerUser(data:Array<String>){
     return this.http.post(this.baseUrl,{
      FirstName:data[0],

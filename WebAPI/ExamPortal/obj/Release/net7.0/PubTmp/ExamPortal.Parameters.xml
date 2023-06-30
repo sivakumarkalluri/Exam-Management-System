@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <parameters>
-  <parameter name="IIS Web Application Name" description="" value="ExamManagementSystemAPI" tags="IisApp">
+  <parameter name="IIS Web Application Name" description="" value="app-examportal" tags="IisApp">
     <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Exam-Management-System\\WebAPI\\ExamPortal\\obj\\Release\\net7\.0\\PubTmp\\Out\\$" />
   </parameter>
-  <parameter name="ExamPortal.Data.ExamPortalDBContext" description="" value="Data Source=examportaldbserver.database.windows.net,1433;Initial Catalog=examportal;User ID=sivakumarkalluri;Password=Reddy@144" tags="dbfullsql">
+  <parameter name="ExamPortal.Data.ExamPortalDBContext" description="" value="Data Source=sqlserver-examportal.database.windows.net,1433;Initial Catalog=ExamPortal;User ID=sivakumarkalluri;Password=Kumar@144" tags="dbfullsql">
     <parameterEntry kind="ProviderPath" scope="dbfullsql" match="^C:\\Exam-Management-System\\WebAPI\\ExamPortal\\obj\\Release\\net7\.0\\PubTmp\\EFSQLScripts\\ExamPortal\.Data\.ExamPortalDBContext\.sql$" />
   </parameter>
 </parameters>

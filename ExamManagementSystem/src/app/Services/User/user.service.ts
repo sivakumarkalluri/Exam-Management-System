@@ -15,7 +15,7 @@ export class UserService implements OnInit{
     this.getUserId();
   }
 
-   baseUrl='https://localhost:7058/api'
+   baseUrl='https://app-examportal.azurewebsites.net/api'
 
   getUserId():any{
     this.authService.loadCurrentUser();

@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "nSC9zsnxHTE9NpzQ+LBg2yTKG0KCWTIQbJub9UsT3O0=",
+  "Source": "ExamPortalAPI",
+  "BasePath": "_content/ExamPortalAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

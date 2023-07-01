@@ -1,4 +1,4 @@
-placementsprep[build]
+ExamManagementSystem[build]
   publish = "ExamManagementSystem/dist/exam-management-system"
   command = "ng build"
 [[redirects]]

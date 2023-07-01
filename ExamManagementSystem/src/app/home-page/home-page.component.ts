@@ -33,7 +33,7 @@ export class HomePageComponent implements OnInit{
   getImagePath(examName: string): string {
     if(this.examImages){
       const examImage = this.examImages.find((item:any) => item.exam_Name === examName);
-    return examImage ? examImage.imagePath : 'assets/default_exam.webp';
+    return examImage ? examImage.imagePath : 'assets/default_exam.png';
     }
     return "";
     

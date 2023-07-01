@@ -1,5 +1,5 @@
-ExamManagementSystem[build]
-  publish = "ExamManagementSystem/dist/exam-management-system"
+[build]
+  publish = "dist/exam-management-system"
   command = "ng build"
 [[redirects]]
   from = "/*"

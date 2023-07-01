@@ -1,0 +1,7 @@
+placementsprep[build]
+  publish = "dist/exam-management-system"
+  command = "ng build"
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
